@@ -4,7 +4,7 @@ A responsive artisan bakery website with a black, warm cream, and muted gold the
 
 ## Shop availability
 
-The shop is temporarily hidden from navigation. Shop buttons and direct visits to `/shop` return to the homepage. The shop implementation is retained; set `SHOP_ENABLED` to `true` in `src/config/site.js` to restore it.
+Shop remains visible in navigation, but the shop page is temporarily disabled. The Shop navigation link, shop buttons, and direct visits to `/shop` return to the homepage. The shop implementation is retained; set `SHOP_ENABLED` to `true` in `src/config/site.js` to restore it.
 
 ## Run locally
 

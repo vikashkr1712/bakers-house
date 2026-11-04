@@ -35,9 +35,17 @@ export default function Navbar({ count, open }) {
     document.addEventListener('keydown', onKey)
     return () => { media.removeEventListener('change', closeWide); document.removeEventListener('keydown', onKey) }
   }, [])
-  const links = [{ label: 'Home', to: '/#home' }, { label: 'About', to: '/#about' }, ...(SHOP_ENABLED ? [{ label: 'Shop', to: '/shop' }] : []), { label: 'Our Story', to: '/#our-story' }, { label: 'Contact', action: 'contact' }]
+  const links = [{ label: 'Home', to: '/#home' }, { label: 'About', to: '/#about' }, { label: 'Shop', to: SHOP_ENABLED ? '/shop' : '/' }, { label: 'Our Story', to: '/#our-story' }, { label: 'Contact', action: 'contact' }]
   const current = isShop ? 'Shop' : active
-  function navigate(link) { setMenu(false); if (link.to) setActive(link.label); if (link.to === '/shop' && isShop) window.scrollTo({ top: 0, behavior: 'smooth' }); if (link.action) open({ type: link.action }) }
+  function navigate(link) {
+    setMenu(false)
+    if (link.label === 'Shop' && !SHOP_ENABLED) {
+      setActive('Home')
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    } else if (link.to) setActive(link.label)
+    if (link.to === '/shop' && isShop) window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (link.action) open({ type: link.action })
+  }
   return <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
     <div className="container nav-inner">
       <Brand onClick={() => { setMenu(false); setActive('Home') }} />

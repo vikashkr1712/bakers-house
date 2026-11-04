@@ -12,7 +12,7 @@ export default function Hero({ onShop }) {
   const [selected, setSelected] = useState(0)
   const reduced = useReducedMotion()
   const composition = compositions[selected]
-  return <section className={`hero hero--${selected}`} id="home" aria-label="Welcome to Baker’s House">
+  return <section className={`hero hero--${selected}`} id="home" aria-label="Welcome to Baker’s House" style={{ '--hero-photo': `url("${composition.image}")` }}>
     <div className="hero-photograph" aria-hidden="true"><AnimatePresence mode="sync" initial={false}><motion.img key={composition.image} src={composition.image} alt="" width="2400" height="1600" fetchPriority={selected === 0 ? 'high' : 'auto'} initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.55 }} /></AnimatePresence></div>
     <div className="hero-shade" />
     <div className="container hero-content">

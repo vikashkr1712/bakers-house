@@ -47,6 +47,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 /* Contain horizontal entrances without adding a sideways scrollbar. */
 .features, .categories, .our-story, .favorites, .testimonials { overflow-x: clip; }
 .scroll-reveal:focus-within { opacity: 1 !important; transform: none !important; }
+.category-card:focus-visible .scroll-reveal { opacity: 1 !important; transform: none !important; }
 
 /* A dedicated header row with centered navigation and aligned actions. */
 .site-header { position: sticky; top: 0; z-index: 30; background: #111; border-bottom: 1px solid #ffffff12; transition: background .3s, box-shadow .3s; }
@@ -117,6 +118,9 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .category-grid, .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 25px; }
 .category-card { width: 100%; text-align: left; display: block; }
 .category-image-wrap { display: block; position: relative; aspect-ratio: 1 / 1.05; overflow: hidden; background: #302820; }
+.category-photo { position: absolute; inset: 0; display: block; }
+.category-title-content { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.category-caption-copy { display: block; }
 .category-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s cubic-bezier(.2,.7,.3,1); }
 .category-card:hover img { transform: scale(1.045); }
 .category-image-shade { position: absolute; inset: 0; background: linear-gradient(0deg, #000c, transparent 55%); }

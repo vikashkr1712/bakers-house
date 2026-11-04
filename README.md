@@ -4,7 +4,7 @@ A responsive artisan bakery website with a black, warm cream, and muted gold the
 
 ## Homepage motion
 
-Content below the hero enters as approximately 35% becomes visible. Story and banner images slide in from the left, text enters from the right, and bakery cards appear with a short stagger. Entrances play once per page visit and respect reduced-motion preferences.
+Content below the hero enters as approximately 35% becomes visible, using a gentle 1.35-second transition. Images slide in from the left; text, including Explore card titles and descriptions, enters separately from the right. Animations reset after leaving the screen and replay on each return without refreshing. Reduced-motion preferences are respected.
 
 ## Shop availability
 

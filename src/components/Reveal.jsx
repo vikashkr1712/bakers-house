@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 
 const offsets = {
@@ -6,7 +7,36 @@ const offsets = {
   up: { x: 0, y: 24 },
 }
 
-export default function Reveal({ children, className = '', delay = 0, direction = 'up', amount = 0.35 }) {
+export default function Reveal({ children, className = '', delay = 0, direction = 'up', amount = 0.35, as = 'div', observeParent = false }) {
   const reduced = useReducedMotion()
-  return <motion.div className={`scroll-reveal ${className}`} initial={reduced ? false : { opacity: 0, ...offsets[direction] }} whileInView={{ opacity: 1, x: 0, y: 0 }} viewport={{ once: true, amount }} transition={{ duration: reduced ? 0 : 0.85, delay: reduced ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>
+  const elementRef = useRef(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (reduced) return
+    const element = observeParent ? elementRef.current?.parentElement : elementRef.current
+    if (!element) return
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && entry.intersectionRatio >= amount) setVisible(true)
+      // Reset only after leaving the screen, avoiding flicker near the entrance threshold.
+      else if (!entry.isIntersecting) setVisible(false)
+    }, { threshold: [0, amount] })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [amount, observeParent, reduced])
+
+  const show = reduced || visible
+  const hidden = { opacity: 0, ...offsets[direction] }
+  const Element = as === 'span' ? motion.span : motion.div
+  return <Element
+    ref={elementRef}
+    className={`scroll-reveal ${className}`}
+    initial={reduced ? false : hidden}
+    animate={show ? { opacity: 1, x: 0, y: 0 } : hidden}
+    transition={{ duration: reduced || !show ? 0 : 1.35, delay: reduced || !show ? 0 : delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+  >{children}</Element>
 }

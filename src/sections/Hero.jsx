@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ArrowRight, ArrowDown, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowDown, CornerDownRight } from 'lucide-react'
 
 const compositions = [
   { label: 'Breads', eyebrow: 'ARTISAN BAKERY', title: <>Freshly Baked,<br />Artisan Crafted<span>.</span></>, description: 'Handcrafted breads and pastries. Fine ingredients, time-honored traditions, and a little love in every bake.', image: '/images/bakery/hero/hero-artisan-bread.webp', alt: 'Rustic artisan bread, baked to a beautiful golden crust', button: 'Shop Bakery', category: 'All' },
@@ -20,7 +20,7 @@ export default function Hero({ onShop }) {
         <p className="eyebrow">{composition.eyebrow}</p>
         <h1>{composition.title}</h1>
         <p className="hero-description">{composition.description}</p>
-        <div className="hero-buttons"><button className="button button--gold" onClick={() => onShop(composition.category)}>{composition.button}<ArrowRight size={20} aria-hidden="true" /></button><a className="button button--outline" href="#our-story">Our Story<ArrowUpRight size={20} aria-hidden="true" /></a></div>
+        <div className="hero-buttons"><button className="button button--gold" onClick={() => onShop(composition.category)}>{composition.button}<ArrowRight size={20} aria-hidden="true" /></button><a className="button button--outline" href="#our-story">Our Story<CornerDownRight size={20} aria-hidden="true" /></a></div>
       </motion.div></AnimatePresence>
       <div className="hero-bottom"><div className="hero-compositions" aria-label="Choose a featured collection">{compositions.map((item, index) => <button key={item.label} className={selected === index ? 'is-selected' : ''} onClick={() => setSelected(index)} aria-pressed={selected === index}><span>0{index + 1}</span>{item.label}</button>)}</div><a className="hero-scroll" href="#categories" aria-label="Scroll to explore our bakery"><span>SCROLL TO EXPLORE</span><ArrowDown size={16} /></a></div>
     </div>

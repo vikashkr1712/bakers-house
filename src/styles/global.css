@@ -76,7 +76,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .hero h1 span { color: var(--gold); }
 .hero-description { max-width: 475px; margin-top: 24px; font-size: 18px; line-height: 1.8; color: #ddd8d0; }
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 32px; }
-.hero-buttons .button { min-height: 58px; min-width: 186px; padding: 16px 25px; }
+.hero-buttons .button { min-height: 58px; min-width: 186px; padding: 16px 29px; border-radius: 999px; }
 .hero-buttons .button--gold { min-width: 208px; justify-content: space-between; gap: 24px; }
 .hero-buttons .button--outline { min-width: 170px; }
 .hero-bottom { position: absolute; bottom: 32px; inset-inline: 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; }

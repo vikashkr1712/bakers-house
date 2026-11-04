@@ -20,13 +20,35 @@ export default function Reveal({ children, className = '', delay = 0, direction 
       setVisible(true)
       return
     }
+    let active = true
+    let entered = false
+    let imagesReady
+    function reveal() {
+      const images = [...elementRef.current.querySelectorAll('img')]
+      if (images.every((image) => image.complete && image.naturalWidth > 0)) {
+        setVisible(true)
+        return
+      }
+      imagesReady ||= Promise.all(images.map((image) => {
+        image.loading = 'eager'
+        return image.decode().catch(() => {})
+      }))
+      imagesReady.then(() => { if (active && entered) setVisible(true) })
+    }
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && entry.intersectionRatio >= amount) setVisible(true)
+      if (!active) return
+      if (entry.isIntersecting && entry.intersectionRatio >= amount) {
+        entered = true
+        reveal()
+      }
       // Reset only after leaving the screen, avoiding flicker near the entrance threshold.
-      else if (!entry.isIntersecting) setVisible(false)
+      else if (!entry.isIntersecting) {
+        entered = false
+        setVisible(false)
+      }
     }, { threshold: [0, amount] })
     observer.observe(element)
-    return () => observer.disconnect()
+    return () => { active = false; observer.disconnect() }
   }, [amount, observeParent, reduced])
 
   const show = reduced || visible

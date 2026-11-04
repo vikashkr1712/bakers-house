@@ -165,36 +165,41 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .testimonial-attribution { display: flex; align-items: center; justify-content: center; gap: 13px; font-size: 12px; text-transform: uppercase; letter-spacing: .15em; color: #ccc3b5; }
 .testimonial-attribution span { width: 23px; height: 1px; background: var(--gold); }
 .testimonial-disclaimer { font-size: 12px; line-height: 1.7; color: #a7a198; margin-top: 12px; }
-.promotional-banner { min-height: 420px; position: relative; background: #261e18; isolation: isolate; display: flex; align-items: center; overflow: hidden; }
-.banner-visual { position: absolute; z-index: -2; inset: 0; }
-.banner-photo { position: absolute; z-index: -2; height: 100%; width: 100%; object-fit: cover; object-position: center 56%; }
-.banner-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, #15120ff5, #15120fbf 33%, #15120f26 76%); }
-.banner-copy { padding-block: 60px; }
-.banner-copy h2 { font-size: clamp(38px, 3.6vw, 50px); line-height: 1.15; letter-spacing: -.025em; margin-top: 16px; }
+.promotional-banner { padding-block: 64px; background: var(--black); border-block: 1px solid #ffffff12; overflow-x: clip; }
+.banner-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(56px, 5vw, 80px); align-items: center; }
+.banner-image-frame { position: relative; aspect-ratio: 1.8; overflow: hidden; border: 1px solid #ffffff12; border-radius: 20px; background: var(--charcoal); }
+.banner-visual { position: absolute; inset: 0; }
+.banner-photo { height: 100%; width: 100%; object-fit: cover; object-position: center; }
+.banner-copy { min-width: 0; }
+.banner-copy h2 { font-size: clamp(40px, 4vw, 58px); line-height: 1.15; letter-spacing: -.025em; margin-top: 16px; }
 .banner-copy h2 span { color: var(--gold); }
-.banner-copy > p:not(.eyebrow) { color: #d2c9bc; margin-top: 16px; font-size: 16px; }
-.banner-copy .button { margin-top: 26px; }
+.banner-copy > p:not(.eyebrow) { color: #d2c9bc; margin-top: 20px; font-size: 17px; line-height: 1.8; }
+.banner-copy .button { margin-top: 28px; border-radius: 999px; max-width: 100%; }
 
-.site-footer { background: #111; padding-top: 65px; }
-.footer-main { display: grid; grid-template-columns: 1.4fr .7fr .7fr 1.5fr; gap: 45px; padding-bottom: 50px; }
+.site-footer { background: #111; padding-top: 64px; }
+.footer-main { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .55fr) minmax(0, .55fr) minmax(0, 1.35fr); gap: clamp(24px, 3.2vw, 48px); align-items: start; padding-bottom: 48px; }
+.footer-main > * { min-width: 0; }
 .footer-brand .brand-name { font-size: 24px; }
 .footer-brand .brand-mark { width: 31px; height: 41px; }
 .footer-brand .brand-tagline { font-size: 8px; }
 .footer-brand > p { font-size: 16px; color: #b8b4ae; line-height: 1.8; margin: 22px 0 0; }
 .footer-links { display: flex; align-items: flex-start; flex-direction: column; gap: 2px; }
-.footer-links h2, .footer-newsletter h2 { font-family: 'Inter', sans-serif; color: #dfd5c4; font-size: 16px; font-weight: 500; line-height: 1.6; margin-bottom: 5px; }
+.footer-links h2, .footer-newsletter h2 { font-family: 'Inter', sans-serif; color: #dfd5c4; font-size: 16px; font-weight: 600; line-height: 1.6; margin-bottom: 12px; }
+.footer-links h2 { color: var(--gold); }
 .footer-links a, .footer-links button { display: flex; align-items: center; min-height: 44px; font-size: 16px; color: #b8b4ae; line-height: 1.6; transition: color .2s; }
 .footer-links a:hover, .footer-links button:hover { color: var(--gold); }
-.footer-newsletter > p { color: #b8b4ae; font-size: 16px; line-height: 1.9; max-width: 300px; margin-top: 8px; }
-.newsletter-input { margin-top: 17px; display: flex; border: 1px solid #736a5c; border-radius: 2px; overflow: hidden; }
+.footer-newsletter { padding: 24px; border: 1px solid #ffffff14; border-radius: 18px; background: var(--charcoal); }
+.footer-newsletter h2 { max-width: 22ch; font-size: 20px; line-height: 1.45; margin: 0; }
+.footer-newsletter > p { color: #b8b4ae; font-size: 16px; line-height: 1.8; margin-top: 12px; }
+.newsletter-input { margin-top: 20px; display: flex; padding: 4px; border: 1px solid #ffffff30; border-radius: 999px; background: var(--black); }
 .newsletter-input:focus-within { outline: 2px solid var(--gold); outline-offset: 3px; }
-.newsletter-input input { border: 0; outline: none; border-radius: 0; background: transparent; color: var(--light); min-width: 0; width: 100%; padding: 13px 12px; font-size: 16px; }
+.newsletter-input input { border: 0; outline: none; border-radius: 999px; background: transparent; color: var(--light); min-width: 0; flex: 1; width: 100%; padding: 10px 12px; font-size: 16px; }
 .newsletter-input input::placeholder { color: #b5ada1; opacity: 1; }
-.newsletter-input button { display: flex; align-items: center; justify-content: center; width: 54px; min-height: 54px; flex-shrink: 0; background: var(--gold); color: var(--ink); transition: background .2s; }
+.newsletter-input button { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; background: var(--gold); color: var(--ink); transition: background .2s; }
 .newsletter-input button:hover { background: #dfba82; }
-.newsletter-status { margin-top: 9px; color: #a9a195; font-size: 12px; line-height: 1.8; }
+.newsletter-status { min-height: 3.6em; margin-top: 12px; color: #b8b0a4; font-size: 12px; line-height: 1.8; }
 .newsletter-status.is-success { color: #ddbd8f; }
-.footer-bottom { border-top: 1px solid #ffffff20; padding-block: 23px; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: #a9a298; font-size: 12px; line-height: 1.8; }
+.footer-bottom { border-top: 1px solid #ffffff20; padding-block: 18px; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: #b8b0a4; font-size: 14px; line-height: 1.8; }
 .footer-bottom > div { display: flex; align-items: center; gap: 25px; }
 .footer-bottom button { min-height: 44px; }
 .footer-bottom button:hover { color: var(--gold); }
@@ -307,7 +312,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   .story-grid { gap: 48px; }
   .category-grid, .product-grid { gap: 22px; }
   .category-card-title { inset-inline: 17px; font-size: 27px; }
-  .footer-main { grid-template-columns: 1fr .65fr .65fr 1.25fr; gap: 26px; }
+  .footer-main { gap: 24px; }
   .footer-brand .brand-name { font-size: 21px; }
   .footer-brand .brand-mark { width: 28px; }
 }
@@ -327,9 +332,11 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   .category-card-title { font-size: 30px; }
   .product-image-wrap { aspect-ratio: 1.1; }
   .section { padding-block: 80px; }
-  .footer-main { grid-template-columns: 1.25fr 1fr 1fr; gap: 40px; }
-  .footer-newsletter { grid-column: 1 / -1; width: min(100%, 500px); }
-  .footer-newsletter > p { max-width: none; }
+  .footer-main { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-areas: 'brand brand newsletter newsletter' 'explore bakes newsletter newsletter'; gap: 32px 24px; }
+  .footer-brand { grid-area: brand; }
+  .footer-explore { grid-area: explore; }
+  .footer-bakes { grid-area: bakes; }
+  .footer-newsletter { grid-area: newsletter; padding: 20px; }
   .footer-brand .brand-name { font-size: 25px; }
   .footer-brand .brand-mark { width: 34px; }
   .footer-bottom > div > span { display: none; }
@@ -361,6 +368,8 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   .story-image { min-height: 0; aspect-ratio: 1.15; }
   .story-copy { padding-block: 0; }
   .story-copy > p:not(.eyebrow) { max-width: none; }
+  .banner-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .banner-image-frame { min-height: 0; }
   .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .product-detail-grid { grid-template-columns: 1fr; gap: 28px; }
   .product-detail-image { aspect-ratio: 1.15; }
@@ -419,25 +428,21 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   .testimonial-attribution { letter-spacing: .08em; gap: 10px; }
   .testimonial-attribution span { width: 18px; }
   .desktop-break { display: none; }
-  .promotional-banner { min-height: 465px; }
-  .banner-copy { padding-block: 56px; }
+  .promotional-banner { padding-block: 48px; }
   .banner-copy h2 { font-size: 43px; }
-  .banner-photo { width: 150%; max-width: none; left: 0; object-position: 62% center; }
-  .banner-shade { background: linear-gradient(90deg, #15120fe8, #15120fa6 58%, #15120f33); }
-  .banner-copy > p:not(.eyebrow) { font-size: 16px; max-width: 250px; }
+  .banner-image-frame { border-radius: 16px; }
+  .banner-copy > p:not(.eyebrow) { font-size: 16px; max-width: 32ch; }
   .banner-copy .button { max-width: 100%; padding-inline: 20px; }
-  .site-footer { padding-top: 54px; }
-  .footer-main { grid-template-columns: 1fr 1fr; gap: 36px 24px; padding-bottom: 36px; }
-  .footer-brand { grid-column: 1 / -1; }
+  .site-footer { padding-top: 48px; }
+  .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: 'brand brand' 'explore bakes' 'newsletter newsletter'; gap: 32px 24px; padding-bottom: 32px; }
   .footer-brand .brand-name { font-size: 26px; }
   .footer-brand .brand-mark { width: 36px; height: 46px; }
   .footer-brand > p { font-size: 16px; margin-top: 20px; }
-  .footer-links h2, .footer-newsletter h2 { font-size: 17px; }
-  .footer-newsletter { width: 100%; max-width: none; }
+  .footer-links h2 { font-size: 17px; }
+  .footer-newsletter h2 { font-size: 20px; }
   .footer-newsletter > p { font-size: 16px; }
-  .footer-bottom { align-items: flex-start; padding-block: 20px; gap: 18px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; padding-block: 20px; gap: 6px; }
   .footer-bottom > div { gap: 0; }
-  .footer-bottom > p { padding-top: 10px; }
   .dialog, .dialog--search, .dialog--story, .dialog--contact, .dialog--privacy { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
   .dialog-header { padding: 18px 20px; gap: 12px; }
   .dialog-header h2 { font-size: 26px; }

@@ -1,0 +1,14 @@
+.git
+node_modules
+dist
+tests
+screenshots
+test-results
+playwright-report
+playwright.config.*
+.asset-originals
+.asset-tools
+.npm-cache
+.env
+.env.*
+*.md

@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vercel/
+.env
+.env.*
+*.log
+.DS_Store
+tests/
+screenshots/
+test-results/
+playwright-report/
+playwright.config.*
+.asset-originals/
+.asset-tools/
+.npm-cache/
+*.md
+!/README.md

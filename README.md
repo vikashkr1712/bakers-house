@@ -2,6 +2,10 @@
 
 A responsive artisan bakery website with a black, warm cream, and muted gold theme. Built with React, Vite, React Router, Tailwind CSS, Motion, and Lucide.
 
+## Shop availability
+
+The shop is temporarily hidden from navigation. Shop buttons and direct visits to `/shop` return to the homepage. The shop implementation is retained; set `SHOP_ENABLED` to `true` in `src/config/site.js` to restore it.
+
 ## Run locally
 
 Use Node.js 22.12 or later.

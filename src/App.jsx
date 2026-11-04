@@ -14,11 +14,12 @@ import Testimonials from './sections/Testimonials'
 import PromotionalBanner from './sections/PromotionalBanner'
 import { useBasket } from './hooks/useBasket'
 import ShopPage from './pages/ShopPage'
+import { SHOP_ENABLED } from './config/site'
 
 function PagePosition() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
-    document.title = pathname === '/shop' ? 'Shop the Collection — Baker’s House' : 'Baker’s House — Artisan Bakery'
+    document.title = SHOP_ENABLED && pathname === '/shop' ? 'Shop the Collection — Baker’s House' : 'Baker’s House — Artisan Bakery'
     const frame = requestAnimationFrame(() => {
       if (hash) {
         document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'auto' })
@@ -37,11 +38,16 @@ export default function App() {
   const [notification, setNotification] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
-  const isShop = location.pathname === '/shop'
+  const isShop = SHOP_ENABLED && location.pathname === '/shop'
   const basket = useBasket()
   useEffect(() => { setView(null) }, [location.pathname, location.search, location.hash])
   function openShop(category = 'All') {
     setView(null)
+    if (!SHOP_ENABLED) {
+      navigate('/')
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      return
+    }
     navigate(category === 'All' ? '/shop' : `/shop?category=${encodeURIComponent(category.toLowerCase())}`)
     if (isShop) window.scrollTo({ top: 0, behavior: 'instant' })
   }
@@ -63,7 +69,7 @@ export default function App() {
       <BestSellers onShop={openShop} onProduct={openProduct} onAdd={addProduct} />
       <Testimonials />
       <PromotionalBanner onShop={openShop} />
-      </>} /><Route path="/shop" element={<ShopPage onProduct={openProduct} onAdd={addProduct} onBasket={() => setView({ type: 'basket' })} />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>
+      </>} /><Route path="/shop" element={SHOP_ENABLED ? <ShopPage onProduct={openProduct} onAdd={addProduct} onBasket={() => setView({ type: 'basket' })} /> : <Navigate to="/" replace />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>
     </main>
     <Footer onShop={openShop} onContact={() => setView({ type: 'contact' })} onPrivacy={() => setView({ type: 'privacy' })} />
     <ShopDialogs view={view} setView={setView} basket={basket} onAdd={addProduct} onShop={openShop} isShop={isShop} />

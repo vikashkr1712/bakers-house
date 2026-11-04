@@ -3,15 +3,16 @@ import { AnimatePresence, motion } from 'motion/react'
 import { Menu, Search, ShoppingBag, X } from 'lucide-react'
 import Brand from './Brand'
 import { Link, useLocation } from 'react-router-dom'
+import { SHOP_ENABLED } from '../config/site'
 
 export default function Navbar({ count, open }) {
   const [menu, setMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('Home')
   const { pathname } = useLocation()
-  const isShop = pathname === '/shop'
+  const isShop = SHOP_ENABLED && pathname === '/shop'
   useEffect(() => {
-    const sections = [['home', 'Home'], ['about', 'About'], ['our-story', 'Our Story'], ['shop', 'Shop'], ['contact', 'Contact']]
+    const sections = [['home', 'Home'], ['about', 'About'], ['our-story', 'Our Story'], ...(SHOP_ENABLED ? [['shop', 'Shop']] : []), ['contact', 'Contact']]
     const onScroll = () => {
       setScrolled(window.scrollY > 24)
       if (isShop) { setActive('Shop'); return }
@@ -34,7 +35,7 @@ export default function Navbar({ count, open }) {
     document.addEventListener('keydown', onKey)
     return () => { media.removeEventListener('change', closeWide); document.removeEventListener('keydown', onKey) }
   }, [])
-  const links = [{ label: 'Home', to: '/#home' }, { label: 'About', to: '/#about' }, { label: 'Shop', to: '/shop' }, { label: 'Our Story', to: '/#our-story' }, { label: 'Contact', action: 'contact' }]
+  const links = [{ label: 'Home', to: '/#home' }, { label: 'About', to: '/#about' }, ...(SHOP_ENABLED ? [{ label: 'Shop', to: '/shop' }] : []), { label: 'Our Story', to: '/#our-story' }, { label: 'Contact', action: 'contact' }]
   const current = isShop ? 'Shop' : active
   function navigate(link) { setMenu(false); if (link.to) setActive(link.label); if (link.to === '/shop' && isShop) window.scrollTo({ top: 0, behavior: 'smooth' }); if (link.action) open({ type: link.action }) }
   return <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>

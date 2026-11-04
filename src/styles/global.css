@@ -44,6 +44,10 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .text-link--light:hover { color: #e3bd85; }
 .short-rule { display: block; width: 38px; height: 1px; background: var(--gold); }
 
+/* Contain horizontal entrances without adding a sideways scrollbar. */
+.features, .categories, .our-story, .favorites, .testimonials { overflow-x: clip; }
+.scroll-reveal:focus-within { opacity: 1 !important; transform: none !important; }
+
 /* A dedicated header row with centered navigation and aligned actions. */
 .site-header { position: sticky; top: 0; z-index: 30; background: #111; border-bottom: 1px solid #ffffff12; transition: background .3s, box-shadow .3s; }
 .site-header.is-scrolled { background: #111111f5; backdrop-filter: blur(12px); box-shadow: 0 1px 0 #ffffff0e; }
@@ -97,6 +101,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .feature { display: flex; justify-content: center; align-items: center; gap: 19px; padding-inline: 16px; }
 .feature + .feature { border-left: 1px solid #ffffff24; }
 .feature svg { color: var(--gold); flex-shrink: 0; }
+.feature-icon { display: flex; flex-shrink: 0; }
 .feature h2 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 500; }
 .feature p { color: #b8b4ae; font-size: 14px; margin-top: 6px; line-height: 1.6; }
 
@@ -157,6 +162,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 .testimonial-attribution span { width: 23px; height: 1px; background: var(--gold); }
 .testimonial-disclaimer { font-size: 12px; line-height: 1.7; color: #a7a198; margin-top: 12px; }
 .promotional-banner { min-height: 420px; position: relative; background: #261e18; isolation: isolate; display: flex; align-items: center; overflow: hidden; }
+.banner-visual { position: absolute; z-index: -2; inset: 0; }
 .banner-photo { position: absolute; z-index: -2; height: 100%; width: 100%; object-fit: cover; object-position: center 56%; }
 .banner-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, #15120ff5, #15120fbf 33%, #15120f26 76%); }
 .banner-copy { padding-block: 60px; }
@@ -494,6 +500,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .scroll-reveal { opacity: 1 !important; transform: none !important; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .button:hover, .category-card:hover img, .product-image-button:hover img, .category-card:hover .category-card-title svg { transform: none; }
 }

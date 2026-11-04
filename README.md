@@ -2,6 +2,10 @@
 
 A responsive artisan bakery website with a black, warm cream, and muted gold theme. Built with React, Vite, React Router, Tailwind CSS, Motion, and Lucide.
 
+## Homepage motion
+
+Content below the hero enters as approximately 35% becomes visible. Story and banner images slide in from the left, text enters from the right, and bakery cards appear with a short stagger. Entrances play once per page visit and respect reduced-motion preferences.
+
 ## Shop availability
 
 Shop remains visible in navigation, but the shop page is temporarily disabled. The Shop navigation link, shop buttons, and direct visits to `/shop` return to the homepage. The shop implementation is retained; set `SHOP_ENABLED` to `true` in `src/config/site.js` to restore it.

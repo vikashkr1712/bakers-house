@@ -1,69 +1,44 @@
-# Baker’s House — Artisan Bakery
+# Baker’s House
 
-A responsive artisan bakery website with a black, warm cream, and muted gold theme. Built with React, Vite, React Router, Tailwind CSS, Motion, and Lucide.
+A responsive bakery website with a burgundy and beige-white theme. Built with React, Vite, React Router, Tailwind CSS, Motion and Lucide. Photographs and fonts are hosted locally.
 
-## Homepage motion
-
-Content below the hero enters as approximately 35% becomes visible, using a gentle 1.35-second transition. Images slide in from the left; text, including Explore card titles and descriptions, enters separately from the right. Animations reset after leaving the screen and replay on each return without refreshing. Reduced-motion preferences are respected.
-
-## Shop availability
-
-Shop remains visible in navigation, but the shop page is temporarily disabled. The Shop navigation link, shop buttons, and direct visits to `/shop` return to the homepage. The shop implementation is retained; set `SHOP_ENABLED` to `true` in `src/config/site.js` to restore it.
-
-## Run locally
+## Run and build
 
 Use Node.js 22.12 or later.
 
 ```sh
 npm ci
 npm run dev
-```
-
-## Build
-
-```sh
 npm run build
 npm run preview
 ```
 
-The production build is written to `dist/`. No environment variables or backend services are required.
+The production output is `dist/`. No environment variables are required. `vercel.json` preserves application-route refreshes through the existing SPA rewrite.
 
 ## Pages and features
 
-- Homepage with three manually selected photographic hero compositions, bakery categories, story, favorites, an illustrative testimonial, and a newsletter demo.
-- A dedicated `/shop` page with category filters, live search, sorting, product previews, and a basket shared with the homepage.
-- Shareable shop filters, for example `/shop?category=pastries` or `/shop?q=chocolate&sort=name-asc`.
-- Responsive mobile navigation, keyboard-accessible dialogs, reduced-motion support, and readable type.
-- Optimized local WebP photographs and self-hosted Playfair Display and Inter fonts.
+- Homepage with Cakes & Pastries, Chocolates and Sweets selections, five animated photographs per selection, collection cards, best sellers and editorial sections.
+- `/shop`: all 20 current products, category/search/price/best-seller filters, cake occasion filtering and sorting by best sellers, price or name.
+- `/cakes`: dedicated cake hero, five occasion categories and cake-only products.
+- `/chocolates` and `/sweets`: dedicated collection pages.
+- `/cakes/:slug` and `/products/:slug`: product details, weights, flavours, quantity, prices, Add to cart and Buy now.
+- `/search`: searchable catalogue with URL filters and return navigation.
+- `/cart`: persistent variant-aware basket, quantities, subtotals and legacy basket migration.
+- `/checkout`: contact validation, selection review and an explicit email enquiry, with a copy action.
+- About, Our Story and Contact remain visible in navigation and redirect Home while saved for later.
+- Responsive navigation, keyboard focus, native privacy dialogs, reduced-motion support and local WebP/WOFF2 assets.
 
-## Vercel deployment
+Shop filters and sort persist in the URL, for example `/shop?category=sweets&price=0-500&sort=price-asc`. Product details return to the filtered Shop view. Cake-specific actions continue to open the dedicated cake page.
 
-Import this repository into Vercel with the **Vite** framework preset. The build command is `npm run build` and the output directory is `dist`.
+## Catalogue and storage
 
-`vercel.json` includes the [Vercel-recommended SPA rewrite](https://vercel.com/docs/frameworks/frontend/vite#using-vite-to-make-spas), allowing direct visits and refreshes at `/shop` to work.
+Prices, weights and flavours are example catalogue values chosen for this implementation. Bestseller ranks are curated; no sales analytics, ratings or customer testimonials are fabricated. Product photos are licensed stock. Confirm business catalogue values, availability, ingredients and fulfilment arrangements before commercial use.
 
-## Frontend demo behavior
+Online payment and an order API are not connected. Checkout prepares an enquiry addressed to the configured business email; the visitor reviews and sends it in their own email app. No email is sent automatically and no paid-order success is simulated. Customer contact fields are not persisted.
 
-The basket is stored locally in the browser under `bakers-house-basket-v1`. Newsletter demo input is stored under `bakers-house-newsletter-demo`; it is never emailed or sent to a server. The privacy dialog can clear saved demo data. No payment or real order is submitted.
+The basket is saved on the visitor’s device under `bakers-house-basket-v1`. The footer email preference retains the compatibility key `bakers-house-newsletter-demo`; it is saved only on the device and no updates are sent. Privacy can clear both saved values. Storage-denied browsers can still use the in-memory basket. No analytics or tracking cookies are included.
 
-Prices, contact details, verified testimonials, ordering, and mailing-service integrations should be supplied before a commercial launch. No business prices, ratings, discounts, contact details, or social media URLs have been invented. The sample testimonial is labeled on the website.
-
-## Project structure
-
-```text
-src/
-  components/   Reusable navigation, cards, dialogs, and footer
-  data/         Products and categories
-  hooks/        Persistent browser basket
-  pages/        Dedicated shop page
-  sections/     Homepage sections
-  styles/       Shared theme and scoped shop styles
-public/
-  fonts/        WOFF2 fonts and original license notices
-  images/bakery/ Optimized website photography
-```
-
-This repository contains application source, required assets, package manifests, deployment configuration, and this README. Local test code, test images, screenshots, reports, original photo downloads, and asset-download scripts are excluded.
+This repository contains runtime source, required assets, manifests, deployment configuration and licensing documentation. Local browser tests, screenshots and verification notes are excluded.
 
 ## Photograph sources and licenses
 
@@ -107,3 +82,34 @@ Both families use the **SIL Open Font License 1.1**. Full license notices are re
 
 - Inter: [official font source](https://github.com/google/fonts/tree/main/ofl/inter), [official license](https://github.com/google/fonts/blob/main/ofl/inter/OFL.txt).
 - Playfair Display: [official font source](https://github.com/google/fonts/tree/main/ofl/playfairdisplay), [official license](https://github.com/google/fonts/blob/main/ofl/playfairdisplay/OFL.txt).
+
+
+## Additional collection photographs
+
+The redesign adds 21 real Pexels photographs, downloaded on 5 November 2026 and optimized locally. Google Images discovery was attempted but its traffic challenge prevented access; original Pexels sources and the [Pexels License](https://www.pexels.com/license/) were verified instead. These freely licensed photographs may be used on commercial websites; attribution is optional. No AI images or Google thumbnails were used. Do not resell unchanged copies or imply photographer endorsement.
+
+Paths below are relative to `public/images/bakery/redesign/`. The local manifest also records source and license URLs.
+
+| Local file | Photographer | Original Pexels page/listing | Download source |
+| --- | --- | --- | --- |
+| `cake-birthday.webp` | DRAKE NICOLLS | [10891153](https://www.pexels.com/photo/sprinkles-on-top-of-a-white-cake-10891153/) | [Original photograph](https://images.pexels.com/photos/10891153/pexels-photo-10891153.jpeg) |
+| `cake-anniversary.webp` | Eneida Nieves | [934727](https://www.pexels.com/photo/white-flowers-on-round-cake-with-white-cream-934727/) | [Original photograph](https://images.pexels.com/photos/934727/pexels-photo-934727.jpeg) |
+| `cake-kids.webp` | Natalia Sevruk | [36982680](https://www.pexels.com/photo/colorful-sprinkle-cake-with-icing-on-a-table-36982680/) | [Original photograph](https://images.pexels.com/photos/36982680/pexels-photo-36982680.jpeg) |
+| `cake-party.webp` | Schuyler Love | [18421881](https://www.pexels.com/photo/birthday-cake-on-table-18421881/) | [Original photograph](https://images.pexels.com/photos/18421881/pexels-photo-18421881.jpeg) |
+| `cake-baby-shower.webp` | Jonathan Borba | [33158033](https://www.pexels.com/photo/baby-shower-cake-with-blue-and-yellow-balloons-33158033/) | [Original photograph](https://images.pexels.com/photos/33158033/pexels-photo-33158033.jpeg) |
+| `cake-strawberry.webp` | Wil Carranza | [18604370](https://www.pexels.com/photo/strawberry-on-top-of-pink-cake-18604370/) | [Original photograph](https://images.pexels.com/photos/18604370/pexels-photo-18604370.jpeg) |
+| `cake-floral.webp` | Fernanda Leticia | [32978298](https://www.pexels.com/photo/elegant-wedding-cake-with-floral-decor-32978298/) | [Original photograph](https://images.pexels.com/photos/32978298/pexels-photo-32978298.jpeg) |
+| `cake-chocolate.webp` | Nano Erdozain | [29538420](https://www.pexels.com/photo/rich-chocolate-cake-with-textured-frosting-29538420/) | [Original photograph](https://images.pexels.com/photos/29538420/pexels-photo-29538420.jpeg) |
+| `cake-cream.webp` | Hanna Pad | [7552323](https://www.pexels.com/photo/white-cake-on-white-ceramic-plate-7552323/) | [Original photograph](https://images.pexels.com/photos/7552323/pexels-photo-7552323.jpeg) |
+| `cake-red-velvet.webp` | Jonathan Valdes | [30665204](https://www.pexels.com/photo/celebratory-red-velvet-cake-with-30th-anniversary-decorations-30665204/) | [Original photograph](https://images.pexels.com/photos/30665204/pexels-photo-30665204.jpeg) |
+| `chocolate-pralines.webp` | shuruq | [15833455](https://www.pexels.com/photo/close-up-photo-of-pralines-15833455/) | [Original photograph](https://images.pexels.com/photos/15833455/pexels-photo-15833455.jpeg) |
+| `chocolate-gift-box.webp` | Egor Komarov | [13278153](https://www.pexels.com/photo/a-box-of-chocolate-pralines-13278153/) | [Original photograph](https://images.pexels.com/photos/13278153/pexels-photo-13278153.jpeg) |
+| `chocolate-truffles.webp` | Abdullah Alsaibaie | [19121798](https://www.pexels.com/photo/a-box-of-chocolate-pralines-19121798/) | [Original photograph](https://images.pexels.com/photos/19121798/pexels-photo-19121798.jpeg) |
+| `chocolate-dark.webp` | Eva Bronzini | [6261692](https://www.pexels.com/photo/chocolate-bar-on-a-brown-surface-6261692/) | [Original photograph](https://images.pexels.com/photos/6261692/pexels-photo-6261692.jpeg) |
+| `chocolate-nut-bars.webp` | Polina Tankilevitch | [3735187](https://www.pexels.com/photo/chocolate-bar-3735187/) | [Original photograph](https://images.pexels.com/photos/3735187/pexels-photo-3735187.jpeg) |
+| `sweet-kaju-katli.webp` | Gaurav Kumar | [18488310](https://www.pexels.com/photo/kaju-katri-18488310/) | [Original photograph](https://images.pexels.com/photos/18488310/pexels-photo-18488310.jpeg) |
+| `sweet-gulab-jamun.webp` | Nishess Shakya | [15014919](https://www.pexels.com/photo/bowl-of-gulab-jamun-15014919/) | [Original photograph](https://images.pexels.com/photos/15014919/pexels-photo-15014919.jpeg) |
+| `sweet-rasgulla.webp` | Divya Jain | [8788869](https://www.pexels.com/photo/round-foods-in-a-bowl-8788869/) | [Original photograph](https://images.pexels.com/photos/8788869/pexels-photo-8788869.jpeg) |
+| `sweet-almond-barfi.webp` | Gaurav Kumar | [18488299](https://www.pexels.com/photo/almond-barfi-18488299/) | [Original photograph](https://images.pexels.com/photos/18488299/pexels-photo-18488299.jpeg) |
+| `sweet-rose-barfi.webp` | Gaurav Kumar | [18488320](https://www.pexels.com/photo/rose-barfi-18488320/) | [Original photograph](https://images.pexels.com/photos/18488320/pexels-photo-18488320.jpeg) |
+| `sweet-laddu.webp` | Divya Jain | [8659010](https://www.pexels.com/search/laddu/) | [Original photograph](https://images.pexels.com/photos/8659010/pexels-photo-8659010.jpeg) |

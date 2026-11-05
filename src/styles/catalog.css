@@ -1,0 +1,277 @@
+.catalog-page { color: var(--ink, #35252b); background: var(--cream, #faf7f2); }
+.catalog-page .eyebrow { color: var(--burgundy, #6d213c); font-size: 11px; letter-spacing: .17em; }
+.catalog-page .catalog-primary-button { background: var(--burgundy, #6d213c); border-color: var(--burgundy, #6d213c); color: #fff; border-radius: 999px; }
+.catalog-page .catalog-primary-button:hover { background: #842d4c; border-color: #842d4c; }
+.catalog-page .catalog-secondary-button { border: 1px solid var(--burgundy, #6d213c); color: var(--burgundy, #6d213c); background: transparent; border-radius: 999px; }
+.catalog-page .catalog-secondary-button:hover { background: #6d213c0a; }
+.catalog-page button:disabled { opacity: .5; }
+.catalog-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: #766b6d; font-size: 12px; line-height: 1.6; }
+.catalog-breadcrumb a { min-height: 44px; display: inline-flex; align-items: center; transition: color .2s; }
+.catalog-breadcrumb a:hover { color: var(--burgundy, #6d213c); }
+.catalog-breadcrumb svg { flex-shrink: 0; }
+.catalog-breadcrumb span { overflow-wrap: anywhere; }
+.catalog-hero { border-bottom: 1px solid #e8dcd8; overflow: clip; }
+.catalog-hero-layout { display: grid; grid-template-columns: 1.08fr 1fr; align-items: center; gap: clamp(40px, 6vw, 90px); padding-block: 45px 82px; }
+.catalog-hero-copy { min-width: 0; padding-bottom: 2px; }
+.catalog-hero .catalog-breadcrumb { margin-bottom: 31px; }
+.catalog-hero-copy > .eyebrow { margin-bottom: 19px; }
+.catalog-hero h1 { font-size: clamp(45px, 4.55vw, 68px); line-height: 1.13; letter-spacing: -.045em; color: var(--burgundy, #6d213c); max-width: 620px; }
+.catalog-hero h1 em { font-weight: 400; }
+.catalog-hero-description { max-width: 455px; margin-top: 24px; color: #766b6d; font-size: 16px; line-height: 1.85; }
+.catalog-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px; margin-top: 29px; }
+.catalog-hero-actions .button { min-height: 54px; padding: 14px 24px; gap: 20px; font-size: 14px; }
+.catalog-hero-secondary { display: inline-flex; min-height: 48px; align-items: center; gap: 10px; color: var(--burgundy, #6d213c); font-size: 13px; border-bottom: 1px solid #6d213c40; transition: gap .2s; }
+.catalog-hero-secondary:hover { gap: 16px; }
+.catalog-hero-footnote { display: flex; gap: 12px; align-items: center; margin-top: 36px; font-size: 11px; color: #766b6d; letter-spacing: .02em; }
+.catalog-hero-footnote > span { width: 29px; height: 1px; background: #c1a5aa; }
+.catalog-hero-visual { position: relative; min-width: 0; width: 100%; max-width: 560px; margin-top: 18px; padding: 0 13px 0 20px; justify-self: end; }
+.catalog-hero-photo-frame { height: clamp(390px, 36vw, 500px); overflow: hidden; border-radius: 250px 250px 20px 20px; background: #f0e4dc; }
+.catalog-hero-photo-frame img { height: 100%; width: 100%; object-fit: cover; }
+.catalog-hero-caption { position: absolute; bottom: -26px; left: -8px; padding: 25px 29px; color: #fff; background: var(--burgundy, #6d213c); border-radius: 4px 20px 4px 20px; box-shadow: 0 12px 30px #5016290d; }
+.catalog-hero-caption > span { display: block; font-size: 8px; letter-spacing: .16em; line-height: 1.6; opacity: .78; margin-bottom: 9px; }
+.catalog-hero-caption p { font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1.3; }
+.catalog-hero-seal { position: absolute; top: 25px; right: -10px; display: flex; flex-direction: column; justify-content: center; text-align: center; height: 100px; width: 100px; background: #faf7f2; color: var(--burgundy, #6d213c); border: 1px solid #c9a9b2; border-radius: 50%; box-shadow: inset 0 0 0 5px #faf7f2, inset 0 0 0 6px #e4d2d6; font-size: 12px; line-height: 1.65; transform: rotate(10deg); }
+.catalog-hero-seal em { font-family: 'Playfair Display', serif; font-size: 15px; }
+.cake-occasions { padding-block: 64px 58px; border-bottom: 1px solid #e8dcd8; background: #f5efe6; }
+.catalog-section-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 30px; }
+.catalog-section-heading h2 { color: var(--burgundy, #6d213c); font-size: clamp(31px, 3vw, 43px); line-height: 1.25; letter-spacing: -.035em; margin-top: 9px; }
+.catalog-section-heading > div > p:not(.eyebrow) { margin-top: 12px; color: #766b6d; line-height: 1.75; font-size: 14px; }
+.catalog-all-filter { display: inline-flex; align-items: center; justify-content: center; gap: 13px; padding: 11px 20px; min-height: 44px; min-width: 115px; flex-shrink: 0; border: 1px solid #c5aeb5; border-radius: 999px; color: var(--burgundy, #6d213c); font-size: 13px; transition: background .2s, color .2s; }
+.catalog-all-filter.is-selected, .catalog-all-filter:hover { background: var(--burgundy, #6d213c); border-color: var(--burgundy, #6d213c); color: #fff; }
+.cake-occasion-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
+.cake-occasion-card { min-width: 0; display: block; text-align: left; border-radius: 12px; }
+.cake-occasion-image { position: relative; display: block; aspect-ratio: 1 / .96; overflow: hidden; border-radius: 11px; background: #e9ddd4; outline: 2px solid transparent; outline-offset: 4px; transition: outline-color .2s; }
+.cake-occasion-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.cake-occasion-card:hover img { transform: scale(1.04); }
+.cake-occasion-card.is-selected .cake-occasion-image { outline-color: var(--burgundy, #6d213c); }
+.cake-occasion-check { position: absolute; width: 29px; height: 29px; top: 10px; right: 10px; display: grid; place-items: center; background: var(--burgundy, #6d213c); color: #fff; border-radius: 50%; }
+.cake-occasion-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 49px; padding-top: 9px; color: var(--burgundy, #6d213c); font-size: 14px; font-weight: 500; line-height: 1.5; }
+.cake-occasion-name svg { flex-shrink: 0; transition: transform .2s; }
+.cake-occasion-card:hover .cake-occasion-name svg { transform: translateX(3px); }
+.catalog-listing { padding-block: 76px 35px; scroll-margin-top: calc(var(--header-height, 96px) + 24px); }
+.catalog-listing-heading { align-items: end; margin-bottom: 33px; }
+.catalog-results-count { color: #766b6d; font-size: 12px; flex-shrink: 0; padding-bottom: 4px; }
+.catalog-product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: 32px 26px; }
+.catalog-current-filter { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-bottom: 1px solid #e8dcd8; padding-bottom: 20px; margin: -4px 0 27px; font-size: 12px; color: #766b6d; }
+.catalog-current-filter > span { background: #f0e6e7; border-radius: 999px; padding: 7px 15px; color: var(--burgundy, #6d213c); }
+.catalog-current-filter button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--burgundy, #6d213c); }
+.catalog-product-card { min-width: 0; display: flex; flex-direction: column; background: #fff; color: var(--ink, #35252b); border: 1px solid #e8dcd8; border-radius: 15px; overflow: hidden; transition: box-shadow .3s, transform .3s; }
+.catalog-product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #50162909; }
+.catalog-product-image { position: relative; aspect-ratio: 1 / .98; background: #f0e7df; overflow: hidden; }
+.catalog-product-image > a { display: block; width: 100%; height: 100%; }
+.catalog-product-image img { height: 100%; width: 100%; object-fit: cover; transition: transform .5s; }
+.catalog-product-image > a:hover img { transform: scale(1.035); }
+.catalog-bestseller { position: absolute; left: 16px; top: 16px; padding: 6px 12px; border: 1px solid #fff8; background: #faf7f2ed; border-radius: 999px; color: var(--burgundy, #6d213c); font-size: 10px; line-height: 1.8; font-weight: 500; letter-spacing: .025em; pointer-events: none; }
+.catalog-unavailable { position: absolute; left: 16px; bottom: 16px; padding: 6px 11px; background: #fff; color: #766b6d; border-radius: 4px; font-size: 11px; }
+.catalog-quick-add { position: absolute; bottom: 16px; right: 16px; width: 44px; height: 44px; display: grid; place-items: center; background: #fff; border: 1px solid #e8dcd8; border-radius: 50%; color: var(--burgundy, #6d213c); box-shadow: 0 3px 10px #35252b0a; transition: background .2s, color .2s; }
+.catalog-quick-add:hover { color: #fff; background: var(--burgundy, #6d213c); }
+.catalog-product-info { display: flex; flex: 1; flex-direction: column; padding: 23px 22px 19px; }
+.catalog-product-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.catalog-product-tags span { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 4px; background: #f5edef; color: #7a3b50; font-size: 11px; line-height: 1.7; letter-spacing: .015em; }
+.catalog-product-info h3 { color: var(--ink, #35252b); font-size: 25px; line-height: 1.3; letter-spacing: -.025em; margin-top: 14px; }
+.catalog-product-info h3 a { transition: color .2s; }
+.catalog-product-info h3 a:hover { color: var(--burgundy, #6d213c); }
+.catalog-product-note { margin-top: 8px; color: #766b6d; font-size: 13px; line-height: 1.8; }
+.catalog-product-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; margin-top: auto; padding-top: 19px; color: var(--burgundy, #6d213c); font-size: 19px; font-weight: 600; line-height: 1.7; }
+.catalog-product-price > span { font-size: 12px; font-weight: 400; color: #766b6d; margin-right: 2px; }
+.catalog-product-price small { color: #766b6d; font-size: 12px; font-weight: 400; }
+.catalog-product-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; border-top: 1px solid #eee5e2; padding-top: 15px; }
+.catalog-details-link { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; color: var(--burgundy, #6d213c); font-size: 13px; line-height: 1.5; }
+.catalog-details-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+.catalog-details-link svg { flex-shrink: 0; }
+.catalog-buy-button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 44px; padding: 10px 19px; background: var(--burgundy, #6d213c); color: #fff; border: 1px solid var(--burgundy, #6d213c); border-radius: 999px; font-size: 13px; line-height: 1.5; transition: background .2s; }
+.catalog-buy-button:hover { background: #842d4c; }
+.catalog-closing-note { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 55px; padding: 20px 0 30px; color: #766b6d; font-size: 12px; text-align: center; }
+.catalog-note-rule { height: 1px; width: 45px; background: #d9c7c9; }
+.confection-listing { padding-top: 70px; }
+.confection-page--chocolates .catalog-hero-photo-frame img { object-position: 50% 45%; }
+.confection-page--sweets .catalog-hero-photo-frame img { object-position: center; }
+.cake-detail-section { padding-block: 29px 72px; }
+.cake-detail-section > .catalog-breadcrumb { margin-bottom: 29px; }
+.cake-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .96fr); gap: clamp(35px, 6vw, 88px); align-items: start; }
+.cake-detail-gallery { min-width: 0; }
+.cake-detail-main-image { position: relative; aspect-ratio: .9; background: #f0e7df; border: 1px solid #e8dcd8; border-radius: 16px; overflow: hidden; }
+.cake-detail-main-image img { height: 100%; width: 100%; object-fit: contain; }
+.cake-detail-thumbnails { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
+.cake-detail-thumbnails button { width: 78px; height: 78px; overflow: hidden; border: 1px solid #e8dcd8; border-radius: 6px; }
+.cake-detail-thumbnails button[aria-pressed='true'] { border: 2px solid var(--burgundy, #6d213c); }
+.cake-detail-thumbnails img { width: 100%; height: 100%; object-fit: cover; }
+.cake-detail-back { display: inline-flex; align-items: center; min-height: 44px; gap: 11px; margin-top: 14px; color: #766b6d; font-size: 12px; }
+.cake-detail-back:hover { color: var(--burgundy, #6d213c); }
+.cake-detail-copy { min-width: 0; padding-top: 4px; }
+.cake-detail-copy > .catalog-product-tags { margin-top: 14px; }
+.cake-detail-copy h1 { color: var(--burgundy, #6d213c); font-size: clamp(36px, 4vw, 55px); letter-spacing: -.04em; line-height: 1.13; margin-top: 18px; }
+.cake-detail-note { margin-top: 13px; color: #766b6d; font-size: 14px; }
+.cake-detail-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 11px; margin-top: 19px; color: var(--burgundy, #6d213c); font-size: 28px; font-weight: 500; line-height: 1.5; }
+.cake-detail-price > span { font-size: 12px; color: #766b6d; font-weight: 400; }
+.cake-detail-description { color: #766b6d; font-size: 14px; line-height: 1.9; margin-top: 18px; }
+.cake-detail-availability { display: flex; align-items: center; gap: 7px; color: #547152; font-size: 11px; margin-top: 16px; }
+.cake-detail-availability.is-unavailable { color: #8b4e45; }
+.cake-detail-options { display: grid; gap: 22px; margin-top: 23px; padding-top: 24px; border-top: 1px solid #e8dcd8; }
+.cake-detail-options fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.cake-detail-options legend { padding: 0; margin-bottom: 11px; font-size: 12px; font-weight: 500; }
+.cake-option-buttons { display: flex; flex-wrap: wrap; gap: 9px; }
+.cake-option-buttons button { min-height: 44px; padding: 9px 20px; border: 1px solid #d9c9c9; border-radius: 6px; font-size: 12px; color: #766b6d; transition: color .2s, background .2s, border-color .2s; }
+.cake-option-buttons button.is-selected { border-color: var(--burgundy, #6d213c); color: var(--burgundy, #6d213c); background: #f3e8ec; box-shadow: inset 0 0 0 .5px var(--burgundy, #6d213c); }
+.cake-option-buttons button:hover { border-color: var(--burgundy, #6d213c); }
+.cake-detail-order-row { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-top: 23px; }
+.cake-detail-quantity-wrap > label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 10px; }
+.cake-detail-quantity { display: flex; align-items: center; border: 1px solid #d9c9c9; border-radius: 6px; overflow: hidden; height: 44px; }
+.cake-detail-quantity button { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--burgundy, #6d213c); }
+.cake-detail-quantity input { -moz-appearance: textfield; appearance: textfield; width: 39px; height: 44px; min-width: 0; border: 0; border-inline: 1px solid #e8dcd8; text-align: center; background: transparent; color: var(--ink, #35252b); font-size: 16px; border-radius: 0; }
+.cake-detail-quantity input::-webkit-inner-spin-button, .cake-detail-quantity input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.cake-detail-total { text-align: right; font-size: 11px; color: #766b6d; }
+.cake-detail-total span { display: block; color: var(--burgundy, #6d213c); font-size: 23px; font-weight: 500; line-height: 1.5; margin-top: 2px; }
+.cake-detail-purchase { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 25px; }
+.cake-detail-purchase .button { min-width: 0; min-height: 54px; font-size: 13px; padding: 13px 18px; gap: 12px; }
+.cake-detail-order-note { text-align: center; margin-top: 13px; color: #766b6d; font-size: 10px; line-height: 1.8; }
+.cake-detail-small-print { padding-top: 23px; margin-top: 24px; border-top: 1px solid #e8dcd8; }
+.cake-detail-small-print h2 { color: var(--burgundy, #6d213c); font-size: 21px; line-height: 1.5; }
+.cake-detail-small-print p { color: #766b6d; font-size: 11px; line-height: 1.9; margin-top: 8px; }
+.catalog-related { padding-block: 63px 78px; background: #f5efe6; border-top: 1px solid #e8dcd8; }
+.catalog-not-found { padding-block: 100px 130px; text-align: center; }
+.catalog-not-found h1 { font-size: clamp(32px, 4vw, 54px); color: var(--burgundy, #6d213c); margin-top: 18px; line-height: 1.2; }
+.catalog-not-found > p:not(.eyebrow) { color: #766b6d; margin-top: 20px; }
+.catalog-not-found .button { margin-top: 30px; }
+@media (min-width: 1600px) { .catalog-hero-layout { padding-block: 55px 90px; } .catalog-hero-photo-frame { height: 530px; } }
+@media (max-width: 1100px) {
+  .catalog-hero-layout { gap: 32px; }
+  .catalog-hero h1 { font-size: 49px; }
+  .catalog-hero-photo-frame { height: 430px; }
+  .catalog-hero-description { font-size: 14px; }
+  .catalog-hero-caption { padding: 20px 23px; }
+  .catalog-hero-caption p { font-size: 23px; }
+  .cake-occasion-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 23px; }
+  .cake-occasion-image { aspect-ratio: 1 / .78; }
+  .catalog-product-grid { gap: 25px 20px; }
+  .catalog-product-info { padding: 20px 17px 16px; }
+  .catalog-product-info h3 { font-size: 23px; }
+  .catalog-product-actions { gap: 6px; }
+  .catalog-buy-button { padding-inline: 14px; }
+  .cake-detail-layout { gap: 36px; }
+  .cake-detail-purchase .button { padding-inline: 12px; gap: 8px; }
+}
+@media (max-width: 900px) {
+  .catalog-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 22px; }
+  .catalog-hero-layout { grid-template-columns: 1fr 1fr; padding-block: 25px 65px; gap: 24px; }
+  .catalog-hero h1 { font-size: clamp(38px, 5.5vw, 49px); }
+  .catalog-hero .catalog-breadcrumb { margin-bottom: 24px; }
+  .catalog-hero-description { margin-top: 18px; }
+  .catalog-hero-visual { padding: 0 8px 0 14px; margin-top: 25px; }
+  .catalog-hero-photo-frame { height: 385px; }
+  .catalog-hero-seal { height: 85px; width: 85px; right: -4px; top: 18px; font-size: 10px; }
+  .catalog-hero-seal em { font-size: 12px; }
+  .catalog-hero-caption { left: 0; bottom: -24px; padding: 17px 20px; }
+  .catalog-hero-caption p { font-size: 20px; }
+  .catalog-hero-actions { margin-top: 23px; gap: 10px; }
+  .catalog-hero-actions .button { font-size: 12px; padding: 13px 18px; gap: 15px; min-height: 50px; }
+  .catalog-hero-secondary { font-size: 12px; }
+  .catalog-hero-footnote { margin-top: 23px; font-size: 9px; gap: 8px; }
+  .catalog-hero-footnote > span { width: 18px; }
+  .cake-detail-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+  .cake-detail-copy h1 { font-size: 36px; }
+  .cake-detail-description { font-size: 14px; }
+  .cake-detail-purchase { grid-template-columns: 1fr; gap: 10px; }
+  .cake-detail-purchase .catalog-primary-button { grid-row: 1; }
+  .cake-detail-order-note { font-size: 9px; }
+  .cake-detail-main-image { aspect-ratio: .75; }
+}
+@media (max-width: 650px) {
+  .catalog-hero-layout { grid-template-columns: 1fr; gap: 32px; padding-block: 18px 62px; }
+  .catalog-hero .catalog-breadcrumb { margin-bottom: 19px; }
+  .catalog-hero-copy > .eyebrow { margin-bottom: 14px; }
+  .catalog-hero h1 { font-size: clamp(40px, 9vw, 55px); max-width: 520px; }
+  .catalog-hero-description { max-width: 460px; font-size: 14px; margin-top: 18px; }
+  .catalog-hero-actions { margin-top: 23px; gap: 16px; }
+  .catalog-hero-actions .button { font-size: 12px; padding-inline: 21px; }
+  .catalog-hero-secondary { font-size: 12px; }
+  .catalog-hero-footnote { margin-top: 21px; font-size: 10px; }
+  .catalog-hero-visual { width: min(100%, 450px); justify-self: center; margin-top: 4px; padding-inline: 14px; }
+  .catalog-hero-photo-frame { height: 370px; border-radius: 220px 220px 13px 13px; }
+  .catalog-hero-caption { left: 0; padding: 19px 24px; }
+  .catalog-hero-caption p { font-size: 23px; }
+  .catalog-hero-seal { right: 0; height: 90px; width: 90px; }
+  .cake-occasions { padding-block: 42px 36px; }
+  .catalog-section-heading { gap: 15px; margin-bottom: 24px; }
+  .catalog-section-heading h2 { font-size: 31px; }
+  .catalog-page .eyebrow { font-size: 9px; letter-spacing: .15em; }
+  .catalog-all-filter { min-width: 88px; padding-inline: 13px; font-size: 12px; gap: 8px; }
+  .cake-occasion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px 15px; }
+  .cake-occasion-image { aspect-ratio: 1 / .9; border-radius: 9px; }
+  .cake-occasion-name { font-size: 12px; padding-top: 7px; min-height: 45px; gap: 4px; }
+  .cake-occasion-name svg { width: 13px; }
+  .catalog-listing { padding-block: 44px 20px; }
+  .catalog-listing-heading { align-items: start; flex-direction: column; gap: 13px; }
+  .catalog-section-heading > div > p:not(.eyebrow) { font-size: 13px; margin-top: 10px; }
+  .catalog-results-count { font-size: 11px; }
+  .catalog-product-grid { gap: 23px 16px; }
+  .catalog-product-info { padding: 16px 14px 12px; }
+  .catalog-product-info h3 { font-size: 22px; margin-top: 11px; }
+  .catalog-product-note { font-size: 13px; }
+  .catalog-product-tags { gap: 4px; }
+  .catalog-product-tags span { font-size: 11px; padding: 4px 7px; }
+  .catalog-product-price { font-size: 18px; padding-top: 14px; }
+  .catalog-product-price > span { font-size: 12px; }
+  .catalog-product-price small { font-size: 12px; }
+  .catalog-product-actions { flex-wrap: wrap; margin-top: 11px; padding-top: 10px; gap: 5px; }
+  .catalog-details-link { font-size: 13px; }
+  .catalog-buy-button { font-size: 13px; padding: 10px 15px; width: 100%; }
+  .catalog-bestseller { left: 10px; top: 10px; padding: 5px 9px; font-size: 9px; }
+  .catalog-quick-add { right: 11px; bottom: 11px; width: 44px; height: 44px; }
+  .catalog-closing-note { gap: 12px; margin-top: 30px; padding-bottom: 15px; font-size: 10px; }
+  .catalog-note-rule { width: 25px; }
+  .cake-detail-section { padding-block: 15px 46px; }
+  .cake-detail-section > .catalog-breadcrumb { margin-bottom: 19px; }
+  .catalog-breadcrumb { font-size: 10px; gap: 7px; }
+  .cake-detail-layout { grid-template-columns: 1fr; gap: 21px; }
+  .cake-detail-main-image { aspect-ratio: 1 / 1.04; }
+  .cake-detail-copy h1 { font-size: 40px; margin-top: 16px; }
+  .cake-detail-copy { padding-top: 0; }
+  .cake-detail-copy .catalog-product-tags span { font-size: 11px; }
+  .cake-detail-note { font-size: 13px; margin-top: 11px; }
+  .cake-detail-description { font-size: 14px; }
+  .cake-detail-price { margin-top: 15px; }
+  .cake-detail-purchase { grid-template-columns: 1fr 1fr; }
+  .cake-detail-purchase .catalog-primary-button { grid-row: auto; }
+  .cake-detail-purchase .button { font-size: 14px; padding-inline: 10px; gap: 8px; }
+  .cake-detail-order-note { font-size: 9px; }
+  .cake-detail-small-print { margin-top: 21px; }
+  .catalog-related { padding-block: 43px 50px; }
+  .catalog-related .catalog-section-heading { align-items: start; flex-direction: column; gap: 9px; }
+  .catalog-not-found { padding-block: 65px 90px; }
+}
+@media (max-width: 420px) {
+  .catalog-product-grid { grid-template-columns: 1fr; gap: 25px; }
+  .catalog-product-image { aspect-ratio: 1 / .97; }
+  .catalog-product-info { padding: 22px 20px 17px; }
+  .catalog-product-info h3 { font-size: 27px; }
+  .catalog-product-note { font-size: 13px; }
+  .catalog-product-tags span { font-size: 11px; }
+  .catalog-product-price { padding-top: 17px; font-size: 20px; }
+  .catalog-product-actions { flex-wrap: nowrap; gap: 15px; padding-top: 13px; margin-top: 15px; }
+  .catalog-buy-button { width: auto; min-width: 100px; padding-inline: 18px; font-size: 13px; }
+  .catalog-details-link { font-size: 13px; }
+  .catalog-bestseller { left: 14px; top: 14px; }
+  .catalog-quick-add { width: 44px; height: 44px; right: 14px; bottom: 14px; }
+  .catalog-hero-photo-frame { height: 320px; }
+  .catalog-hero-caption { padding: 18px 21px; }
+  .catalog-hero-caption p { font-size: 22px; }
+  .catalog-hero-actions { gap: 11px; }
+  .catalog-hero-actions .button { padding-inline: 18px; }
+  .catalog-hero-secondary { min-height: 44px; }
+  .catalog-section-heading h2 { font-size: 28px; }
+  .cake-occasions .catalog-section-heading { align-items: end; }
+  .cake-occasions .catalog-section-heading .eyebrow { font-size: 8px; }
+  .cake-occasions .catalog-section-heading h2 { max-width: 180px; }
+  .catalog-all-filter { min-width: 80px; font-size: 12px; padding-inline: 11px; }
+  .cake-occasion-grid { gap: 14px; }
+  .cake-occasion-name { font-size: 12px; }
+  .cake-detail-purchase { gap: 8px; }
+  .cake-detail-purchase .button { font-size: 14px; gap: 7px; padding-inline: 8px; }
+  .cake-detail-purchase .button svg { width: 16px; }
+  .cake-detail-copy h1 { font-size: 37px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .catalog-product-card, .catalog-product-image img, .cake-occasion-image img, .cake-occasion-name svg, .catalog-hero-secondary { transition: none; }
+  .catalog-product-card:hover, .catalog-product-image > a:hover img, .cake-occasion-card:hover img, .cake-occasion-card:hover .cake-occasion-name svg { transform: none; }
+}

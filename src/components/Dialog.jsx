@@ -13,6 +13,7 @@ export default function Dialog({ title, onClose, children, className = '' }) {
       dialog.close()
       document.body.style.overflow = originalOverflow
       if (previous instanceof HTMLElement && previous.isConnected) previous.focus({ preventScroll: true })
+      else document.getElementById('main-content')?.focus({ preventScroll: true })
     }
   }, [])
   return <dialog ref={ref} className={`dialog ${className}`} aria-labelledby="dialog-title" onCancel={(event) => { event.preventDefault(); onClose() }} onClick={(event) => {

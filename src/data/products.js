@@ -1,4 +1,6 @@
-export const products = [
+import { catalogProducts, cakeProducts, chocolateProducts, sweetProducts } from './catalog'
+
+export const legacyProducts = [
   { id: 'sourdough', name: 'Sourdough Bread', category: 'Breads', note: 'Slow made. Simply good.', description: 'A beautifully rustic loaf with a deeply golden crust and a soft, open crumb. Made for the breakfast table, a generous sandwich, or just a little butter.', image: '/images/bakery/products/product-sourdough-bread.webp', alt: 'Rustic sourdough bread with a flour-dusted crust', featured: true },
   { id: 'almond-croissant', name: 'Almond Croissant', category: 'Pastries', note: 'A little everyday indulgence.', description: 'Delicate, buttery layers with a sweet almond finish. The kind of pastry that makes a quiet coffee break feel like an occasion.', image: '/images/bakery/products/product-almond-croissant.webp', alt: 'Flaky croissant finished with sliced almonds', featured: true },
   { id: 'chocolate-cake', name: 'Chocolate Cake', category: 'Cakes', note: 'A slice of something lovely.', description: 'Rich chocolate and a tender crumb come together in a bake made for sharing. A simple pleasure for celebrations, or just because.', image: '/images/bakery/products/product-chocolate-cake.webp', alt: 'Rich chocolate cake with a chocolate finish', featured: true },
@@ -9,4 +11,6 @@ export const products = [
   { id: 'cookies', name: 'Chocolate Chip Cookies', category: 'Cookies', note: 'The sweetest little pause.', description: 'Comforting, golden cookies dotted with chocolate. Made for sharing with someone, or saving for a quiet moment of your own.', image: '/images/bakery/categories/category-cookies.webp', alt: 'Golden chocolate chip cookies' },
 ]
 
-export const featuredProducts = products.filter((product) => product.featured)
+// Retain existing basket IDs when a returning visitor opens their saved basket.
+export const products = [...catalogProducts, ...legacyProducts]
+export const featuredProducts = [cakeProducts[0], cakeProducts[1], chocolateProducts[0], sweetProducts[0]]

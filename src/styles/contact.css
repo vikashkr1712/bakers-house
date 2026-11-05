@@ -1,0 +1,109 @@
+/* The contact section shares the bakery's warm cream and antique gold palette. */
+.contact-page { background: var(--cream); color: var(--ink); }
+.contact-page-breadcrumb { display: flex; align-items: center; gap: 10px; padding-top: 16px; color: #756b5e; font-size: 14px; }
+.contact-page-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.contact-page-breadcrumb a:hover { color: #896233; }
+.contact-page-breadcrumb [aria-current] { color: var(--ink); }
+.contact-section { padding-block: 36px 80px; color: var(--ink); background: var(--cream); border-bottom: 1px solid #d9cdbc; scroll-margin-top: 24px; }
+.contact-section-layout { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: start; gap: clamp(40px, 6vw, 92px); }
+.contact-section-copy { min-width: 0; padding-top: 8px; }
+.contact-section .eyebrow { color: #896233; }
+.contact-section-title { margin-top: 16px; font-size: clamp(36px, 3.6vw, 50px); line-height: 1.2; letter-spacing: -.03em; }
+.contact-section-title:focus { outline: none; }
+.contact-section-title em { color: #8a6637; font-weight: 400; }
+.contact-section-intro { max-width: 430px; margin-top: 22px; font-size: 16px; color: #6b6258; line-height: 1.85; }
+.contact-methods { margin-top: 30px; border-top: 1px solid #d6cabb; }
+.contact-method { display: flex; align-items: center; gap: 16px; min-height: 94px; padding-block: 20px; border-bottom: 1px solid #d6cabb; }
+.contact-method-icon { display: flex; flex-shrink: 0; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid #d9cbbb; border-radius: 50%; color: #8a6637; }
+.contact-method-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 3px; }
+.contact-method-label { color: #7a6c59; font-size: 12px; line-height: 1.8; letter-spacing: .09em; text-transform: uppercase; }
+.contact-method-value { font-size: 17px; color: #322b23; line-height: 1.7; overflow-wrap: anywhere; }
+.contact-method > svg { color: #8a6637; flex-shrink: 0; transition: transform .2s; }
+.contact-method:hover > svg { transform: translate(2px, -2px); }
+.contact-method:hover .contact-method-value { color: #896233; }
+.contact-method--address { align-items: flex-start; }
+.contact-method--address > svg { margin-top: 13px; }
+.contact-method--address .contact-method-icon { margin-top: 3px; }
+.contact-directions { display: inline-flex; width: fit-content; align-items: center; gap: 9px; margin-top: 5px; color: #78562e; font-size: 13px; line-height: 1.8; text-decoration: underline; text-underline-offset: 4px; }
+.contact-visiting-note { display: flex; align-items: flex-start; gap: 11px; margin-top: 23px; color: #746650; }
+.contact-visiting-note > svg { margin-top: 5px; flex-shrink: 0; }
+.contact-visiting-note p { font-size: 14px; line-height: 1.85; }
+.contact-source { margin-top: 14px; color: #756b5e; font-size: 12px; line-height: 1.8; }
+.contact-source a { display: inline-flex; align-items: center; gap: 5px; min-height: 32px; color: #78562e; text-decoration: underline; text-underline-offset: 3px; }
+.contact-form-card { min-width: 0; padding: 34px; border: 1px solid #d7cbbb; border-radius: 12px; background: #fcf9f4; box-shadow: 0 10px 36px #5e472307; }
+.contact-form-heading { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+.contact-form-mark { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 48px; height: 48px; color: #8a6637; background: #eee5d8; border-radius: 50%; }
+.contact-form-heading h2 { font-size: 29px; line-height: 1.25; letter-spacing: -.025em; }
+.contact-form-heading p { margin-top: 8px; color: #756b5e; font-size: 14px; line-height: 1.8; }
+.contact-form { display: grid; gap: 22px; }
+.contact-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.contact-form-field { display: flex; min-width: 0; flex-direction: column; }
+.contact-form label { display: block; margin-bottom: 9px; color: #443b30; font-size: 14px; line-height: 1.7; font-weight: 500; }
+.contact-form label > span { color: #8a6637; }
+.contact-form input, .contact-form select, .contact-form textarea { display: block; width: 100%; min-width: 0; min-height: 50px; padding: 12px 14px; border: 1px solid #cfc3b1; border-radius: 5px; color: var(--ink); background: #fffcf8; font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; }
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: #756b5e; opacity: 1; }
+.contact-form select { padding-right: 32px; cursor: pointer; }
+.contact-form textarea { min-height: 144px; resize: vertical; }
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: 2px solid #a9844f; outline-offset: 3px; border-color: #a9844f; }
+.contact-field-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 9px; color: #756b5e; font-size: 12px; line-height: 1.8; }
+.contact-submit { display: flex; width: 100%; justify-content: space-between; padding-inline: 22px; border-radius: 5px; }
+.contact-submit:hover { transform: none; }
+.contact-form .contact-form-note { margin-top: -10px; color: #7a6e5e; font-size: 12px; line-height: 1.85; }
+.contact-enquiry-preview { position: relative; margin-top: 26px; padding: 22px; border: 1px solid #c9b89d; border-radius: 6px; background: #f0e8db; overflow-wrap: anywhere; }
+.contact-preview-check { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin-bottom: 12px; border-radius: 50%; color: #65502f; background: #e0d2b9; }
+.contact-enquiry-preview h3 { margin: 0; font-family: 'Inter', sans-serif; font-size: 17px; line-height: 1.6; font-weight: 600; }
+.contact-enquiry-preview > p { margin-top: 9px; color: #6b5f4e; font-size: 14px; line-height: 1.8; }
+.contact-enquiry-preview strong { font-weight: 500; }
+.contact-preview-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin-top: 18px; }
+.contact-open-email { min-height: 46px; padding: 10px 16px; border-radius: 4px; border-color: #25211b; color: var(--light); background: #25211b; font-size: 14px; gap: 16px; }
+.contact-open-email:hover { transform: none; background: #44382a; }
+.contact-copy { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; color: #65502f; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+.contact-copy svg { flex-shrink: 0; }
+.contact-enquiry-preview .contact-copy-status { margin-top: 14px; font-size: 13px; }
+
+@media (max-width: 1099px) {
+  .contact-section-layout { gap: 36px; }
+  .contact-form-card { padding: 28px; }
+  .contact-form-row { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}
+@media (max-width: 899px) {
+  .contact-section { padding-block: 30px 64px; }
+  .contact-section-layout { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .contact-section-copy { padding-top: 0; }
+  .contact-section-intro { max-width: 560px; }
+  .contact-methods { margin-top: 26px; }
+  .contact-method { min-height: 90px; }
+  .contact-form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .contact-form-card { padding: 32px; }
+}
+@media (max-width: 599px) {
+  .contact-section { padding-block: 24px 48px; }
+  .contact-section-title { font-size: 37px; }
+  .contact-section-intro { margin-top: 18px; }
+  .contact-method { gap: 13px; }
+  .contact-method-value { font-size: 16px; }
+  .contact-methods { margin-top: 24px; }
+  .contact-section-layout { gap: 30px; }
+  .contact-form-card { padding: 24px 20px; border-radius: 8px; }
+  .contact-form-heading { gap: 12px; margin-bottom: 24px; }
+  .contact-form-mark { width: 40px; height: 40px; }
+  .contact-form-mark svg { width: 21px; }
+  .contact-form-heading h2 { font-size: 27px; }
+  .contact-form-row { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .contact-form { gap: 20px; }
+  .contact-form input, .contact-form select, .contact-form textarea { padding-inline: 12px; }
+  .contact-form select { padding-right: 24px; }
+  .contact-enquiry-preview { padding: 18px; }
+  .contact-preview-actions { align-items: flex-start; flex-direction: column; gap: 8px; }
+}
+@media (max-width: 374px) {
+  .contact-section-title { font-size: 33px; }
+  .contact-form-card { padding-inline: 16px; }
+  .contact-form-heading h2 { font-size: 25px; }
+  .contact-method-icon { width: 40px; height: 40px; }
+  .contact-method { gap: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-method > svg { transition: none; }
+  .contact-method:hover > svg { transform: none; }
+}

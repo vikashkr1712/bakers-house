@@ -1,0 +1,114 @@
+/* A visual narrative that shares the bakery's palette and editorial typography. */
+.story-page { color: var(--light); background: var(--black); }
+.story-page section { overflow-x: clip; }
+.story-page figure { margin: 0; }
+.story-page h1, .story-page h2 { overflow-wrap: break-word; }
+.story-page em { color: var(--gold); font-weight: 400; }
+.story-page .button { border-radius: 999px; }
+.story-page-breadcrumb { display: flex; align-items: center; gap: 10px; padding-top: 14px; color: #b8b4ae; font-size: 14px; }
+.story-page-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.story-page-breadcrumb a:hover { color: var(--gold); }
+.story-page-breadcrumb [aria-current] { color: #eee6d9; }
+.story-page-intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: end; gap: clamp(40px, 7vw, 110px); padding-block: 30px 36px; }
+.story-page-intro h1 { margin-top: 17px; font-size: clamp(48px, 5vw, 72px); line-height: 1.12; letter-spacing: -.035em; }
+.story-page-lede { padding-bottom: 3px; max-width: 410px; }
+.story-page-lede > p { color: #c8c1b7; font-size: 17px; line-height: 1.85; }
+.story-page-lede .text-link { margin-top: 17px; padding-bottom: 10px; }
+.story-page-hero-photo { position: relative; aspect-ratio: 3.1; overflow: hidden; border: 1px solid #c9a06333; border-radius: 5px; background: #2d2a25; }
+.story-page-hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
+.story-page-hero-photo::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(0deg, #111111cc, transparent); pointer-events: none; }
+.story-page-hero-photo figcaption { position: absolute; z-index: 1; inset: auto 28px 24px; display: flex; align-items: center; gap: 13px; font-family: 'Playfair Display', serif; font-size: 23px; font-style: italic; line-height: 1.4; }
+.story-page-hero-photo figcaption > svg { flex-shrink: 0; color: var(--gold); }
+.story-page-chapter-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-block: 14px; margin-top: 12px; }
+.story-page-chapter-nav a { display: flex; align-items: center; justify-content: center; min-height: 48px; gap: 16px; padding: 8px 16px; font-size: 15px; color: #d6cbb9; transition: color .2s; }
+.story-page-chapter-nav a + a { border-left: 1px solid #c9a06333; }
+.story-page-chapter-nav a:hover { color: var(--gold); }
+.story-page-nav-number { color: var(--gold); font-size: 12px; letter-spacing: .1em; }
+.story-page-chapter-nav a > svg { margin-left: 4px; color: var(--gold); }
+.story-page-chapter { padding-block: 76px; color: var(--ink); background: var(--cream); scroll-margin-top: 24px; }
+.story-page-chapter-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(48px, 8vw, 120px); }
+.story-page-chapter .eyebrow { display: flex; align-items: center; gap: 16px; color: #896233; }
+.story-page-chapter-number { display: inline-flex; align-items: center; gap: 16px; letter-spacing: .06em; }
+.story-page-chapter-number::after { content: ''; display: block; width: 26px; height: 1px; background: #b8a181; }
+.story-page-chapter h2 { margin-top: 19px; font-size: clamp(34px, 3.25vw, 46px); line-height: 1.2; letter-spacing: -.025em; }
+.story-page-chapter em { color: #8a6637; }
+.story-page-chapter .short-rule { margin-block: 25px; }
+.story-page-chapter-copy > p:not(.eyebrow, .story-page-motto) { font-size: 16px; line-height: 1.9; color: #6b6258; }
+.story-page-chapter-copy > p + p { margin-top: 17px; }
+.story-page-image-frame { aspect-ratio: 1.16; overflow: hidden; border-radius: 4px; background: #e2d8ca; }
+.story-page-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+#story-beginning .story-page-image-frame img { object-position: 55% center; }
+#story-craft .story-page-image-frame img { object-position: center 45%; }
+.story-page-chapter-visual figcaption { padding-top: 15px; color: #7b6c58; font-family: 'Playfair Display', serif; font-size: 17px; font-style: italic; line-height: 1.7; }
+.story-page-chapter--dark { color: var(--light); background: #171715; }
+.story-page-chapter--dark .story-page-chapter-copy { order: 2; }
+.story-page-chapter--dark .eyebrow, .story-page-chapter--dark em { color: var(--gold); }
+.story-page-chapter--dark .story-page-chapter-number::after { background: #c9a06380; }
+.story-page-chapter--dark .story-page-chapter-copy > p:not(.eyebrow, .story-page-motto) { color: #b8b4ae; }
+.story-page-chapter--dark .story-page-chapter-visual figcaption { color: #b8aa95; }
+.story-page-chapter--dark .story-page-image-frame { background: #30271e; }
+.story-page-motto { margin-top: 25px !important; padding-left: 18px; border-left: 1px solid #c9a06380; color: #d9c6a9; font-family: 'Playfair Display', serif; font-size: 21px; font-style: italic; line-height: 1.6; }
+.story-page-invitation { padding-block: 64px 70px; text-align: center; border-bottom: 1px solid #ffffff14; background: radial-gradient(ellipse at 50% 100%, #30261c66, transparent 65%), var(--black); }
+.story-page-invitation-copy > svg { margin: 0 auto 22px; color: var(--gold); }
+.story-page-invitation h2 { margin-top: 16px; font-size: clamp(38px, 4vw, 54px); line-height: 1.2; letter-spacing: -.025em; }
+.story-page-invitation-copy > p:not(.eyebrow) { margin: 22px auto 0; max-width: 580px; color: #bfb7ac; font-size: 16px; line-height: 1.9; }
+.story-page-invitation-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 18px 30px; margin-top: 28px; }
+.story-page-invitation-actions .text-link { border: 0; }
+
+@media (max-width: 1099px) {
+  .story-page-intro { gap: 40px; }
+  .story-page-intro h1 { font-size: 56px; }
+  .story-page-chapter-grid { gap: 44px; }
+}
+@media (max-width: 899px) {
+  .story-page-intro { grid-template-columns: minmax(0, 1fr); gap: 22px; padding-block: 26px 30px; }
+  .story-page-intro h1 { font-size: clamp(46px, 7vw, 58px); }
+  .story-page-lede { max-width: 600px; }
+  .story-page-lede .text-link { margin-top: 12px; }
+  .story-page-hero-photo { aspect-ratio: 2.2; }
+  .story-page-chapter { padding-block: 60px; }
+  .story-page-chapter-grid { gap: 32px; }
+  .story-page-image-frame { aspect-ratio: .85; }
+}
+@media (max-width: 767px) {
+  .story-page-chapter-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .story-page-chapter-copy { max-width: 620px; }
+  .story-page-chapter h2 { font-size: 40px; }
+  .story-page-chapter--dark .story-page-chapter-copy { order: 0; }
+  .story-page-image-frame { aspect-ratio: 1.55; }
+  .story-page-chapter-visual figcaption { padding-top: 12px; }
+}
+@media (max-width: 599px) {
+  .story-page-breadcrumb { padding-top: 12px; }
+  .story-page-intro { gap: 20px; padding-block: 22px 26px; }
+  .story-page-intro h1 { font-size: clamp(40px, 10.5vw, 54px); margin-top: 16px; }
+  .story-page-lede > p { font-size: 16px; }
+  .story-page-hero-photo { aspect-ratio: 1.25; }
+  .story-page-hero-photo::after { inset: 35% 0 0; background: linear-gradient(0deg, #111111f0 0%, #111111a6 42%, transparent 100%); }
+  .story-page-hero-photo img { object-position: 53% center; }
+  .story-page-hero-photo figcaption { inset: auto 18px 18px; gap: 10px; font-size: 21px; }
+  .story-page-hero-photo figcaption > svg { width: 19px; }
+  .story-page-chapter-nav { margin-top: 10px; padding-block: 12px; }
+  .story-page-chapter-nav a { flex-direction: column; gap: 3px; min-height: 58px; padding: 5px 8px; font-size: 14px; }
+  .story-page-chapter-nav a > svg { display: none; }
+  .story-page-chapter { padding-block: 46px; }
+  .story-page-chapter h2 { font-size: 35px; margin-top: 16px; }
+  .story-page-chapter .short-rule { margin-block: 22px; }
+  .story-page-chapter-grid { gap: 26px; }
+  .story-page-image-frame { aspect-ratio: 1.1; }
+  .story-page-motto { font-size: 20px; }
+  .story-page-invitation { padding-block: 48px 52px; }
+  .story-page-invitation h2 { font-size: 40px; }
+  .story-page-invitation-actions { gap: 12px 24px; margin-top: 24px; }
+  .story-page-desktop-break { display: none; }
+}
+@media (max-width: 374px) {
+  .story-page .eyebrow { letter-spacing: .13em; }
+  .story-page-intro h1 { font-size: 38px; }
+  .story-page-hero-photo figcaption { inset-inline: 14px; font-size: 19px; }
+  .story-page-chapter h2 { font-size: 32px; }
+  .story-page-invitation h2 { font-size: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-page-chapter-nav a { transition: none; }
+}

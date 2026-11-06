@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigationType, useSearchParams } from 'react-rou
 import { ArrowRight, ChevronRight, Search, ShoppingBag, SlidersHorizontal, X } from 'lucide-react'
 import { cakeCategories, catalogProducts, getUnitPrice, heroCollections } from '../data/catalog'
 import CatalogProductCard from '../components/CatalogProductCard'
+import SubcategoryFilters from '../components/SubcategoryFilters'
+import { getSubcategory, getSweetType, matchesSubcategory, resolveSweetCollection } from '../data/subcategories'
 import '../styles/shop.css'
 
 const priceRanges = [
@@ -22,25 +24,33 @@ export default function ShopPage({ onAdd, onBuy }) {
   const focusAfterChange = useRef(null)
   const inputRef = useRef(null)
   const [query, setQuery] = useState(searchParams.get('q') || '')
+  const [bestsellersOnly, setBestsellersOnly] = useState(searchParams.get('bestseller') === '1')
   useEffect(() => {
     if (navigationType === 'POP' || !location.state?.shopFilters) {
       latestParams.current = searchParams
       setQuery(searchParams.get('q') || '')
+      setBestsellersOnly(searchParams.get('bestseller') === '1')
     }
   }, [navigationType, searchParams, location.state])
   useEffect(() => {
-    const selector = focusAfterChange.current
-    if (selector) {
+    const destination = focusAfterChange.current
+    if (destination) {
       focusAfterChange.current = null
-      document.querySelector(selector)?.focus({ preventScroll: true })
+      const control = document.querySelector(typeof destination === 'string' ? destination : destination.selector)
+      const fallback = typeof destination === 'object' ? document.querySelector(destination.fallback) : null
+      // A collapsed category panel keeps its filters, but its controls cannot receive focus.
+      const target = control?.getClientRects().length ? control : fallback
+      target?.focus({ preventScroll: true })
     }
   }, [searchParams])
 
   const requestedCategory = searchParams.get('category')?.toLowerCase()
   const category = heroCollections.find(item => item.id === requestedCategory || item.name.toLowerCase() === requestedCategory)
   const occasion = category?.id === 'cakes' ? cakeCategories.find(item => item.id === searchParams.get('occasion')) : null
+  const mithai = category?.id === 'sweets' ? resolveSweetCollection(searchParams.get('mithai'), searchParams.get('subcategory'), searchParams.get('type')) : null
+  const subcategory = getSubcategory(category?.id, searchParams.get('subcategory'), mithai)
+  const sweetType = getSweetType(category?.id, searchParams.get('subcategory'), searchParams.get('type'), mithai)
   const priceRange = priceRanges.find(item => item.id === searchParams.get('price'))
-  const bestsellersOnly = searchParams.get('bestseller') === '1'
   const sort = sorts.includes(searchParams.get('sort')) ? searchParams.get('sort') : 'featured'
   const shown = useMemo(() => {
     const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean)
@@ -48,6 +58,7 @@ export default function ShopPage({ onAdd, onBuy }) {
       const text = `${product.name} ${product.category} ${product.tags.join(' ')} ${product.note} ${product.description} ${product.flavours.join(' ')}`.toLowerCase()
       return (!category || product.collection === category.id)
         && (!occasion || product.tags.includes(occasion.name))
+        && matchesSubcategory(product, subcategory, sweetType, mithai)
         && (!priceRange || priceRange.matches(getUnitPrice(product)))
         && (!bestsellersOnly || product.bestseller)
         && words.every(word => text.includes(word))
@@ -55,13 +66,27 @@ export default function ShopPage({ onAdd, onBuy }) {
     return matching.sort(sort === 'price-asc' ? (a, b) => getUnitPrice(a) - getUnitPrice(b) || byName(a, b)
       : sort === 'price-desc' ? (a, b) => getUnitPrice(b) - getUnitPrice(a) || byName(a, b)
       : sort === 'name-asc' ? byName : sort === 'name-desc' ? (a, b) => byName(b, a) : byBestSeller)
-  }, [query, category, occasion, priceRange, bestsellersOnly, sort])
+  }, [query, category, occasion, mithai, subcategory, sweetType, priceRange, bestsellersOnly, sort])
 
   function updateFilter(key, value) {
     const next = new URLSearchParams(latestParams.current)
+    // Canonicalise old category links before a user changes or clears a level.
+    if (subcategory) next.set('subcategory', subcategory.id)
+    if (sweetType) next.set('type', sweetType.id)
+    if (key === 'category' && value !== next.get('category')) {
+      next.delete('mithai')
+      next.delete('subcategory')
+      next.delete('type')
+    }
+    if (key === 'mithai') {
+      next.delete('subcategory')
+      next.delete('type')
+    } else if (key !== 'category' && mithai) next.set('mithai', mithai.id)
+    if (key === 'subcategory') next.delete('type')
     if (!value || value === 'featured') next.delete(key)
     else next.set(key, value)
     if (key === 'q') setQuery(value)
+    if (key === 'bestseller') setBestsellersOnly(value === '1')
     if (key === 'category' && value !== 'cakes') next.delete('occasion')
     latestParams.current = next
     setSearchParams(next, { replace: key === 'q', preventScrollReset: true, state: { shopFilters: true } })
@@ -69,16 +94,28 @@ export default function ShopPage({ onAdd, onBuy }) {
   function reset() {
     focusAfterChange.current = '#shop-search'
     setQuery('')
+    setBestsellersOnly(false)
     latestParams.current = new URLSearchParams()
     setSearchParams({}, { preventScrollReset: true, state: { shopFilters: true } })
   }
   function removeFilter(key) {
-    focusAfterChange.current = { category: '#shop-all-products', occasion: '#shop-occasion', price: '#shop-price', bestseller: '#shop-bestsellers', q: '#shop-search' }[key]
+    focusAfterChange.current = {
+      selector: { category: '#shop-all-products', occasion: '#shop-occasion', mithai: `#shop-mithai-${mithai?.id || 'desi'}`, subcategory: '#shop-subcategory', type: '#shop-type', price: '#shop-price', bestseller: '#shop-bestsellers', q: '#shop-search' }[key],
+      fallback: mithai ? `#shop-mithai-${mithai.id}` : '#shop-all-products',
+    }
     updateFilter(key, '')
+  }
+  function viewResults() {
+    const results = document.getElementById('shop-results')
+    results?.focus({ preventScroll: true })
+    results?.scrollIntoView({ block: 'start', behavior: 'instant' })
   }
   const activeFilters = [
     ...(category ? [{ key: 'category', label: category.name }] : []),
     ...(occasion ? [{ key: 'occasion', label: occasion.name }] : []),
+    ...(mithai ? [{ key: 'mithai', label: mithai.name }] : []),
+    ...(subcategory ? [{ key: 'subcategory', label: subcategory.name }] : []),
+    ...(sweetType ? [{ key: 'type', label: sweetType.name }] : []),
     ...(priceRange ? [{ key: 'price', label: priceRange.name }] : []),
     ...(bestsellersOnly ? [{ key: 'bestseller', label: 'Best sellers only' }] : []),
     ...(query.trim() ? [{ key: 'q', label: `“${query.trim()}”` }] : []),
@@ -97,14 +134,16 @@ export default function ShopPage({ onAdd, onBuy }) {
 
       <div className="shop-category-tabs" role="group" aria-label="Shop categories"><button id="shop-all-products" aria-label="All products" className={!category ? 'is-selected' : ''} aria-pressed={!category} onClick={() => updateFilter('category', '')}>All products<span aria-hidden="true">{catalogProducts.length}</span></button>{heroCollections.map(item => <button key={item.id} aria-label={item.name} className={category?.id === item.id ? 'is-selected' : ''} aria-pressed={category?.id === item.id} onClick={() => updateFilter('category', item.id)}>{item.name}<span aria-hidden="true">{catalogProducts.filter(product => product.collection === item.id).length}</span></button>)}</div>
 
-      <div className="shop-filter-panel"><div className="shop-filter-caption"><SlidersHorizontal size={18} strokeWidth={1.5} aria-hidden="true" /><span>Find your favourite</span></div><div className="shop-filter-controls">
+      <div className="shop-filter-panel"><div className="shop-filter-caption"><SlidersHorizontal size={18} strokeWidth={1.5} aria-hidden="true" /><span>Find your favourite</span></div>
+        {category?.id === 'cakes' && <fieldset className="subcategory-fieldset shop-cake-occasions"><legend className="subcategory-legend">Cake occasion</legend><div className="subcategory-options subcategory-options--categories"><button id="shop-occasion" type="button" className="subcategory-option" aria-pressed={!occasion} onClick={() => updateFilter('occasion', '')}>All occasions</button>{cakeCategories.map(item => <button id={`shop-occasion-${item.id}`} key={item.id} type="button" className="subcategory-option" aria-pressed={occasion?.id === item.id} onClick={() => updateFilter('occasion', occasion?.id === item.id ? '' : item.id)}>{item.name}</button>)}</div></fieldset>}
+        {category && category.id !== 'cakes' && <SubcategoryFilters collection={category.id} mithai={mithai?.id} subcategory={subcategory?.id} sweetType={sweetType?.id} onChange={updateFilter} resultsCount={shown.length} onViewResults={viewResults} />}
+        <div className="shop-filter-controls">
         <div className="shop-select-field"><label htmlFor="shop-price">Price range</label><select id="shop-price" value={priceRange?.id || ''} onChange={event => updateFilter('price', event.target.value)}><option value="">Any price</option>{priceRanges.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></div>
-        {category?.id === 'cakes' && <div className="shop-select-field"><label htmlFor="shop-occasion">Cake occasion</label><select id="shop-occasion" value={occasion?.id || ''} onChange={event => updateFilter('occasion', event.target.value)}><option value="">All occasions</option>{cakeCategories.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></div>}
         <label className="shop-bestsellers-filter"><input id="shop-bestsellers" type="checkbox" checked={bestsellersOnly} onChange={event => updateFilter('bestseller', event.target.checked ? '1' : '')} /><span>Best sellers only</span></label>
         {(activeFilters.length > 0 || sort !== 'featured') && <button className="shop-reset" onClick={reset}>Clear all<X size={14} aria-hidden="true" /></button>}
       </div><p className="shop-price-help">Price filters use the starting pack or weight.</p></div>
 
-      <div className="shop-toolbar"><p className="shop-results-count" role="status" aria-live="polite" aria-atomic="true">{shown.length} {shown.length === 1 ? 'product' : 'products'}{category ? ` in ${category.name.toLowerCase()}` : ' to discover'}{query.trim() ? ` matching “${query.trim()}”` : ''}</p><div className="shop-sort"><label htmlFor="shop-sort">Sort by</label><select id="shop-sort" value={sort} onChange={event => updateFilter('sort', event.target.value)}><option value="featured">Best sellers</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="name-asc">Name: A–Z</option><option value="name-desc">Name: Z–A</option></select></div></div>
+      <div className="shop-toolbar"><p id="shop-results" tabIndex={-1} className="shop-results-count" role="status" aria-live="polite" aria-atomic="true">{shown.length} {shown.length === 1 ? 'product' : 'products'}{category ? ` in ${category.name.toLowerCase()}` : ' to discover'}{query.trim() ? ` matching “${query.trim()}”` : ''}</p><div className="shop-sort"><label htmlFor="shop-sort">Sort by</label><select id="shop-sort" value={sort} onChange={event => updateFilter('sort', event.target.value)}><option value="featured">Best sellers</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="name-asc">Name: A–Z</option><option value="name-desc">Name: Z–A</option></select></div></div>
       {activeFilters.length > 0 && <div className="shop-active-filters" aria-label="Active filters">{activeFilters.map(filter => <button key={filter.key} aria-label={`Remove ${filter.key === 'q' ? 'search' : filter.label} filter`} onClick={() => removeFilter(filter.key)}><span>{filter.label}</span><X size={13} aria-hidden="true" /></button>)}</div>}
       {shown.length ? <div className="shop-product-grid">{shown.map(product => <CatalogProductCard key={product.id} product={product} onAdd={onAdd} onBuy={onBuy} />)}</div> : <div className="shop-empty"><Search size={34} strokeWidth={1.3} aria-hidden="true" /><h3>No treats in this selection.</h3><p>Try another search or adjust your filters.<br />There’s something lovely waiting to be found.</p><button className="button button--gold" onClick={reset}>Explore all products<ArrowRight size={18} aria-hidden="true" /></button></div>}
       <div className="shop-collection-footer"><p>Thoughtfully made. Joyfully shared.</p><Link className="text-link" to="/cart">View my basket<ShoppingBag size={18} aria-hidden="true" /></Link></div>

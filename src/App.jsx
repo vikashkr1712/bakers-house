@@ -24,6 +24,7 @@ import CakesPage from './pages/CakesPage'
 import CakeDetailPage from './pages/CakeDetailPage'
 import CollectionPage from './pages/CollectionPage'
 import CheckoutPage from './pages/CheckoutPage'
+import GiftHampersPage from './pages/GiftHampersPage'
 import { catalogProducts } from './data/catalog'
 import { ABOUT_PAGE_ENABLED, CART_PAGE_ENABLED, CONTACT_PAGE_ENABLED, SHOP_ENABLED, STORY_PAGE_ENABLED } from './config/site'
 
@@ -37,7 +38,7 @@ function PagePosition() {
   useEffect(() => {
     const isProduct = /^\/(cakes|products)\/[^/]+$/.test(path)
     const product = isProduct ? catalogProducts.find((item) => item.slug === path.split('/')[2] && (!path.startsWith('/cakes/') || item.collection === 'cakes')) : null
-    const catalogTitle = path === '/cakes' ? 'Celebration Cakes' : isProduct ? product?.name || 'Product Not Found' : path === '/chocolates' ? 'Chocolates' : path === '/sweets' ? 'Traditional Sweets' : path === '/checkout' ? 'Review Your Order' : null
+    const catalogTitle = path === '/gift-hampers' ? 'Gift Hampers' : path === '/cakes' ? 'Celebration Cakes' : isProduct ? product?.name || 'Product Not Found' : path === '/chocolates' ? 'Chocolates' : path === '/sweets' ? 'Traditional Sweets' : path === '/checkout' ? 'Review Your Order' : null
     document.title = catalogTitle ? `${catalogTitle} — Baker’s House` : isContact ? 'Contact Us — Baker’s House' : isStory ? 'Our Story — Baker’s House' : ABOUT_PAGE_ENABLED && path === '/about' ? 'About Us — Baker’s House' : path === '/search' ? 'Search the Bakery — Baker’s House' : isCart ? 'Your Basket — Baker’s House' : SHOP_ENABLED && path === '/shop' ? 'Shop the Collection — Baker’s House' : 'Baker’s House — Artisan Bakery'
     const frame = requestAnimationFrame(() => {
       if (hash) {
@@ -102,6 +103,12 @@ export default function App() {
     setNotification({ name: product.name, key: Date.now() })
     return key
   }
+  function addHamper(config, options) {
+    const key = basket.addHamper(config, options)
+    if (!key) return null
+    setNotification({ name: config.name, key: Date.now() })
+    return key
+  }
   function buyProduct(product, options = {}) {
     const key = basket.add(product.id, options)
     if (!key) return
@@ -128,6 +135,7 @@ export default function App() {
       <Route path="/chocolates" element={<CollectionPage collection="chocolates" onAdd={addProduct} onBuy={buyProduct} />} />
       <Route path="/sweets" element={<CollectionPage collection="sweets" onAdd={addProduct} onBuy={buyProduct} />} />
       <Route path="/checkout" element={<CheckoutPage basket={basket} />} />
+      <Route path="/gift-hampers" element={<GiftHampersPage basket={basket} onAddHamper={addHamper} />} />
       <Route path="/cart" element={CART_PAGE_ENABLED ? <CartPage basket={basket} onShop={openShop} onAdd={addProduct} onProduct={openProduct} /> : <Navigate to="/" replace />} />
       <Route path="/shop" element={SHOP_ENABLED ? <ShopPage onAdd={addProduct} onBuy={buyProduct} /> : <Navigate to="/" replace />} />
       <Route path="/search" element={<SearchPage onProduct={openProduct} onAdd={addProduct} onBuy={buyProduct} />} />

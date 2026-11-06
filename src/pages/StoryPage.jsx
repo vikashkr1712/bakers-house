@@ -44,16 +44,20 @@ export default function StoryPage({ onContact }) {
     <section className="story-page-hero" aria-labelledby="story-page-title">
       <div className="container">
         <nav className="story-page-breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link><ChevronRight size={14} aria-hidden="true" /><span aria-current="page">Our story</span></nav>
-        <div className="story-page-intro">
-          <div><p className="eyebrow">THE BAKER’S HOUSE STORY</p><h1 id="story-page-title">Flour. Patience.<br />A little <em>heart.</em></h1></div>
-          <div className="story-page-lede"><p>A celebration of traditional craft, slow mornings, and the simple joy of sharing something good.</p><Link className="text-link text-link--light" to="/our-story#story-beginning">Read our story<ArrowDown size={17} aria-hidden="true" /></Link></div>
+        <div className="story-page-hero-grid">
+          <div className="story-page-intro">
+            <p className="eyebrow">THE BAKER’S HOUSE STORY</p>
+            <h1 id="story-page-title">Flour. Patience.<br />A little <em>heart.</em></h1>
+            <span className="short-rule" aria-hidden="true" />
+            <div className="story-page-lede"><p>A celebration of traditional craft, slow mornings, and the simple joy of sharing something good.</p><Link className="button button--gold" to="/our-story#story-beginning">Read our story<ArrowDown size={17} aria-hidden="true" /></Link></div>
+          </div>
+          <figure className="story-page-hero-photo"><div className="story-page-hero-frame"><img src="/images/bakery/story/story-baker-working.webp" alt="Flour-dusted hands shaping dough at a bakery workbench" width="2000" height="1333" fetchPriority="high" decoding="async" /></div><figcaption><Wheat size={28} strokeWidth={1.1} aria-hidden="true" /><span>Good things take a little time.<small>A little care, from the first fold.</small></span></figcaption></figure>
         </div>
-        <figure className="story-page-hero-photo"><img src="/images/bakery/story/story-baker-working.webp" alt="Flour-dusted hands shaping dough at a bakery workbench" width="2000" height="1333" fetchPriority="high" decoding="async" /><figcaption><Wheat size={22} strokeWidth={1.1} aria-hidden="true" /><span>Good things take a little time.</span></figcaption></figure>
         <nav className="story-page-chapter-nav" aria-label="Story chapters">{chapters.map((chapter) => <Link key={chapter.id} to={`/our-story#${chapter.id}`}><span className="story-page-nav-number" aria-hidden="true">{chapter.number}</span><span>{chapter.shortLabel}</span><ArrowDown size={15} aria-hidden="true" /></Link>)}</nav>
       </div>
     </section>
 
-    {chapters.map((chapter, index) => <section className={`story-page-chapter ${index % 2 ? 'story-page-chapter--dark' : ''}`} id={chapter.id} aria-labelledby={`${chapter.id}-title`} key={chapter.id}>
+    {chapters.map((chapter, index) => <section className={`story-page-chapter ${index % 2 ? 'story-page-chapter--blush' : ''}`} id={chapter.id} aria-labelledby={`${chapter.id}-title`} key={chapter.id}>
       <div className="container story-page-chapter-grid">
         <Reveal className="story-page-chapter-copy" direction={index % 2 ? 'right' : 'left'}>
           <p className="eyebrow"><span className="story-page-chapter-number" aria-hidden="true">{chapter.number}</span>{chapter.label}</p>
@@ -68,7 +72,7 @@ export default function StoryPage({ onContact }) {
     </section>)}
 
     <section className="story-page-invitation" aria-labelledby="story-page-invitation-title">
-      <div className="container"><Reveal className="story-page-invitation-copy"><Wheat size={34} strokeWidth={1.1} aria-hidden="true" /><p className="eyebrow">THE NEXT CHAPTER IS YOURS</p><h2 id="story-page-invitation-title">Make room for<br />something <em>good.</em></h2><p>A daily loaf, a little indulgence, or something to share.<br className="story-page-desktop-break" /> Find your own little moment at Baker’s House.</p><div className="story-page-invitation-actions"><Link className="button button--gold" to="/search">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><button className="text-link text-link--light" onClick={onContact}>Get in touch<ArrowRight size={17} aria-hidden="true" /></button></div></Reveal></div>
+      <div className="container"><Reveal className="story-page-invitation-copy"><span className="story-page-invitation-mark"><Wheat size={34} strokeWidth={1.1} aria-hidden="true" /></span><p className="eyebrow">THE NEXT CHAPTER IS YOURS</p><h2 id="story-page-invitation-title">Make room for<br />something <em>good.</em></h2><p>A daily loaf, a little indulgence, or something to share.<br className="story-page-desktop-break" /> Find your own little moment at Baker’s House.</p><div className="story-page-invitation-actions"><Link className="button button--gold" to="/shop">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><button className="text-link" onClick={onContact}>Get in touch<ArrowRight size={17} aria-hidden="true" /></button></div></Reveal></div>
     </section>
   </div>
 }

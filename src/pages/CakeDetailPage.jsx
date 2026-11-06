@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight, Check, ChevronRight, Minus, Plus, ShoppingBag } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { cakeProducts, catalogProducts, formatPrice, getUnitPrice } from '../data/catalog'
 import CatalogProductCard from '../components/CatalogProductCard'
 import '../styles/catalog.css'
+import '../styles/product-gallery.css'
 
 export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
   const { slug } = useParams()
@@ -26,6 +27,8 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
   const chosenFlavour = product.flavours.includes(flavour) ? flavour : product.flavours[0]
   const unitPrice = getUnitPrice(product, chosenWeight)
   const options = { weight: chosenWeight, flavour: chosenFlavour, quantity }
+  const gallery = product.gallery || product.images.map(src => ({ src, alt: product.alt, generated: false }))
+  const currentPhoto = gallery[activeImage] || gallery[0]
   const recommendations = catalogProducts.filter((item) => item.collection === product.collection && item.id !== product.id).sort((a, b) => a.bestsellerRank - b.bestsellerRank).slice(0, 3)
 
   function changeQuantity(value) {
@@ -37,7 +40,16 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
     <section className="container cake-detail-section" aria-labelledby="cake-detail-title">
       <nav className="catalog-breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link><ChevronRight size={14} aria-hidden="true" /><Link to={fallback}>{product.category}</Link><ChevronRight size={14} aria-hidden="true" /><span aria-current="page">{product.name}</span></nav>
       <div className="cake-detail-layout">
-        <div className="cake-detail-gallery"><div className="cake-detail-main-image"><img src={product.images[activeImage] || product.image} alt={product.alt} width="1000" height="1100" fetchPriority="high" />{product.bestseller && <span className="catalog-bestseller">Best seller</span>}</div>{product.images.length > 1 && <div className="cake-detail-thumbnails" role="group" aria-label="Product photographs">{product.images.map((photo, index) => <button key={photo} onClick={() => setActiveImage(index)} aria-pressed={activeImage === index} aria-label={`View photograph ${index + 1} of ${product.name}`}><img src={photo} alt="" width="100" height="100" /></button>)}</div>}<Link className="cake-detail-back" to={from}><ArrowLeft size={16} aria-hidden="true" />{backLabel}</Link></div>
+        <div className="cake-detail-gallery">
+          <div className="cake-detail-main-image"><img src={currentPhoto.src} alt={currentPhoto.alt} width="1000" height="1100" fetchPriority="high" />{product.bestseller && <span className="catalog-bestseller">Best seller</span>}
+            <button type="button" className="product-gallery-arrow product-gallery-arrow--previous" aria-label={`Previous photograph of ${product.name}`} onClick={() => setActiveImage(index => (index - 1 + gallery.length) % gallery.length)}><ChevronLeft size={20} aria-hidden="true" /></button>
+            <button type="button" className="product-gallery-arrow product-gallery-arrow--next" aria-label={`Next photograph of ${product.name}`} onClick={() => setActiveImage(index => (index + 1) % gallery.length)}><ChevronRight size={20} aria-hidden="true" /></button>
+            <span className="product-gallery-position" aria-live="polite">{activeImage + 1} / {gallery.length}</span>
+          </div>
+          <p className="product-gallery-note">{currentPhoto.generated ? `Generated sample · ${currentPhoto.label}. Styling inspiration; the actual product may differ.` : product.imageNote || currentPhoto.label}</p>
+          <div className="cake-detail-thumbnails" role="group" aria-label="Product photographs">{gallery.map((photo, index) => <button key={photo.src} type="button" onClick={() => setActiveImage(index)} aria-pressed={activeImage === index} aria-label={`View photograph ${index + 1} of ${product.name}`}><img src={photo.src} alt="" width="100" height="100" loading="lazy" decoding="async" /><span className="product-gallery-thumbnail-number" aria-hidden="true">{index + 1}</span></button>)}</div>
+          <Link className="cake-detail-back" to={from}><ArrowLeft size={16} aria-hidden="true" />{backLabel}</Link>
+        </div>
         <div className="cake-detail-copy">
           <p className="eyebrow">A LITTLE SOMETHING SPECIAL</p><div className="catalog-product-tags">{product.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           <h1 id="cake-detail-title">{product.name}</h1><p className="cake-detail-note">{product.note}</p><p className="cake-detail-price" aria-live="polite">{formatPrice(unitPrice)}<span>/ {chosenWeight}</span></p><p className="cake-detail-description">{product.description}</p>

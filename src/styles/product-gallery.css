@@ -1,0 +1,30 @@
+.catalog-preview-arrow, .product-gallery-arrow { position: absolute; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #e0cdd4; border-radius: 50%; background: #fffdf9ed; color: var(--burgundy); box-shadow: 0 3px 12px #5016290d; transition: color var(--motion-fast), background-color var(--motion-fast), border-color var(--motion-fast), opacity var(--motion-fast); }
+.catalog-preview-arrow, .product-gallery-arrow { top: calc(50% - 22px); }
+.catalog-preview-arrow--previous, .product-gallery-arrow--previous { left: 12px; }
+.catalog-preview-arrow--next, .product-gallery-arrow--next { right: 12px; }
+.catalog-gallery-position, .product-gallery-position { position: absolute; z-index: 1; bottom: 19px; left: 50%; translate: -50% 0; padding: 5px 10px; border-radius: 999px; background: #fffdf9ed; color: var(--burgundy-dark); font-size: 12px; line-height: 1.7; pointer-events: none; }
+.catalog-preview-sample { position: absolute; z-index: 1; bottom: 70px; left: 50%; translate: -50% 0; width: max-content; max-width: calc(100% - 24px); padding: 4px 9px; border-radius: 999px; background: #fffdf9ed; color: var(--burgundy-dark); font-size: 11px; line-height: 1.6; text-align: center; pointer-events: none; }
+.catalog-product-image > a > img { animation: gallery-photo-reveal 180ms ease; }
+.product-gallery-note { min-height: 48px; margin-top: 12px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.cake-detail-gallery .cake-detail-thumbnails { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+.cake-detail-gallery .cake-detail-thumbnails button { position: relative; width: 100%; min-width: 0; height: auto; aspect-ratio: 1; border-radius: 8px; }
+.cake-detail-gallery .cake-detail-thumbnails button[aria-pressed='true'] { border: 2px solid var(--burgundy); }
+.cake-detail-gallery .cake-detail-thumbnails button:focus-visible { outline-offset: 3px; }
+.product-gallery-thumbnail-number { position: absolute; bottom: 3px; right: 3px; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #fffdf9e8; color: var(--burgundy-dark); font-size: 10px; line-height: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .catalog-preview-arrow { opacity: 0; pointer-events: none; }
+  .catalog-product-card:is(:hover, :focus-within) .catalog-preview-arrow { opacity: 1; pointer-events: auto; }
+  :is(.catalog-preview-arrow, .product-gallery-arrow):hover { color: white; background: var(--burgundy); border-color: var(--burgundy); }
+}
+:is(.catalog-preview-arrow, .product-gallery-arrow):focus-visible { color: white; background: var(--burgundy); border-color: var(--burgundy); outline-offset: 3px; }
+@media (max-width: 599px) {
+  .cake-detail-gallery .cake-detail-thumbnails { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .product-gallery-note { min-height: 0; }
+  .catalog-preview-arrow--previous { left: 7px; }
+  .catalog-preview-arrow--next { right: 7px; }
+}
+@keyframes gallery-photo-reveal { from { opacity: .5; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .catalog-product-image > a > img { animation: none; }
+  .catalog-preview-arrow, .product-gallery-arrow { transition: none; }
+}

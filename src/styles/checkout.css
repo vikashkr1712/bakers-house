@@ -21,11 +21,12 @@
 .checkout-description { color: #766b6d; font-size: 14px; line-height: 1.85; margin-top: 14px; max-width: 56ch; }
 .checkout-fields { display: grid; gap: 21px; margin-top: 28px; }
 .checkout-field { min-width: 0; }
-.checkout-field label { display: block; font-size: 14px; font-weight: 500; line-height: 1.7; margin-bottom: 7px; }
+.checkout-field label { display: block; font-size: 14px; font-weight: 500; line-height: 1.7; margin-bottom: 7px; transition: color var(--motion-fast, 180ms) ease; }
+.checkout-field:focus-within label { color: #6d213c; }
 .checkout-field label span { color: #766b6d; font-weight: 400; }
-.checkout-field input, .checkout-field textarea { display: block; width: 100%; border: 1px solid #d7c9c5; background: #fff; border-radius: 9px; color: #35252b; font: inherit; font-size: 16px; line-height: 1.6; padding: 13px 15px; min-height: 50px; transition: border-color .15s, box-shadow .15s; }
+.checkout-field input, .checkout-field textarea { display: block; width: 100%; border: 1px solid #d7c9c5; background: #fff; border-radius: 9px; color: #35252b; font: inherit; font-size: 16px; line-height: 1.6; padding: 13px 15px; min-height: 50px; transition: border-color var(--motion-fast, 180ms) ease, box-shadow var(--motion-fast, 180ms) ease; }
 .checkout-field textarea { resize: vertical; min-height: 122px; }
-.checkout-field input:focus, .checkout-field textarea:focus { border-color: #6d213c; outline: 2px solid #6d213c28; outline-offset: 2px; }
+.checkout-field input:focus, .checkout-field textarea:focus { border-color: #6d213c; outline: 2px solid #6d213c28; outline-offset: 2px; box-shadow: 0 0 0 4px #6d213c0a; }
 .checkout-field input[aria-invalid="true"] { border-color: #a02c45; }
 .checkout-field-help { margin-top: 6px; font-size: 12px; line-height: 1.75; color: #766b6d; }
 .checkout-error { margin-top: 6px; color: #a02c45; font-size: 13px; line-height: 1.7; }
@@ -35,9 +36,10 @@
 .checkout-page .checkout-review-button, .checkout-page .checkout-send { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 54px; width: 100%; margin-top: 24px; border-radius: 999px; padding: 15px 23px; background: #6d213c; color: #fff; border: 1px solid #6d213c; font-size: 14px; line-height: 1.6; }
 .checkout-page .checkout-review-button:hover, .checkout-page .checkout-send:hover { background: #842d4c; border-color: #842d4c; }
 .checkout-review-button svg, .checkout-send svg { flex-shrink: 0; }
-.checkout-back, .checkout-edit, .checkout-copy { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.7; min-height: 44px; color: #6d213c; }
+.checkout-back, .checkout-edit { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.7; min-height: 44px; color: #6d213c; }
 .checkout-back { margin-top: 21px; }
-.checkout-back:hover, .checkout-edit:hover, .checkout-copy:hover { text-decoration: underline; text-underline-offset: 4px; }
+.checkout-back:hover, .checkout-edit:hover { text-decoration: underline; text-underline-offset: 4px; }
+.checkout-back > svg, .checkout-edit > svg { transition: translate var(--motion-base, 260ms) var(--motion-ease, ease); }
 .checkout-summary { position: sticky; top: calc(var(--header-height, 90px) + 24px); border: 1px solid #e8dcd8; border-radius: 18px; background: #fff; padding: 28px; min-width: 0; }
 .checkout-summary-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
 .checkout-summary h2 { font-size: 29px; line-height: 1.3; letter-spacing: -.02em; margin-top: 7px; }
@@ -60,11 +62,12 @@
 .checkout-contact-review { display: grid; gap: 18px; margin-top: 26px; padding: 24px; border: 1px solid #e8dcd8; background: #fff; border-radius: 12px; }
 .checkout-contact-review dt { color: #766b6d; font-size: 12px; line-height: 1.7; }
 .checkout-contact-review dd { color: #35252b; font-size: 15px; line-height: 1.8; margin: 3px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-.checkout-recipient { font-size: 13px; line-height: 1.8; margin-top: 22px; color: #766b6d; overflow-wrap: anywhere; }
-.checkout-recipient a { color: #6d213c; text-decoration: underline; text-underline-offset: 3px; }
 .checkout-page .checkout-send { justify-content: center; }
+.checkout-demo-success { margin-top: 24px; padding: 24px; border: 1px solid #dbc3cc; border-radius: 12px; background: #f5e9ee; color: #6d213c; }
+.checkout-demo-success h3 { font-size: 24px; line-height: 1.4; margin-top: 10px; }
+.checkout-demo-success p { color: #68585f; font-size: 14px; line-height: 1.85; margin-top: 9px; }
+.checkout-demo-success:focus { outline: 2px solid #6d213c; outline-offset: 4px; }
 .checkout-review-actions { display: flex; flex-wrap: wrap; gap: 4px 20px; justify-content: space-between; margin-top: 12px; }
-.checkout-copy-status { min-height: 28px; color: #6d213c; font-size: 12px; line-height: 1.8; }
 .checkout-empty { display: flex; align-items: center; flex-direction: column; text-align: center; padding: 48px 24px; border: 1px solid #e8dcd8; background: #fff; border-radius: 18px; color: #6d213c; }
 .checkout-empty h2 { font-size: clamp(28px, 3vw, 40px); max-width: 22ch; line-height: 1.3; letter-spacing: -.02em; margin-top: 22px; }
 .checkout-empty > p { color: #766b6d; font-size: 15px; line-height: 1.8; max-width: 44ch; margin-top: 16px; }
@@ -103,4 +106,11 @@
 }
 @media (max-height: 800px), (prefers-reduced-motion: reduce) {
   .checkout-summary { position: static; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .checkout-back:hover > svg, .checkout-edit:not(:disabled):hover > svg { translate: -2px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .checkout-field label, .checkout-field input, .checkout-field textarea, .checkout-back > svg, .checkout-edit > svg { transition: none; }
+  .checkout-back:hover > svg, .checkout-edit:hover > svg { translate: none; }
 }

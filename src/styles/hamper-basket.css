@@ -1,0 +1,14 @@
+.hamper-line-details { min-width: 0; margin-top: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--cream); overflow-wrap: anywhere; }
+.hamper-line-packaging { display: flex; flex-wrap: wrap; gap: 3px 10px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.hamper-line-packaging strong { color: var(--burgundy-dark); font-weight: 500; }
+.hamper-line-items { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; color: var(--ink); font-size: 13px; line-height: 1.6; }
+.hamper-line-items li > span { display: block; color: var(--muted); font-size: 11px; }
+.hamper-line-message { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); color: var(--ink); font-size: 13px; line-height: 1.75; white-space: pre-wrap; }
+.hamper-line-message strong { display: block; color: var(--burgundy-dark); font-size: 11px; font-weight: 500; }
+.hamper-line-message > span { display: block; margin-top: 3px; }
+.hamper-edit-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 5px; color: var(--burgundy); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.checkout-item .hamper-line-details { padding: 10px; }
+.checkout-item .hamper-line-items { font-size: 12px; }
+@media (max-width: 599px) {
+  .hamper-line-details { padding: 10px; }
+}

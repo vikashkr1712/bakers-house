@@ -26,7 +26,7 @@ export default function Footer({ onShop, onPrivacy }) {
       <div className="footer-main">
         <div className="footer-brand"><Brand /><p>Thoughtfully made.<br />Joyfully shared.</p></div>
         <nav className="footer-links footer-explore" aria-label="Explore the bakery"><h2>Explore</h2><Link to="/#home">Home</Link><Link to={ABOUT_PAGE_ENABLED ? '/about' : '/'} onClick={() => { if (!ABOUT_PAGE_ENABLED) window.scrollTo({ top: 0, behavior: 'instant' }) }}>About us</Link><Link to={STORY_PAGE_ENABLED ? '/our-story' : '/'} onClick={() => { if (!STORY_PAGE_ENABLED) window.scrollTo({ top: 0, behavior: 'instant' }) }}>Our story</Link><button onClick={() => onShop('All')}>Our bakery</button><Link to={CONTACT_PAGE_ENABLED ? '/contact' : '/'} onClick={() => { if (CONTACT_PAGE_ENABLED) focusContactPage(); else window.scrollTo({ top: 0, behavior: 'instant' }) }}>Contact</Link></nav>
-        <nav className="footer-links footer-bakes" aria-label="Our collections"><h2>Our collections</h2>{heroCollections.map((category) => <button key={category.name} onClick={() => onShop(category.name)}>{category.name}</button>)}</nav>
+        <nav className="footer-links footer-bakes" aria-label="Our collections"><h2>Our collections</h2>{heroCollections.map((category) => <button key={category.name} onClick={() => onShop(category.name)}>{category.name}</button>)}<Link to="/gift-hampers">Gift hampers</Link></nav>
         <div className="footer-newsletter">
           <h2>Stay close to the bakery</h2>
           <p>News and seasonal treats are on the way. Save your email for later.</p>

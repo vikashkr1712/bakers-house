@@ -1,10 +1,10 @@
 # Baker’s House
 
-A responsive bakery website with a burgundy and beige-white theme. Built with React, Vite, React Router, Tailwind CSS, Motion and Lucide. Photographs and fonts are hosted locally.
+A responsive artisan bakery frontend with a burgundy and cream theme, local photographs and fonts, ready-made and custom gift hampers, and a persistent basket. Built with React, Vite, React Router, Tailwind CSS, Motion and Lucide.
 
 ## Run and build
 
-Use Node.js 22.12 or later.
+Use Node.js 22.12 or later. No environment variables or backend services are required.
 
 ```sh
 npm ci
@@ -13,36 +13,36 @@ npm run build
 npm run preview
 ```
 
-The production output is `dist/`. No environment variables are required. `vercel.json` preserves application-route refreshes through the existing SPA rewrite.
+The build output is `dist/`. The existing `vercel.json` preserves direct application routes through the SPA rewrite.
 
 ## Pages and features
 
-- Homepage with Cakes & Pastries, Chocolates and Sweets selections, five animated photographs per selection, collection cards, best sellers and editorial sections.
-- `/shop`: all 20 current products, category/search/price/best-seller filters, cake occasion filtering and sorting by best sellers, price or name.
-- `/cakes`: dedicated cake hero, five occasion categories and cake-only products.
-- `/chocolates` and `/sweets`: dedicated collection pages.
-- `/cakes/:slug` and `/products/:slug`: product details, weights, flavours, quantity, prices, Add to cart and Buy now.
-- `/search`: searchable catalogue with URL filters and return navigation.
-- `/cart`: persistent variant-aware basket, quantities, subtotals and legacy basket migration.
-- `/checkout`: contact validation, selection review and an explicit email enquiry, with a copy action.
-- About, Our Story and Contact remain visible in navigation and redirect Home while saved for later.
-- Responsive navigation, keyboard focus, native privacy dialogs, reduced-motion support and local WebP/WOFF2 assets.
+- `/`: three photographic hero collections, three featured products, bakery philosophy, story and other editorial sections.
+- `/shop`: 45 products with visible cake-occasion and chocolate-type choices, nested sweet collections/categories/varieties, search, price and bestseller filters, sorting and shareable URLs.
+- Shop navigation opens cake, chocolate and sweet category links on desktop and mobile. About, Our Story and Contact remain visible in navigation and redirect Home while saved for later.
+- `/gift-hampers`: ready-made gifts and an editable custom hamper of chocolates and sweets, with pack sizes, packaging, a gift message and one grouped basket line. Cakes are excluded.
+- `/cakes`, `/chocolates`, `/sweets`: dedicated collection pages with matching product details.
+- Product details provide seven-picture galleries, weight options through 5 kg, flavours, quantities, Add to cart and Buy now.
+- Shop photographs rotate on pointer hover, with manual previous/next arrows. Manual navigation or keyboard focus pauses rotation; leaving resets it. There is no separate playback button. Reduced motion disables autoplay.
+- Shop and detail photographs fill their frames with consistent cover sizing, including portrait and landscape cake photos.
+- `/search`, `/cart` and `/checkout`: catalogue search, a persistent variant-aware basket and a demo-only checkout review.
+- Responsive layouts, larger hamper text, keyboard focus, reduced-motion support, and local WebP/WOFF2 assets.
 
-Shop filters and sort persist in the URL, for example `/shop?category=sweets&price=0-500&sort=price-asc`. Product details return to the filtered Shop view. Cake-specific actions continue to open the dedicated cake page.
+## Demo catalogue and local storage
 
-## Catalogue and storage
+Prices, weights and flavours are illustrative catalogue values. Bestseller ranks are editorial. Confirm actual recipes, ingredients, allergens, availability and nutritional labels before commercial use; Healthy, Protein and Sugar-Free sample labels are not verified dietary claims.
 
-Prices, weights and flavours are example catalogue values chosen for this implementation. Bestseller ranks are curated; no sales analytics, ratings or customer testimonials are fabricated. Product photos are licensed stock. Confirm business catalogue values, availability, ingredients and fulfilment arrangements before commercial use.
+Checkout simulates an enquiry locally. It sends no real email, places no real order and processes no payment. Newsletter preferences, baskets and hamper drafts stay on the visitor’s device and can be cleared through Privacy. Customer contact fields are not persisted.
 
-Online payment and an order API are not connected. Checkout prepares an enquiry addressed to the configured business email; the visitor reviews and sends it in their own email app. No email is sent automatically and no paid-order success is simulated. Customer contact fields are not persisted.
+Each current product gallery contains its existing main photograph plus six shared, clearly labelled generated inspiration samples for its collection. These samples show serving, craft, gifting, celebrations, ingredients and textures; they do not claim to be additional photographs or verified recipes of the actual product.
 
-The basket is saved on the visitor’s device under `bakers-house-basket-v1`. The footer email preference retains the compatibility key `bakers-house-newsletter-demo`; it is saved only on the device and no updates are sent. Privacy can clear both saved values. Storage-denied browsers can still use the in-memory basket. No analytics or tracking cookies are included.
+The built-in image generation tool created 18 gallery samples, optimized to WebP. Filenames, labels and full prompts are recorded in `public/images/bakery/gallery/gallery-sample-prompts.json`. The original stock photograph and font credits are retained below.
 
-This repository contains runtime source, required assets, manifests, deployment configuration and licensing documentation. Local browser tests, screenshots and verification notes are excluded.
+This repository contains application source, required assets, manifests, deployment configuration and licensing documentation. Local browser tests, screenshots, verification reports and original asset downloads are excluded.
 
 ## Photograph sources and licenses
 
-All 13 photographs are genuine stock photography downloaded on **2026-11-04**, optimized to WebP, and served locally. No AI-generated food imagery is used. Paths below are relative to `public/images/bakery/`.
+The original 13 photographs are genuine stock photography downloaded on **2026-11-04**, optimized to WebP, and served locally. Generated gallery inspiration images are documented separately below. Paths below are relative to `public/images/bakery/`.
 
 - [Unsplash License](https://unsplash.com/license): permits commercial website use and modification.
 - [Pexels License](https://www.pexels.com/license/): permits commercial website use and modification.
@@ -86,7 +86,7 @@ Both families use the **SIL Open Font License 1.1**. Full license notices are re
 
 ## Additional collection photographs
 
-The redesign adds 21 real Pexels photographs, downloaded on 5 November 2026 and optimized locally. Google Images discovery was attempted but its traffic challenge prevented access; original Pexels sources and the [Pexels License](https://www.pexels.com/license/) were verified instead. These freely licensed photographs may be used on commercial websites; attribution is optional. No AI images or Google thumbnails were used. Do not resell unchanged copies or imply photographer endorsement.
+The redesign adds 21 real Pexels photographs, downloaded on 5 November 2026 and optimized locally. Google Images discovery was attempted but its traffic challenge prevented access; original Pexels sources and the [Pexels License](https://www.pexels.com/license/) were verified instead. These freely licensed photographs may be used on commercial websites; attribution is optional. These collection photographs are licensed stock images; the generated gallery samples are documented separately below. Do not resell unchanged copies or imply photographer endorsement.
 
 Paths below are relative to `public/images/bakery/redesign/`. The local manifest also records source and license URLs.
 

@@ -1,0 +1,152 @@
+{
+  "mode": "built-in image_gen",
+  "purpose": "Generated contextual inspiration samples for demo product galleries. These are not photographs of a specific business's actual products.",
+  "style": "Premium editorial food photography, warm natural window light, cream and dark burgundy styling, photorealistic texture, square composition, no text, logos or watermark.",
+  "images": [
+    {
+      "file": "cakes-01.webp",
+      "label": "Serving inspiration",
+      "subject": "A single elegant vanilla layer cake slice on a small ivory ceramic plate, a neat fork beside it",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: A single elegant vanilla layer cake slice on a small ivory ceramic plate, a neat fork beside it. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/cakes-01.png"
+    },
+    {
+      "file": "cakes-02.webp",
+      "label": "Finishing inspiration",
+      "subject": "Close-up of a baker's hands piping smooth ivory buttercream rosettes on a celebration cake, no face",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: Close-up of a baker's hands piping smooth ivory buttercream rosettes on a celebration cake, no face. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/cakes-02.png"
+    },
+    {
+      "file": "cakes-03.webp",
+      "label": "Gifting inspiration",
+      "subject": "An open unbranded cream cake box tied with a burgundy satin ribbon, a simple iced celebration cake inside",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An open unbranded cream cake box tied with a burgundy satin ribbon, a simple iced celebration cake inside. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/cakes-03.png"
+    },
+    {
+      "file": "cakes-04.webp",
+      "label": "Celebration inspiration",
+      "subject": "A tasteful small celebration table with an ivory cake, burgundy linen napkins and flowers, no people",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: A tasteful small celebration table with an ivory cake, burgundy linen napkins and flowers, no people. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/cakes-04.png"
+    },
+    {
+      "file": "cakes-05.webp",
+      "label": "Bakery ingredient inspiration",
+      "subject": "Flat lay of a mixing bowl with flour, a small jug of milk, eggs and a whisk on a bakery worktop",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: Flat lay of a mixing bowl with flour, a small jug of milk, eggs and a whisk on a bakery worktop. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/cakes-05.png"
+    },
+    {
+      "file": "cakes-06.webp",
+      "label": "Texture inspiration",
+      "subject": "Close-up macro of delicate vanilla sponge layers and soft white cream on a plated cake slice",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: Close-up macro of delicate vanilla sponge layers and soft white cream on a plated cake slice. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/cakes-06.png"
+    },
+    {
+      "file": "chocolates-01.webp",
+      "label": "Serving inspiration",
+      "subject": "An ivory ceramic dessert plate with a few artisan dark chocolate truffles, a short espresso cup softly out of focus, and a folded burgundy linen napkin",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An ivory ceramic dessert plate with a few artisan dark chocolate truffles, a short espresso cup softly out of focus, and a folded burgundy linen napkin. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/chocolates-01.png"
+    },
+    {
+      "file": "chocolates-02.webp",
+      "label": "Craft inspiration",
+      "subject": "Close-up of a chocolatier's hands using a metal scraper to temper glossy dark chocolate on a marble slab, a burgundy apron, no face",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: Close-up of a chocolatier's hands using a metal scraper to temper glossy dark chocolate on a marble slab, a burgundy apron, no face. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/chocolates-02.png"
+    },
+    {
+      "file": "chocolates-03.webp",
+      "label": "Gifting inspiration",
+      "subject": "An open unbranded cream presentation box filled with an elegant assortment of artisan chocolate truffles and pralines, a dark burgundy satin ribbon",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An open unbranded cream presentation box filled with an elegant assortment of artisan chocolate truffles and pralines, a dark burgundy satin ribbon. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/chocolates-03.png"
+    },
+    {
+      "file": "chocolates-04.webp",
+      "label": "Celebration inspiration",
+      "subject": "A tasteful dessert table with small ivory platters of artisan chocolates, elegant glassware and burgundy linen napkins, no people",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: A tasteful dessert table with small ivory platters of artisan chocolates, elegant glassware and burgundy linen napkins, no people. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/chocolates-04.png"
+    },
+    {
+      "file": "chocolates-05.webp",
+      "label": "Ingredient inspiration",
+      "subject": "An editorial flat lay of cacao beans, cocoa nibs, cocoa powder and a few dark chocolate pieces in ivory ceramic bowls on a cream bakery worktop with burgundy linen",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An editorial flat lay of cacao beans, cocoa nibs, cocoa powder and a few dark chocolate pieces in ivory ceramic bowls on a cream bakery worktop with burgundy linen. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/chocolates-05.png"
+    },
+    {
+      "file": "chocolates-06.webp",
+      "label": "Texture inspiration",
+      "subject": "A close-up macro of broken artisan dark chocolate and a cut truffle showing a smooth ganache centre on an ivory plate",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: A close-up macro of broken artisan dark chocolate and a cut truffle showing a smooth ganache centre on an ivory plate. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/chocolates-06.png"
+    },
+    {
+      "file": "sweets-01.webp",
+      "label": "Serving inspiration",
+      "subject": "An ivory ceramic plate holding a tasteful small assortment of Indian mithai, diamond kaju katli, golden motichoor laddu and pistachio barfi, on cream linen beside a burgundy napkin",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An ivory ceramic plate holding a tasteful small assortment of Indian mithai, diamond kaju katli, golden motichoor laddu and pistachio barfi, on cream linen beside a burgundy napkin. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/sweets-01.png"
+    },
+    {
+      "file": "sweets-02.webp",
+      "label": "Craft inspiration",
+      "subject": "Close-up of an artisan sweet maker's two hands gently shaping a golden laddu over a cream bakery worktop, a small brass tray of finished laddus, burgundy apron, no face",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: Close-up of an artisan sweet maker's two hands gently shaping a golden laddu over a cream bakery worktop, a small brass tray of finished laddus, burgundy apron, no face. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/sweets-02.png"
+    },
+    {
+      "file": "sweets-03.webp",
+      "label": "Gifting inspiration",
+      "subject": "An open unbranded cream gift box with neat paper dividers holding an elegant assortment of Indian mithai, kaju katli, pistachio barfi, laddu and nut sweets, tied with a burgundy satin ribbon",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An open unbranded cream gift box with neat paper dividers holding an elegant assortment of Indian mithai, kaju katli, pistachio barfi, laddu and nut sweets, tied with a burgundy satin ribbon. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/sweets-03.png"
+    },
+    {
+      "file": "sweets-04.webp",
+      "label": "Celebration inspiration",
+      "subject": "A tasteful Indian festive table with ivory platters of mixed mithai, kaju katli, laddu and barfi, a few brass diyas placed safely apart from food, burgundy linen and flowers, no people",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: A tasteful Indian festive table with ivory platters of mixed mithai, kaju katli, laddu and barfi, a few brass diyas placed safely apart from food, burgundy linen and flowers, no people. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/sweets-04.png"
+    },
+    {
+      "file": "sweets-05.webp",
+      "label": "Ingredient inspiration",
+      "subject": "An editorial flat lay of cashews, pistachios, almonds, dates and mixed seeds in small ivory ceramic bowls on a cream bakery worktop with a folded burgundy linen cloth",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: An editorial flat lay of cashews, pistachios, almonds, dates and mixed seeds in small ivory ceramic bowls on a cream bakery worktop with a folded burgundy linen cloth. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/sweets-05.png"
+    },
+    {
+      "file": "sweets-06.webp",
+      "label": "Texture inspiration",
+      "subject": "A close-up macro of an elegant mixed mithai plate showing the fine texture of kaju katli, pistachio barfi and golden laddu with a few nuts, ivory ceramic plate",
+      "generated": true,
+      "prompt": "Create one premium editorial food photograph for an artisan bakery demo catalogue. Subject: A close-up macro of an elegant mixed mithai plate showing the fine texture of kaju katli, pistachio barfi and golden laddu with a few nuts, ivory ceramic plate. Warm natural window light, cream and dark burgundy styling, honest appetizing textures, calm luxurious mood, photorealistic, square composition. No text, no logos, no watermark, no labels, no price, no decorative UI. This is a generated sample inspiration photograph, not a photograph of a specific business's actual product.",
+      "original": ".asset-originals/gallery/sweets-06.png"
+    }
+  ],
+  "optimization": "WebP, maximum dimension 1000px, quality 0.84; PNG originals preserved locally."
+}

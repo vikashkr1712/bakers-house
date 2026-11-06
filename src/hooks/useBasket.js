@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { products } from '../data/products'
 import { getUnitPrice } from '../data/catalog'
+import { HAMPER_PRODUCT_ID, getHamperProduct, makeHamperKey, normalizeHamperConfig } from '../utils/hamperBasket'
 
 const STORAGE_KEY = 'bakers-house-basket-v1'
 
@@ -27,6 +28,16 @@ function readBasket() {
     if (!Array.isArray(saved)) return []
     return saved.reduce((items, item) => {
       if (!item || typeof item !== 'object' || !Number.isInteger(item.quantity) || item.quantity <= 0) return items
+      if (item.id === HAMPER_PRODUCT_ID || item.kind === 'hamper' || item.hamper) {
+        if (item.id !== HAMPER_PRODUCT_ID) return items
+        const hamper = normalizeHamperConfig(item.hamper)
+        if (!hamper) return items
+        const key = makeHamperKey(hamper)
+        const existing = items.find((entry) => entry.key === key)
+        if (existing) existing.quantity = Math.min(99, existing.quantity + item.quantity)
+        else items.push({ id: HAMPER_PRODUCT_ID, kind: 'hamper', key, weight: '1 hamper', flavour: '', hamper, quantity: positiveQuantity(item.quantity) })
+        return items
+      }
       const product = products.find((entry) => entry.id === item.id)
       if (!product) return items
       const { weight, flavour } = optionsFor(product, item)
@@ -54,6 +65,27 @@ export function useBasket() {
       : [...current, { id, key, weight, flavour, quantity }])
     return key
   }
+  function addHamper(config, options = {}) {
+    const hamper = normalizeHamperConfig(config)
+    if (!hamper) return null
+    const selection = options && typeof options === 'object' ? options : {}
+    const replaceKey = typeof selection.replaceKey === 'string' ? selection.replaceKey : null
+    if (replaceKey && !items.some((item) => item.key === replaceKey && item.kind === 'hamper')) return null
+    const key = makeHamperKey(hamper)
+    setItems((current) => {
+      const previous = replaceKey ? current.find((item) => item.key === replaceKey && item.kind === 'hamper') : null
+      if (replaceKey && !previous) return current
+      const quantity = previous ? previous.quantity : positiveQuantity(selection.quantity)
+      const remaining = previous ? current.filter((item) => item.key !== replaceKey) : current
+      return remaining.some((item) => item.key === key)
+        ? remaining.map((item) => item.key === key ? { ...item, quantity: Math.min(99, item.quantity + quantity) } : item)
+        : [...remaining, { id: HAMPER_PRODUCT_ID, kind: 'hamper', key, weight: '1 hamper', flavour: '', hamper, quantity }]
+    })
+    return key
+  }
+  function productFor(item) {
+    return item?.id === HAMPER_PRODUCT_ID ? getHamperProduct(item) : products.find((entry) => entry.id === item?.id)
+  }
   function update(token, difference) {
     if (!Number.isInteger(difference)) return
     setItems((current) => {
@@ -70,9 +102,9 @@ export function useBasket() {
     })
   }
   const subtotal = items.reduce((total, item) => {
-    const product = products.find((entry) => entry.id === item.id)
+    const product = productFor(item)
     const price = product ? getUnitPrice(product, item.weight) : null
     return total + (Number.isFinite(price) ? price * item.quantity : 0)
   }, 0)
-  return { items, add, update, remove, clear: () => setItems([]), count: items.reduce((total, item) => total + item.quantity, 0), subtotal }
+  return { items, add, addHamper, productFor, update, remove, clear: () => setItems([]), count: items.reduce((total, item) => total + item.quantity, 0), subtotal }
 }

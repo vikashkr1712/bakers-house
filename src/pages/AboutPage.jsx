@@ -6,7 +6,7 @@ import '../styles/about.css'
 const values = [
   { icon: Leaf, title: 'Simple, thoughtful ingredients', text: 'Good baking starts with the essentials. We’re inspired by familiar ingredients and the wonderful things they can become.' },
   { icon: HandHeart, title: 'A respect for the craft', text: 'The care in a folded layer. The character of a golden crust. It’s the little details that make a bake worth slowing down for.' },
-  { icon: Wheat, title: 'Goodness worth sharing', text: 'A loaf on the table or a little something sweet. Our collection celebrates the everyday moments that bring people together.' },
+  { icon: Wheat, title: 'Goodness worth sharing', text: 'A celebration cake or a little something sweet. Our collection celebrates the everyday moments that bring people together.' },
 ]
 
 const process = [
@@ -25,11 +25,13 @@ export default function AboutPage({ onContact }) {
             <p className="eyebrow">THE HEART OF BAKER’S HOUSE</p>
             <h1 id="about-title">Simple ingredients.<br />A little more <em>heart.</em></h1>
             <p>A love for traditional baking. A respect for the simple things. And the belief that something good is always better shared.</p>
-            <div className="about-hero-actions"><Link className="button button--gold" to="/search">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><Link className="about-philosophy-link" to="/about#about-philosophy">Our philosophy<ArrowDown size={17} aria-hidden="true" /></Link></div>
+            <div className="about-hero-actions"><Link className="button button--gold" to="/shop">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><Link className="about-philosophy-link" to="/about#about-philosophy">Our philosophy<ArrowDown size={17} aria-hidden="true" /></Link></div>
+            <div className="about-hero-detail"><span aria-hidden="true" /><p>A little care in every sweet moment.</p></div>
           </div>
           <figure className="about-hero-visual">
             <img src="/images/bakery/story/story-baker-working.webp" alt="Flour-dusted hands carefully shaping dough on a bakery workbench" width="2000" height="1333" fetchPriority="high" decoding="async" />
             <figcaption><Wheat size={27} strokeWidth={1.1} aria-hidden="true" /><span>Flour. Water. Heart.<small>Inspired by the art of making.</small></span></figcaption>
+            <span className="about-photo-label">THE JOY IS IN THE MAKING</span>
           </figure>
         </div>
       </div>
@@ -39,9 +41,9 @@ export default function AboutPage({ onContact }) {
       <div className="container">
         <div className="about-philosophy-grid">
           <Reveal className="about-philosophy-heading" direction="left"><p className="eyebrow">OUR PHILOSOPHY</p><h2 id="about-philosophy-title">Good things take<br />a little <em>time.</em></h2><span className="short-rule" /><p className="about-signature">Thoughtfully made. Joyfully shared.</p></Reveal>
-          <Reveal className="about-philosophy-copy" direction="right" delay={0.1}><p>There is something quietly wonderful about baking. The feel of dough beneath your hands. The first crackle of a crust. A buttery flake that makes an ordinary morning feel special.</p><p>Baker’s House is inspired by those simple pleasures. Our collection brings together rustic breads, delicate pastries, comforting cookies, and cakes made for a moment of celebration.</p><p>At its heart is a simple idea: make room for the things that matter. Good food, a little patience, and the people around your table.</p></Reveal>
+          <Reveal className="about-philosophy-copy" direction="right" delay={0.1}><p>There is something quietly wonderful about baking. The feel of dough beneath your hands. The first crackle of a crust. A buttery flake that makes an ordinary morning feel special.</p><p>Baker’s House is inspired by those simple pleasures. Our collection brings together celebration cakes, thoughtful chocolates, and traditional sweets for moments both big and small.</p><p>At its heart is a simple idea: make room for the things that matter. Good food, a little patience, and the people around your table.</p><Link className="text-link" to="/our-story">The story behind the sweetness<ArrowRight size={17} aria-hidden="true" /></Link></Reveal>
         </div>
-        <div className="about-values-grid">{values.map(({ icon: Icon, title, text }, index) => <Reveal className="about-value" key={title} delay={index * 0.08}><Icon size={30} strokeWidth={1.2} aria-hidden="true" /><h3>{title}</h3><p>{text}</p></Reveal>)}</div>
+        <div className="about-values-grid">{values.map(({ icon: Icon, title, text }, index) => <Reveal className="about-value" key={title} delay={index * 0.08}><span className="about-value-icon" aria-hidden="true"><Icon size={28} strokeWidth={1.4} /></span><h3>{title}</h3><p>{text}</p></Reveal>)}</div>
       </div>
     </section>
 
@@ -54,8 +56,8 @@ export default function AboutPage({ onContact }) {
 
     <section className="about-invitation" aria-labelledby="about-invitation-title">
       <div className="container about-invitation-grid">
-        <Reveal className="about-invitation-photo" direction="left"><img src="/images/bakery/banners/banner-fresh-pastries.webp" alt="Golden filled croissants on a wooden board, with a basket of pastries behind them" width="1200" height="822" loading="lazy" decoding="async" /></Reveal>
-        <Reveal className="about-invitation-copy" direction="right" delay={0.1}><p className="eyebrow">A PLACE FOR SIMPLE PLEASURES</p><h2 id="about-invitation-title">For the everyday.<br />And the <em>just because.</em></h2><p>A daily loaf. A coffee-break companion. Something sweet for someone you love. Find a little goodness for whatever the day brings.</p><div className="about-invitation-actions"><Link className="button button--gold" to="/search">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><button className="text-link" onClick={onContact}>Get in touch<ArrowRight size={17} aria-hidden="true" /></button></div></Reveal>
+        <Reveal className="about-invitation-photo" direction="left"><img src="/images/bakery/redesign/cake-floral.webp" alt="A softly decorated celebration cake with delicate floral details" width="1000" height="1000" loading="lazy" decoding="async" /></Reveal>
+        <Reveal className="about-invitation-copy" direction="right" delay={0.1}><p className="eyebrow">A PLACE FOR SIMPLE PLEASURES</p><h2 id="about-invitation-title">For the everyday.<br />And the <em>just because.</em></h2><p>A birthday wish. A thoughtful gift. Something sweet for someone you love. Find a little goodness for whatever the day brings.</p><div className="about-invitation-actions"><Link className="button button--gold" to="/shop">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><button className="text-link" onClick={onContact}>Get in touch<ArrowRight size={17} aria-hidden="true" /></button></div></Reveal>
       </div>
     </section>
   </div>

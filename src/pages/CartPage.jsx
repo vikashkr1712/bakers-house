@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronRight, Heart, Minus, Plus, ShoppingBag, Trash2, Wheat } from 'lucide-react'
 import { products } from '../data/products'
 import { formatPrice, getUnitPrice } from '../data/catalog'
+import HamperContents from '../components/HamperContents'
 import '../styles/cart.css'
 
 function ProductLink({ product, onProduct, children, ...props }) {
@@ -15,7 +16,7 @@ export default function CartPage({ basket, onShop, onAdd, onProduct }) {
   const [reviewed, setReviewed] = useState(false)
   const pageRef = useRef(null)
   const focusAfterChange = useRef(null)
-  const items = basket.items.map((item) => ({ ...item, product: products.find((product) => product.id === item.id) })).filter((item) => item.product)
+  const items = basket.items.map((item) => ({ ...item, product: basket.productFor(item) })).filter((item) => item.product)
   const pricedItems = items.filter((item) => Number.isFinite(getUnitPrice(item.product, item.weight)))
   const unpricedCount = items.length - pricedItems.length
   const subtotal = pricedItems.reduce((total, item) => total + getUnitPrice(item.product, item.weight) * item.quantity, 0)
@@ -59,6 +60,8 @@ export default function CartPage({ basket, onShop, onAdd, onProduct }) {
                   <h2><ProductLink product={product} onProduct={onProduct}>{product.name}</ProductLink></h2>
                   <p className="cart-item-note">{product.note}</p>
                   {variant && <p className="cart-item-variant">{variant}</p>}
+                  <HamperContents product={product} />
+                  {product.collection === 'hampers' && <Link className="hamper-edit-link" to={product.detailPath}>Edit hamper</Link>}
                   <div className="cart-item-prices">{Number.isFinite(unitPrice) ? <><span>{formatPrice(unitPrice)} each</span><strong>{formatPrice(unitPrice * quantity)}</strong></> : <span>Price on request</span>}</div>
                   <div className="cart-item-controls">
                     <div className="quantity-control cart-quantity" role="group" aria-label={`${label} quantity controls`}>
@@ -83,7 +86,7 @@ export default function CartPage({ basket, onShop, onAdd, onProduct }) {
             <Link className="button button--gold cart-checkout" to="/checkout">{pricedItems.length ? 'Continue to checkout' : 'Review order enquiry'}<ArrowRight size={19} aria-hidden="true" /></Link>
             <button className="button button--gold cart-save" onClick={() => setReviewed(true)}>{reviewed ? 'Collection saved' : 'Save my collection'}{reviewed ? <Check size={19} aria-hidden="true" /> : <ArrowRight size={19} aria-hidden="true" />}</button>
             <div className="cart-save-status" role="status">{reviewed && <p><Check size={17} aria-hidden="true" /><span>Your selection is saved in this browser. No order has been placed.</span></p>}</div>
-            <div className="cart-order-note"><span className="cart-order-label">A NOTE BEFORE YOU GO</span><p>Payment is not collected online. Review your selection and send an order enquiry to confirm availability and the final amount.</p></div>
+            <div className="cart-order-note"><span className="cart-order-label">A NOTE BEFORE YOU GO</span><p>This is a demo. Review your selection at checkout; no payment, email or real order is sent.</p></div>
           </aside>
         </div> : <div className="cart-empty">
           <div className="cart-empty-copy"><span className="cart-empty-icon" aria-hidden="true"><ShoppingBag size={32} strokeWidth={1.2} /></span><p className="eyebrow">ROOM FOR SOMETHING LOVELY</p><h2>Your basket<br /> is waiting.</h2><p>From a favorite daily loaf to a little sweet indulgence, there’s something good to make your own.</p><button className="button button--gold" onClick={onShop}>Explore our bakes<ArrowRight size={18} aria-hidden="true" /></button><span className="cart-empty-note">Find a favorite. Start a little collection.</span></div>

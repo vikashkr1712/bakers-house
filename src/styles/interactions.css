@@ -1,0 +1,134 @@
+/* Shared interaction timing keeps feedback consistent across the bakery. */
+:root {
+  --motion-fast: 180ms;
+  --motion-base: 260ms;
+  --motion-slow: 420ms;
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Keep all six navigation labels comfortable before the mobile breakpoint. */
+@media (min-width: 1100px) and (max-width: 1359px) {
+  .nav-inner { gap: 24px; }
+  .desktop-nav { gap: 18px; }
+  .nav-link { font-size: 14px; padding-inline: 4px; }
+  .nav-inner .brand-name { font-size: 22px; }
+  .nav-inner .brand-mark { width: 31px; }
+  .nav-actions { gap: 12px; }
+}
+
+.button {
+  transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), box-shadow var(--motion-base), transform var(--motion-base) var(--motion-ease);
+}
+.button:disabled:hover { transform: none; box-shadow: none; }
+.button--gold:disabled:hover { background: var(--burgundy); border-color: var(--burgundy); color: white; }
+.button > svg, .text-link > svg, .newsletter-input button > svg, .search-page-suggestions button > svg {
+  transition: translate var(--motion-base) var(--motion-ease);
+}
+/* Move the arrow rather than changing link width and shifting adjacent copy. */
+.text-link, .text-link:hover { gap: 18px; }
+.text-link { transition: color var(--motion-fast), border-color var(--motion-fast); }
+.nav-actions .icon-button { border-radius: 50%; transition: color var(--motion-fast), background-color var(--motion-fast); }
+.nav-actions .icon-button > svg { transition: scale var(--motion-base) var(--motion-ease); }
+.nav-actions .icon-button:focus-visible { background-color: #f2e8e8; }
+.footer-links a, .footer-links button {
+  transition: color var(--motion-fast), translate var(--motion-base) var(--motion-ease);
+}
+.footer-links :is(a, button):focus-visible { color: var(--burgundy); text-decoration: underline; text-underline-offset: 4px; }
+.newsletter-input, .search-page-field { transition: border-color var(--motion-fast), box-shadow var(--motion-base); }
+.newsletter-input:focus-within, .search-page-field:focus-within { border-color: var(--burgundy); box-shadow: 0 0 0 4px #6d213c0a; }
+.newsletter-input button { transition: background-color var(--motion-fast), box-shadow var(--motion-base); }
+.search-page-categories button {
+  transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), box-shadow var(--motion-base);
+}
+.search-page-categories button:focus-visible { box-shadow: 0 0 0 3px #6d213c12; }
+.category-card .category-image-wrap {
+  translate: 0 0;
+  transition: translate var(--motion-base) var(--motion-ease), box-shadow var(--motion-base);
+}
+.category-card:focus-visible .category-image-wrap { box-shadow: 0 8px 24px #50162914; }
+.category-image-wrap img { transition: transform var(--motion-slow) var(--motion-ease); }
+.story-image > img, .banner-photo { transition: scale var(--motion-slow) var(--motion-ease); }
+.feature-icon { border-radius: 4px; background: transparent; box-shadow: 0 0 0 10px transparent; transition: background-color var(--motion-fast), box-shadow var(--motion-fast); }
+.feature .feature-icon > svg { color: #987b86; transition: color var(--motion-fast), scale var(--motion-base) var(--motion-ease), rotate var(--motion-base) var(--motion-ease); }
+.feature h2 { transition: color var(--motion-fast); }
+.celebration-float { transition: border-color var(--motion-base), box-shadow var(--motion-base); }
+.celebration-seal { transition: background-color var(--motion-base), border-color var(--motion-base), color var(--motion-base); }
+.collection-switcher button { transition: color var(--motion-fast), border-color var(--motion-fast); }
+.category-image-shade::after { content: ''; position: absolute; inset: 0; background: #6d213c30; opacity: 0; pointer-events: none; transition: opacity var(--motion-base); }
+.catalog-product-card { transition: background-color var(--motion-base), border-color var(--motion-base), box-shadow var(--motion-base), translate var(--motion-base) var(--motion-ease); }
+.catalog-product-tags span { transition: color var(--motion-fast), background-color var(--motion-fast); }
+.catalog-product-info h3 { transition: color var(--motion-fast); }
+:is(.shop-reset, .collection-filter-clear, .search-page-reset, .search-page-suggestions button, .checkout-back, .checkout-edit) { transition: color var(--motion-fast), background-color var(--motion-fast), text-decoration-color var(--motion-fast); border-radius: 4px; }
+.search-page-clear { border-radius: 50%; transition: color var(--motion-fast), background-color var(--motion-fast); }
+.nav-link, .mobile-nav :is(a, button) { transition: color var(--motion-fast), background-color var(--motion-fast); }
+
+/* Native dropdowns use a restrained neutral focus indicator. */
+:root select:is(:focus, :focus-visible) { border-color: #a99ca1; box-shadow: none; outline: none; }
+:root select:focus-visible { outline: 1px solid #8b7d83; outline-offset: 2px; }
+
+/* Colour feedback also follows keyboard focus, without moving the layout. */
+.button.button--outline:not(:disabled):focus-visible,
+.catalog-page .catalog-secondary-button:not(:disabled):focus-visible { background: var(--burgundy); border-color: var(--burgundy); color: white; }
+.catalog-page .catalog-primary-button:not(:disabled):focus-visible { background: var(--burgundy-hover); border-color: var(--burgundy-hover); color: white; }
+.text-link:focus-visible { color: var(--burgundy-dark); border-color: var(--burgundy); }
+.collection-switcher button:focus-visible { color: var(--burgundy-dark); border-color: var(--burgundy); }
+.category-card:focus-visible .category-image-shade::after { opacity: 1; }
+.catalog-product-card:focus-within { background: #fffbfc; }
+.catalog-product-card:focus-within .catalog-product-tags span { color: white; background: var(--burgundy); }
+.catalog-product-card:focus-within .catalog-product-info h3 { color: var(--burgundy); }
+.sweet-collection-browser .sweet-collection-choice:not(.is-selected):focus-visible { background: #f7edf0; border-color: #a26a7e; }
+.search-page-clear:focus-visible { color: var(--burgundy-dark); background: #f2e6eb; }
+
+@media (hover: hover) and (pointer: fine) {
+  .button:not(:disabled):hover { box-shadow: 0 6px 18px #50162914; }
+  .button.button--outline:not(:disabled):hover,
+  .catalog-page .catalog-secondary-button:not(:disabled):hover { background: var(--burgundy); border-color: var(--burgundy); color: white; }
+  .catalog-page .catalog-primary-button:not(:disabled):hover { background: var(--burgundy-hover); border-color: var(--burgundy-hover); color: white; }
+  .text-link:hover { color: var(--burgundy-dark); border-color: var(--burgundy); }
+  .button:not(:disabled):active { transform: translateY(0); box-shadow: none; }
+  :is(.button:not(:disabled), .text-link):hover > .lucide-arrow-right { translate: 3px 0; }
+  :is(.button:not(:disabled), .text-link):hover > .lucide-arrow-up-right { translate: 2px -2px; }
+  :is(.button:not(:disabled), .text-link):hover > .lucide-arrow-down { translate: 0 3px; }
+  :is(.button:not(:disabled), .text-link):hover > .lucide-arrow-left { translate: -3px 0; }
+  .button:not(:disabled):hover > .lucide-corner-down-right { translate: 2px 0; }
+  .nav-actions .icon-button:hover { color: var(--burgundy); background-color: #f2e8e8; }
+  .nav-actions .icon-button:hover > svg { scale: 1.06; }
+  .footer-links :is(a, button):hover { color: var(--burgundy); translate: 3px 0; }
+  .newsletter-input button:hover { background-color: var(--burgundy-dark); box-shadow: 0 3px 10px #5016291a; }
+  .newsletter-input button:hover > svg { translate: 2px 0; }
+  .search-page-suggestions button:hover > svg { translate: 2px -2px; }
+  .search-page-categories button:not(:disabled):hover { box-shadow: 0 3px 10px #5016290a; }
+  .category-card:not(:disabled):hover .category-image-wrap { translate: 0 -3px; box-shadow: 0 10px 26px #5016291a; }
+  .category-card:not(:disabled):hover img { transform: scale(1.035); }
+  .category-card:not(:disabled):hover .category-image-shade::after { opacity: 1; }
+  .celebration-photo:hover .celebration-float { border-color: #c698a8; box-shadow: 0 12px 30px #50162926; }
+  .celebration-seal:hover { color: white; background: var(--burgundy); border-color: var(--burgundy); }
+  .collection-switcher button:not(.is-selected):hover { color: var(--burgundy-dark); border-color: #a26a7e; }
+  .catalog-product-card:hover { background: #fffbfc; }
+  .catalog-product-card:hover .catalog-product-tags span { color: white; background: var(--burgundy); }
+  .catalog-product-card:hover .catalog-product-info h3 { color: var(--burgundy); }
+  .sweet-collection-browser .sweet-collection-choice:not(.is-selected):hover { background: #f7edf0; border-color: #a26a7e; }
+  :is(.shop-reset, .collection-filter-clear, .search-page-reset, .search-page-suggestions button, .checkout-back, .checkout-edit):not(:disabled):hover { color: var(--burgundy-dark); background-color: #f3e7eb; text-decoration: underline; text-underline-offset: 4px; }
+  .search-page-clear:not(:disabled):hover { color: var(--burgundy-dark); background: #f2e6eb; }
+  .nav-link:hover { color: var(--burgundy-hover); }
+  .mobile-nav :is(a, button):hover { color: var(--burgundy); background-color: #f3e7eb; }
+  .story-image:hover > img, .banner-image-frame:hover .banner-photo { scale: 1.03; }
+  .feature:hover .feature-icon { background: #eadbe1; box-shadow: 0 0 0 10px #eadbe1; }
+  .feature:hover .feature-icon > svg { color: var(--burgundy-dark); scale: 1.06; rotate: -4deg; }
+  .feature:hover h2 { color: var(--burgundy); }
+}
+
+/* Touch controls stay steady; feedback never hides an action behind hover. */
+@media (hover: none), (pointer: coarse) {
+  .button:hover { transform: none; }
+  .category-card:not(:disabled):hover img, .category-card:hover .category-card-title svg { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button, .button:hover, .button:active { transform: none; }
+  .button > svg, .text-link > svg, .newsletter-input button > svg,
+  .search-page-suggestions button > svg, .footer-links a, .footer-links button,
+  .category-card .category-image-wrap { translate: none !important; }
+  .nav-actions .icon-button > svg, .story-image > img, .banner-photo, .feature-icon > svg { scale: none !important; rotate: none !important; }
+  .category-card:not(:disabled):hover img, .category-card:hover .category-card-title svg { transform: none; }
+}

@@ -55,7 +55,7 @@
 .catalog-current-filter > span { background: #f0e6e7; border-radius: 999px; padding: 7px 15px; color: var(--burgundy, #6d213c); }
 .catalog-current-filter button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--burgundy, #6d213c); }
 .catalog-product-card { min-width: 0; display: flex; flex-direction: column; background: #fff; color: var(--ink, #35252b); border: 1px solid #e8dcd8; border-radius: 15px; overflow: hidden; translate: 0 0; transition: box-shadow var(--motion-base, 260ms), border-color var(--motion-base, 260ms), translate var(--motion-base, 260ms) var(--motion-ease, ease); }
-.catalog-product-card:focus-within { border-color: #c9a9b2; box-shadow: 0 10px 26px #5016290d; }
+.catalog-product-card:has(:focus-visible) { border-color: #c9a9b2; box-shadow: 0 10px 26px #5016290d; }
 .catalog-product-image { position: relative; aspect-ratio: 1 / .98; background: #f0e7df; overflow: hidden; }
 .catalog-product-image > a { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .catalog-product-image img { position: absolute; inset: 0; display: block; height: 100%; width: 100%; max-width: none; object-fit: cover; object-position: center; transition: transform var(--motion-slow, 420ms) var(--motion-ease, ease); }
@@ -128,7 +128,7 @@
 .cake-detail-total { text-align: right; font-size: 11px; color: #766b6d; }
 .cake-detail-total span { display: block; color: var(--burgundy, #6d213c); font-size: 23px; font-weight: 500; line-height: 1.5; margin-top: 2px; }
 .cake-detail-purchase { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 25px; }
-.cake-detail-purchase .button { min-width: 0; min-height: 54px; font-size: 13px; padding: 13px 18px; gap: 12px; }
+.cake-detail-purchase .button { min-width: 0; max-width: 280px; min-height: 48px; border-radius: 10px; font-size: 13px; padding: 10px 18px; gap: 10px; }
 .cake-detail-order-note { text-align: center; margin-top: 13px; color: #766b6d; font-size: 10px; line-height: 1.8; }
 .cake-detail-small-print { padding-top: 23px; margin-top: 24px; border-top: 1px solid #e8dcd8; }
 .cake-detail-small-print h2 { color: var(--burgundy, #6d213c); font-size: 21px; line-height: 1.5; }

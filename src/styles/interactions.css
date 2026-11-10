@@ -73,9 +73,9 @@
 .text-link:focus-visible { color: var(--burgundy-dark); border-color: var(--burgundy); }
 .collection-switcher button:focus-visible { color: var(--burgundy-dark); border-color: var(--burgundy); }
 .category-card:focus-visible .category-image-shade::after { opacity: 1; }
-.catalog-product-card:focus-within { background: #fffbfc; }
-.catalog-product-card:focus-within .catalog-product-tags span { color: white; background: var(--burgundy); }
-.catalog-product-card:focus-within .catalog-product-info h3 { color: var(--burgundy); }
+.catalog-product-card:has(:focus-visible) { background: #fffbfc; }
+.catalog-product-card:has(:focus-visible) .catalog-product-tags span { color: white; background: var(--burgundy); }
+.catalog-product-card:has(:focus-visible) .catalog-product-info h3 { color: var(--burgundy); }
 .sweet-collection-browser .sweet-collection-choice:not(.is-selected):focus-visible { background: #f7edf0; border-color: #a26a7e; }
 .search-page-clear:focus-visible { color: var(--burgundy-dark); background: #f2e6eb; }
 
@@ -113,8 +113,8 @@
   .nav-link:hover { color: var(--burgundy-hover); }
   .mobile-nav :is(a, button):hover { color: var(--burgundy); background-color: #f3e7eb; }
   .story-image:hover > img, .banner-image-frame:hover .banner-photo { scale: 1.03; }
-  .feature:hover .feature-icon { background: #eadbe1; box-shadow: 0 0 0 10px #eadbe1; }
-  .feature:hover .feature-icon > svg { color: var(--burgundy-dark); scale: 1.06; rotate: -4deg; }
+  .feature:hover .feature-icon { background: var(--burgundy-dark); box-shadow: 0 0 0 10px var(--burgundy-dark); }
+  .feature:hover .feature-icon > svg { color: white; scale: 1.06; rotate: -4deg; }
   .feature:hover h2 { color: var(--burgundy); }
 }
 

@@ -19,11 +19,11 @@ The build output is `dist/`. The existing `vercel.json` preserves direct applica
 
 - `/`: three photographic hero collections, three featured products, bakery philosophy, story and other editorial sections.
 - `/shop`: 45 products with visible cake-occasion and chocolate-type choices, nested sweet collections/categories/varieties, search, price and bestseller filters, sorting and shareable URLs.
-- Shop navigation opens cake, chocolate and sweet category links on desktop and mobile. About, Our Story and Contact remain visible in navigation and redirect Home while saved for later.
+- Clicking Shop opens all products. Hovering Shop opens the desktop collection menu; a separate mobile arrow opens the same options. Collection links consistently open the dedicated Cakes, Chocolates and Sweets pages. About, Our Story and Contact are available as dedicated pages.
 - `/gift-hampers`: ready-made gifts and an editable custom hamper of chocolates and sweets, with pack sizes, packaging, a gift message and one grouped basket line. Cakes are excluded.
 - `/cakes`, `/chocolates`, `/sweets`: dedicated collection pages with matching product details.
 - Product details provide seven-picture galleries, weight options through 5 kg, flavours, quantities, Add to cart and Buy now.
-- Shop photographs rotate on pointer hover, with manual previous/next arrows. Manual navigation or keyboard focus pauses rotation; leaving resets it. There is no separate playback button. Reduced motion disables autoplay.
+- Visible Shop photographs rotate every four seconds. Manual arrows appear on card hover or keyboard focus and remain available on touch screens. Mouse-click focus does not retain hover styling after the pointer leaves. Manual navigation or keyboard focus pauses rotation. Reduced motion disables autoplay.
 - Shop and detail photographs fill their frames with consistent cover sizing, including portrait and landscape cake photos.
 - `/search`, `/cart` and `/checkout`: catalogue search, a persistent variant-aware basket and a demo-only checkout review.
 - Responsive layouts, larger hamper text, keyboard focus, reduced-motion support, and local WebP/WOFF2 assets.

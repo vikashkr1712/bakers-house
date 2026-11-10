@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { formatPrice, getUnitPrice } from '../data/catalog'
@@ -9,7 +9,9 @@ export default function CatalogProductCard({ product, onAdd, onBuy }) {
   const location = useLocation()
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [activeImage, setActiveImage] = useState(0)
-  const [autoplay, setAutoplay] = useState(false)
+  const [autoplay, setAutoplay] = useState(true)
+  const [inView, setInView] = useState(false)
+  const cardRef = useRef(null)
   const gallery = product.gallery || [{ src: product.image, alt: product.alt, generated: false }]
   const previewEnabled = location.pathname.replace(/\/+$/, '') === '/shop' && gallery.length > 1
   const currentPhoto = gallery[previewEnabled ? activeImage : 0] || gallery[0]
@@ -17,30 +19,35 @@ export default function CatalogProductCard({ product, onAdd, onBuy }) {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     const update = () => {
       setReducedMotion(media.matches)
-      if (media.matches) { setAutoplay(false); setActiveImage(0) }
     }
     media.addEventListener('change', update)
     return () => media.removeEventListener('change', update)
   }, [])
   useEffect(() => {
-    if (!previewEnabled || !autoplay || reducedMotion) return
+    if (!previewEnabled) return
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting))
+    observer.observe(cardRef.current)
+    return () => observer.disconnect()
+  }, [previewEnabled])
+  useEffect(() => {
+    if (!previewEnabled || !inView || !autoplay || reducedMotion) return
     const timer = window.setInterval(() => {
       if (!document.hidden) setActiveImage(index => (index + 1) % gallery.length)
-    }, 2200)
+    }, 4000)
     return () => window.clearInterval(timer)
-  }, [autoplay, gallery.length, previewEnabled, reducedMotion])
+  }, [autoplay, gallery.length, inView, previewEnabled, reducedMotion])
   useEffect(() => {
-    if (!previewEnabled || !autoplay) return
+    if (!previewEnabled || !inView || !autoplay || reducedMotion) return
     const next = new Image()
     next.src = gallery[(activeImage + 1) % gallery.length].src
-  }, [activeImage, autoplay, gallery, previewEnabled])
+  }, [activeImage, autoplay, gallery, inView, previewEnabled, reducedMotion])
   function changePhoto(direction) {
     setAutoplay(false)
     setActiveImage(index => (index + direction + gallery.length) % gallery.length)
   }
   const options = { weight: product.weights[0].label, flavour: product.flavours[0], quantity: 1 }
   const from = `${location.pathname}${location.search}`
-  return <article className="catalog-product-card" onPointerEnter={event => { if (previewEnabled && event.pointerType === 'mouse' && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reducedMotion) setAutoplay(true) }} onPointerLeave={() => { setAutoplay(false); setActiveImage(0) }} onFocusCapture={() => setAutoplay(false)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setAutoplay(false) }}>
+  return <article ref={cardRef} className="catalog-product-card" onPointerLeave={() => { if (!cardRef.current.contains(document.activeElement)) setAutoplay(true) }} onFocusCapture={() => setAutoplay(false)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setAutoplay(true) }}>
     <div className="catalog-product-image">
       <Link to={product.detailPath} state={{ from }} aria-label={`View details of ${product.name}`}>
         <img key={currentPhoto.src} src={currentPhoto.src} alt={currentPhoto.alt} width="800" height="800" loading="lazy" decoding="async" />
@@ -49,7 +56,7 @@ export default function CatalogProductCard({ product, onAdd, onBuy }) {
         {currentPhoto.generated && <span className="catalog-preview-sample">Generated sample</span>}
         <button type="button" className="catalog-preview-arrow catalog-preview-arrow--previous" aria-label={`Previous photograph of ${product.name}`} onClick={() => changePhoto(-1)}><ChevronLeft size={18} aria-hidden="true" /></button>
         <button type="button" className="catalog-preview-arrow catalog-preview-arrow--next" aria-label={`Next photograph of ${product.name}`} onClick={() => changePhoto(1)}><ChevronRight size={18} aria-hidden="true" /></button>
-        <span className="catalog-gallery-position" aria-live={autoplay ? 'off' : 'polite'}>{activeImage + 1} / {gallery.length}</span>
+        <span className="catalog-gallery-position" aria-live={autoplay && !reducedMotion ? 'off' : 'polite'}>{activeImage + 1} / {gallery.length}</span>
       </>}
       {product.bestseller && <span className="catalog-bestseller">Best seller</span>}
       {!product.available && <span className="catalog-unavailable">Currently unavailable</span>}

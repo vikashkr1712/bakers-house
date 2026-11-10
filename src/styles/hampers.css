@@ -46,8 +46,8 @@
 .hamper-preset-footer { margin-top: auto; border-top: 1px solid var(--border); padding-top: 20px; }
 .hamper-preset-footer > strong { display: block; font-size: 24px; color: var(--burgundy); font-weight: 500; }
 .hamper-preset-footer strong > small { display: block; font-size: 14px; font-weight: 400; color: var(--muted); margin-top: 3px; }
-.hamper-preset-footer .button { display: flex; width: 100%; min-height: 48px; margin-top: 18px; padding-inline: 16px; font-size: 14px; gap: 10px; }
-.hamper-customize-link { display: flex; min-height: 44px; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 8px; padding: 8px 12px; border: 1px solid transparent; border-radius: 999px; font-size: 14px; color: var(--burgundy); transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast); }
+.hamper-preset-footer .button { display: flex; width: fit-content; min-height: 44px; margin-top: 16px; padding: 10px 16px; border-radius: 10px; font-size: 14px; gap: 8px; }
+.hamper-customize-link { display: flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; width: fit-content; max-width: 100%; margin-top: 4px; padding: 8px 0; border: 1px solid transparent; border-radius: 6px; font-size: 13px; color: var(--burgundy); transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast); }
 .hamper-customize-link svg { transition: translate var(--motion-base) var(--motion-ease); }
 .hamper-customize-link:focus-visible { background: var(--burgundy); border-color: var(--burgundy); color: white; }
 .hamper-catalogue-note { margin-top: 24px; font-size: 14px; color: var(--muted); line-height: 1.8; }
@@ -131,7 +131,7 @@
 .hamper-totals dd { margin: 0; color: var(--burgundy-dark); flex-shrink: 0; }
 .hamper-totals .hamper-total { font-size: 16px; color: var(--burgundy-dark); margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
 .hamper-total dd { color: var(--burgundy); font-size: 23px; font-weight: 500; }
-.hamper-summary .hamper-submit { width: 100%; padding-inline: 15px; gap: 10px; font-size: 14px; min-height: 50px; }
+.hamper-summary .hamper-submit { width: fit-content; justify-self: start; padding: 10px 14px; border-radius: 10px; gap: 8px; font-size: 14px; min-height: 48px; }
 .hamper-start-fresh { display: flex; min-height: 44px; margin-top: -10px; align-items: center; justify-content: center; gap: 8px; font-size: 14px; color: var(--muted); transition: color var(--motion-fast); }
 .hamper-start-fresh:focus-visible { color: var(--burgundy); text-decoration: underline; text-underline-offset: 4px; }
 .hamper-local-note { margin-top: -8px; font-size: 14px; color: var(--muted); line-height: 1.85; }

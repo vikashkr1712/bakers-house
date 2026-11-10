@@ -33,7 +33,7 @@
 .checkout-payment-note { display: flex; align-items: flex-start; gap: 12px; padding: 18px; border: 1px solid #e8dcd8; border-radius: 10px; background: #f5efe6; margin-top: 26px; }
 .checkout-payment-note svg { color: #6d213c; flex-shrink: 0; margin-top: 3px; }
 .checkout-payment-note p { font-size: 13px; color: #68585f; line-height: 1.8; }
-.checkout-page .checkout-review-button, .checkout-page .checkout-send { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 54px; width: 100%; margin-top: 24px; border-radius: 999px; padding: 15px 23px; background: #6d213c; color: #fff; border: 1px solid #6d213c; font-size: 14px; line-height: 1.6; }
+.checkout-page .checkout-review-button, .checkout-page .checkout-send { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; width: fit-content; margin-top: 24px; border-radius: 10px; padding: 10px 18px; background: #6d213c; color: #fff; border: 1px solid #6d213c; font-size: 14px; line-height: 1.5; }
 .checkout-page .checkout-review-button:hover, .checkout-page .checkout-send:hover { background: #842d4c; border-color: #842d4c; }
 .checkout-review-button svg, .checkout-send svg { flex-shrink: 0; }
 .checkout-back, .checkout-edit { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.7; min-height: 44px; color: #6d213c; }

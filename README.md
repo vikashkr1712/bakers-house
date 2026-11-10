@@ -23,7 +23,7 @@ The build output is `dist/`. The existing `vercel.json` preserves direct applica
 - `/gift-hampers`: ready-made gifts and an editable custom hamper of chocolates and sweets, with pack sizes, packaging, a gift message and one grouped basket line. Cakes are excluded.
 - `/cakes`, `/chocolates`, `/sweets`: dedicated collection pages with matching product details.
 - Product details provide seven-picture galleries, weight options through 5 kg, flavours, quantities, Add to cart and Buy now.
-- Visible Shop photographs rotate every four seconds. Manual arrows appear on card hover or keyboard focus and remain available on touch screens. Mouse-click focus does not retain hover styling after the pointer leaves. Manual navigation or keyboard focus pauses rotation. Reduced motion disables autoplay.
+- Visible Shop and Home Best Sellers photographs rotate through seven images every four seconds. Manual arrows appear on card hover or keyboard focus and remain available on touch screens. Mouse-click focus does not retain hover styling after the pointer leaves. Manual navigation or keyboard focus pauses rotation. Reduced motion disables autoplay.
 - Shop and detail photographs fill their frames with consistent cover sizing, including portrait and landscape cake photos.
 - `/search`, `/cart` and `/checkout`: catalogue search, a persistent variant-aware basket and a demo-only checkout review.
 - Responsive layouts, larger hamper text, keyboard focus, reduced-motion support, and local WebP/WOFF2 assets.

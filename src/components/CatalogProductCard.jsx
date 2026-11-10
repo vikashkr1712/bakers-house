@@ -5,7 +5,7 @@ import { formatPrice, getUnitPrice } from '../data/catalog'
 import '../styles/catalog.css'
 import '../styles/product-gallery.css'
 
-export default function CatalogProductCard({ product, onAdd, onBuy }) {
+export default function CatalogProductCard({ product, onAdd, onBuy, previewGallery = false }) {
   const location = useLocation()
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [activeImage, setActiveImage] = useState(0)
@@ -13,7 +13,7 @@ export default function CatalogProductCard({ product, onAdd, onBuy }) {
   const [inView, setInView] = useState(false)
   const cardRef = useRef(null)
   const gallery = product.gallery || [{ src: product.image, alt: product.alt, generated: false }]
-  const previewEnabled = location.pathname.replace(/\/+$/, '') === '/shop' && gallery.length > 1
+  const previewEnabled = previewGallery && gallery.length > 1
   const currentPhoto = gallery[previewEnabled ? activeImage : 0] || gallery[0]
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')

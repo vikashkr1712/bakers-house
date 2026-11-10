@@ -228,18 +228,20 @@
   .catalog-listing-heading { align-items: start; flex-direction: column; gap: 13px; }
   .catalog-section-heading > div > p:not(.eyebrow) { font-size: 13px; margin-top: 10px; }
   .catalog-results-count { font-size: 11px; }
-  .catalog-product-grid { gap: 23px 16px; }
-  .catalog-product-info { padding: 16px 14px 12px; }
-  .catalog-product-info h3 { font-size: 22px; margin-top: 11px; }
-  .catalog-product-note { font-size: 13px; }
+  .catalog-product-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .catalog-product-card { align-self: start; }
+  .catalog-product-image { flex: none; height: clamp(180px, 52vw, 260px); aspect-ratio: auto; }
+  .catalog-product-info { flex: none; padding: 16px 18px; }
+  .catalog-product-info h3 { font-size: 24px; margin-top: 8px; }
+  .catalog-product-note { font-size: 13px; margin-top: 6px; line-height: 1.65; }
   .catalog-product-tags { gap: 4px; }
   .catalog-product-tags span { font-size: 11px; padding: 4px 7px; }
-  .catalog-product-price { font-size: 18px; padding-top: 14px; }
+  .catalog-product-price { font-size: 20px; margin-top: 0; padding-top: 12px; }
   .catalog-product-price > span { font-size: 12px; }
   .catalog-product-price small { font-size: 12px; }
-  .catalog-product-actions { flex-wrap: wrap; margin-top: 11px; padding-top: 10px; gap: 5px; }
+  .catalog-product-actions { flex-wrap: nowrap; margin-top: 10px; padding-top: 10px; gap: 12px; }
   .catalog-details-link { font-size: 13px; }
-  .catalog-buy-button { font-size: 13px; padding: 10px 15px; width: 100%; }
+  .catalog-buy-button { font-size: 13px; padding: 10px 18px; min-width: 104px; width: auto; }
   .catalog-bestseller { left: 10px; top: 10px; padding: 5px 9px; font-size: 9px; }
   .catalog-quick-add { right: 11px; bottom: 11px; width: 44px; height: 44px; }
   .catalog-closing-note { gap: 12px; margin-top: 30px; padding-bottom: 15px; font-size: 10px; }
@@ -268,16 +270,6 @@
   .collection-subcategory-panel { padding: 20px 16px; }
   .collection-subcategory-controls .subcategory-select-field { flex-basis: 100%; }
   .collection-filter-clear { margin-left: 0; }
-  .catalog-product-grid { grid-template-columns: 1fr; gap: 25px; }
-  .catalog-product-image { aspect-ratio: 1 / .97; }
-  .catalog-product-info { padding: 22px 20px 17px; }
-  .catalog-product-info h3 { font-size: 27px; }
-  .catalog-product-note { font-size: 13px; }
-  .catalog-product-tags span { font-size: 11px; }
-  .catalog-product-price { padding-top: 17px; font-size: 20px; }
-  .catalog-product-actions { flex-wrap: nowrap; gap: 15px; padding-top: 13px; margin-top: 15px; }
-  .catalog-buy-button { width: auto; min-width: 100px; padding-inline: 18px; font-size: 13px; }
-  .catalog-details-link { font-size: 13px; }
   .catalog-bestseller { left: 14px; top: 14px; }
   .catalog-quick-add { width: 44px; height: 44px; right: 14px; bottom: 14px; }
   .catalog-hero-photo-frame { height: 320px; }

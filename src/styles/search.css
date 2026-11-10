@@ -74,6 +74,9 @@
   .search-page-collection-note { display: none; }
   .search-page-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
+@media (max-width: 650px) {
+  .search-page-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
 @media (max-width: 599px) {
   .search-page-intro { padding-block: 12px 24px; }
   .search-page-heading { margin-top: 12px; }
@@ -94,7 +97,6 @@
   .search-page-categories button { padding: 10px 14px; gap: 10px; }
   .search-page-toolbar { min-height: 72px; align-items: flex-start; }
   .search-page-count { padding-top: 9px; }
-  .search-page-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .search-page-card { display: grid; grid-template-columns: 108px minmax(0, 1fr); gap: 18px; padding-bottom: 24px; border-bottom: 1px solid #ded4c7; }
   .search-page-photo { height: 100%; min-height: 156px; aspect-ratio: auto; }
   .search-page-card-copy { padding-top: 0; }

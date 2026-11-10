@@ -53,7 +53,6 @@ export default function CatalogProductCard({ product, onAdd, onBuy, previewGalle
         <img key={currentPhoto.src} src={currentPhoto.src} alt={currentPhoto.alt} width="800" height="800" loading="lazy" decoding="async" />
       </Link>
       {previewEnabled && <>
-        {currentPhoto.generated && <span className="catalog-preview-sample">Generated sample</span>}
         <button type="button" className="catalog-preview-arrow catalog-preview-arrow--previous" aria-label={`Previous photograph of ${product.name}`} onClick={() => changePhoto(-1)}><ChevronLeft size={18} aria-hidden="true" /></button>
         <button type="button" className="catalog-preview-arrow catalog-preview-arrow--next" aria-label={`Next photograph of ${product.name}`} onClick={() => changePhoto(1)}><ChevronRight size={18} aria-hidden="true" /></button>
         <span className="catalog-gallery-position" aria-live={autoplay && !reducedMotion ? 'off' : 'polite'}>{activeImage + 1} / {gallery.length}</span>

@@ -135,6 +135,9 @@ body { background: var(--cream); color: var(--ink); }
   .category-image-wrap { aspect-ratio: 1.6; }
   .category-card-title { font-size: 27px; }
 }
+@media (max-width: 650px) {
+  .favorites .product-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
 @media (max-width: 420px) {
   .celebration-copy .eyebrow { font-size: 9px; letter-spacing: .12em; }
   .celebration-copy h1 { font-size: 39px; }
@@ -147,6 +150,5 @@ body { background: var(--cream); color: var(--ink); }
   .celebration-seal { font-size: clamp(8px, 2.5vw, 10px); }
   .celebration-seal em { font-size: clamp(10px, 3vw, 12px); }
   .celebration-float { border-width: 3px; }
-  .favorites .product-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
 }
 @media (prefers-reduced-motion: reduce) { .celebration-float { animation: none; } }

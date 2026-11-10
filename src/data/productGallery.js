@@ -6,14 +6,14 @@ const inspirationSubjects = {
   sweets: ['an assorted mithai serving plate', 'mithai making by hand', 'an assorted mithai gift box', 'a festive mithai table', 'nuts, dates and seeds', 'assorted mithai textures'],
 }
 
-// These shared context photographs are explicitly labelled inspiration samples.
+// These shared context photographs are labelled by their styling inspiration.
 // They do not claim to show additional angles or the recipe of an actual product.
 export function buildProductGallery({ collection, name, image, alt }) {
   return [
     { src: image, alt, label: `${name} photograph`, generated: false },
     ...inspirationLabels.map((label, index) => ({
       src: `/images/bakery/gallery/${collection}-${String(index + 1).padStart(2, '0')}.webp`,
-      alt: `Generated sample: ${inspirationSubjects[collection]?.[index] || label.toLowerCase()}`,
+      alt: `Styling inspiration: ${inspirationSubjects[collection]?.[index] || label.toLowerCase()}`,
       label,
       generated: true,
     })),

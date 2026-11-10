@@ -5,7 +5,6 @@
 .catalog-gallery-position, .product-gallery-position { position: absolute; z-index: 1; bottom: 19px; left: 50%; translate: -50% 0; padding: 5px 10px; border-radius: 999px; background: #fffdf9ed; color: var(--burgundy-dark); font-size: 12px; line-height: 1.7; pointer-events: none; }
 .catalog-gallery-position { opacity: 0; visibility: hidden; }
 .catalog-product-card:has(:focus-visible) .catalog-gallery-position { opacity: 1; visibility: visible; }
-.catalog-preview-sample { position: absolute; z-index: 1; bottom: 70px; left: 50%; translate: -50% 0; width: max-content; max-width: calc(100% - 24px); padding: 4px 9px; border-radius: 999px; background: #fffdf9ed; color: var(--burgundy-dark); font-size: 11px; line-height: 1.6; text-align: center; pointer-events: none; }
 .catalog-product-image > a > img { animation: gallery-photo-reveal 180ms ease; }
 .product-gallery-note { min-height: 48px; margin-top: 12px; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .cake-detail-gallery .cake-detail-thumbnails { display: grid; grid-template-columns: repeat(auto-fit, minmax(44px, 1fr)); gap: 10px; }

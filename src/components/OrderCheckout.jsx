@@ -30,6 +30,12 @@ export default function OrderCheckout({ checkout }) {
     const attempt = paymentAttemptFor(checkoutRef.current, { fresh: fresh.current })
     fresh.current = false
     setLoading(true); setOrder(null); setError(''); setNotice(''); setChecking(false)
+    if (attempt.order?.paymentMethod === 'payment-link') {
+      // Keep the saved identity available if the first post-return check fails.
+      // Cached paid flags never unlock WhatsApp: a fresh API response must do so.
+      current = { ...attempt.order, status: 'awaiting_payment', paymentStatus: 'pending', handoffReady: false, orderSummary: null, whatsappUrl: null }
+      setOrder(current)
+    }
 
     function accept(value) {
       if (!active) return
@@ -63,13 +69,13 @@ export default function OrderCheckout({ checkout }) {
     async function initialize() {
       try {
         const config = await getTestPaymentConfig({ signal: controller.signal })
-        if (checkoutRef.current.paymentMethod !== 'cod' && !config.configured) throw new Error('Online test payment is unavailable. Your basket is saved. Edit details to choose cash or try again later.')
+        if (!attempt.order && checkoutRef.current.paymentMethod !== 'cod' && !config.configured) throw new Error('Online test payment is unavailable. Your basket is saved. Edit details to choose cash or try again later.')
         const value = attempt.order
           ? await getTestPaymentOrder(attempt.order, { signal: controller.signal })
           : await createTestPaymentOrder(checkoutRef.current, attempt, { signal: controller.signal })
         accept(value); schedule()
       } catch (problem) { if (active && problem.name !== 'AbortError') setError(problem.message) }
-      finally { if (active) setLoading(false) }
+      finally { if (active) { setLoading(false); schedule() } }
     }
 
     const onFocus = () => { if (document.visibilityState !== 'hidden') check() }
@@ -108,8 +114,8 @@ export default function OrderCheckout({ checkout }) {
         <p className="test-payment-confirmed" role="status"><Check size={20} aria-hidden="true" />{cash ? 'Your cash order request is saved. Payment is due on delivery or pickup.' : 'Your test payment is verified.'} Bakery acceptance is still pending.</p>
         <CustomerWhatsAppChat order={order} onNotice={setNotice} />
       </> : !terminal && <>
-        <a className="button test-payment-primary" href={order.paymentUrl}><CreditCard size={19} aria-hidden="true" />Open Razorpay test payment<ExternalLink size={17} aria-hidden="true" /></a>
-        <p className="test-payment-description">Razorpay displays the enabled test payment methods and returns you here after payment. If needed, use your browser’s Back button. Selecting a method alone does not complete payment.</p>
+        {order.paymentStatus === 'pending' ? <p className="test-payment-waiting" role="status">Your saved payment is being verified. Please do not pay again. We will show the WhatsApp order message after Razorpay confirms capture.</p> : <><a className="button test-payment-primary" href={order.paymentUrl}><CreditCard size={19} aria-hidden="true" />Open Razorpay test payment<ExternalLink size={17} aria-hidden="true" /></a>
+        <p className="test-payment-description">Razorpay displays the enabled test payment methods and returns you here after payment. If needed, use your browser’s Back button. Selecting a method alone does not complete payment.</p></>}
         <div className="test-payment-actions"><button type="button" disabled={checking} onClick={() => checkNow.current?.()}><RefreshCw size={16} aria-hidden="true" />{checking ? 'Checking payment…' : 'Check payment status'}</button></div>
         <p className="test-payment-waiting" role="status">We check automatically and when you return to this page. Your message becomes available after verified payment. Your basket stays saved.</p>
       </>}

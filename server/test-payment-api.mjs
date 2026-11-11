@@ -165,10 +165,25 @@ export function createTestOrderMiddleware({ env = process.env, fetchImpl = globa
     validateLink(link, order)
     if (link.status === 'paid') {
       if (link.amount_paid !== order.amount || link.accept_partial === true) throw new OrderError('The full test payment amount has not been verified.', 409)
-      const record = (Array.isArray(link.payments) ? link.payments : []).find(payment => /^pay_[A-Za-z0-9]+$/.test(payment.payment_id || '') && payment.plink_id === order.providerLinkId && payment.status === 'captured' && payment.amount === order.amount)
-      if (!record) throw new OrderError('The test payment is not captured yet. Please check again shortly.', 409)
+      const records = Array.isArray(link.payments) ? link.payments : []
+      // The authenticated link response establishes membership. Razorpay's
+      // standard payment records can omit plink_id; reject it only if supplied
+      // for a different link. Capture is verified on the fetched payment itself.
+      const record = records.find(payment => /^pay_[A-Za-z0-9]+$/.test(payment.payment_id || '') && (payment.plink_id === undefined || payment.plink_id === order.providerLinkId) && payment.amount === order.amount)
+      if (!records.length) {
+        order.paymentStatus = 'pending'; order.lastCheckedAt = time()
+        await store.save(order)
+        return
+      }
+      if (!record) throw new OrderError('The test payment record does not match this order.', 409)
       const payment = await provider(`payments/${record.payment_id}`)
-      if (payment.id !== record.payment_id || payment.status !== 'captured' || payment.captured !== true || payment.amount !== order.amount || payment.currency !== 'INR') throw new OrderError('The test payment details could not be verified for this order.', 409)
+      if (payment.id !== record.payment_id || payment.amount !== order.amount || payment.currency !== 'INR' || link.order_id && payment.order_id !== link.order_id) throw new OrderError('The test payment details could not be verified for this order.', 409)
+      if (['created', 'authorized'].includes(payment.status) && payment.captured !== true) {
+        order.paymentStatus = 'pending'; order.lastCheckedAt = time()
+        await store.save(order)
+        return
+      }
+      if (payment.status !== 'captured' || payment.captured !== true) throw new OrderError('The test payment has not been captured. Please check its status again.', 409)
       order.status = 'awaiting_bakery_confirmation'; order.paymentStatus = 'paid'; order.paymentId = payment.id; order.paidAt = isoNow()
     } else if (['expired', 'cancelled'].includes(link.status)) {
       order.status = link.status; order.paymentStatus = 'unpaid'

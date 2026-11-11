@@ -18,6 +18,10 @@
 .test-payment-chat { padding: 20px; margin-top: 24px; border: 1px solid #ddc7d0; border-radius: 12px; background: #faf6ef; font-size: 13px; line-height: 1.85; overflow-wrap: anywhere; }
 .test-payment-chat .test-payment-chat-heading { font-size: 17px; font-weight: 600; color: #6d213c; margin-bottom: 10px; }
 .test-payment-chat-instructions, .test-payment-chat-warning { margin-top: 13px; color: #68585f; }
+.test-payment-message-review { margin-top: 18px; border-top: 1px solid #e8dcd8; padding-top: 15px; }
+.test-payment-message-review summary { color: #6d213c; font-weight: 600; cursor: pointer; min-height: 34px; }
+.test-payment-summary { margin: 10px 0 0; padding: 15px; background: #fff; border: 1px solid #e8dcd8; border-radius: 8px; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; line-height: 1.8; color: #49363e; }
+.test-payment-summary:focus-visible { outline: 2px solid #6d213c; outline-offset: 3px; }
 .test-payment-chat-warning { padding: 11px 13px; background: #f3e7ec; border-radius: 6px; }
 .test-payment-chat .test-payment-whatsapp { margin-top: 17px; }
 .test-payment-delivery .test-payment-delivery-error { color: #922c45; margin-top: 7px; }

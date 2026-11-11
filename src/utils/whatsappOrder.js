@@ -74,7 +74,7 @@ export function buildOrderRequest({ items, fields, fulfilment, storeId, requeste
   const details = { items: snapshotItems, fields: cleanFields, fulfilment, storeId, requestedDate, slotId, paymentMethod, couponCode: totals.couponCode, totals, store: fulfilment === 'pickup' ? { name: store.name, address: store.address } : null, slotLabel: slot.label, paymentLabel: selectedPayment.label }
   const fingerprint = JSON.stringify(details)
   const reference = `BH-${requestedDate.replaceAll('-', '')}-${globalThis.crypto.randomUUID().slice(0, 8).toUpperCase()}`
-  const request = { ...details, reference, createdAt: now.toISOString(), orderStatus: 'Awaiting test payment', paymentStatus: 'Unpaid', fingerprint }
+  const request = { ...details, reference, createdAt: now.toISOString(), orderStatus: paymentMethod === 'cod' ? 'Awaiting bakery confirmation' : 'Awaiting test payment', paymentStatus: 'Unpaid', fingerprint }
   request.summary = buildOrderSummary(request, config)
   return request
 }
@@ -101,7 +101,7 @@ export function buildOrderSummary(request, config = ORDERING_CONFIG) {
   if (request.totals.discount) lines.push(`Offer saving: −${formatOrderPrice(request.totals.discount)}`)
   lines.push(`${request.fulfilment === 'delivery' ? 'Delivery charge' : 'Pickup charge'}: ${formatOrderPrice(request.totals.deliveryFee)}`, `${request.totals.needsPriceConfirmation ? 'Priced total' : 'Total'}: ${formatOrderPrice(request.totals.total)}`, `Payment preference: ${request.paymentLabel}`, `Payment status: ${request.paymentStatus}`)
   if (request.fields.message) lines.push(`Special instructions: ${request.fields.message}`)
-  lines.push('', 'Please confirm availability, preferences, the requested slot and final amount before arranging payment.', 'This is an order request. No payment has been verified.')
+  lines.push('', 'Please confirm availability, preferences, the requested slot and final amount in WhatsApp.', request.paymentMethod === 'cod' ? `This is an unpaid cash order request. Payment is due ${request.fulfilment === 'delivery' ? 'on delivery' : 'at pickup'}.` : 'This is an order request. No payment has been verified.')
   return lines.join('\n')
 }
 

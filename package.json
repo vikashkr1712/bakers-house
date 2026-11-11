@@ -4,17 +4,19 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "start": "node server/index.mjs",
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test:e2e": "playwright test",
     "test:ordering": "node tests/fulfilment.test.mjs && node tests/whatsapp-order.test.mjs",
-    "test:payments": "node tests/test-payment-api.test.mjs && node tests/test-payment-client.test.mjs && node tests/whatsapp-messaging.test.mjs"
+    "test:payments": "node tests/test-payment-api.test.mjs && node tests/test-payment-client.test.mjs && node tests/postgres-store.test.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.0",
     "lucide-react": "^0.468.0",
     "motion": "^12.0.0",
+    "pg": "^8.23.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.18.5",
@@ -24,5 +26,8 @@
     "@playwright/test": "^1.56.0",
     "@vitejs/plugin-react": "^5.0.0",
     "vite": "^7.0.0"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

@@ -80,7 +80,10 @@ function persistAttempt(attempt, storage) {
 
 export function readStoredPaymentAttempt(storage) {
   let attempt
-  try { attempt = JSON.parse((storage ?? globalThis.sessionStorage).getItem(PAYMENT_SESSION_KEY)) } catch { attempt = memoryAttempt }
+  try {
+    const stored = (storage ?? globalThis.sessionStorage).getItem(PAYMENT_SESSION_KEY)
+    attempt = stored ? JSON.parse(stored) : storage ? null : memoryAttempt
+  } catch { attempt = memoryAttempt }
   if (!attempt || typeof attempt.checkoutFingerprint !== 'string' || typeof attempt.idempotencyKey !== 'string' || !/^[A-Za-z0-9_-]{16,100}$/.test(attempt.idempotencyKey) || !Number.isFinite(attempt.startedAt) || Date.now() - attempt.startedAt < 0 || Date.now() - attempt.startedAt > MAX_ATTEMPT_AGE) return null
   if (attempt.order) {
     try { validateTestOrder(attempt.order, { requireToken: true }) }
@@ -112,7 +115,11 @@ export function markWhatsAppHandoff(attempt, order, storage) {
 
 export function forgetTestOrder(storage) {
   memoryAttempt = null
-  try { (storage ?? globalThis.sessionStorage).removeItem(PAYMENT_SESSION_KEY) } catch { /* No saved session can be removed if storage is unavailable. */ }
+  try {
+    const target = storage ?? globalThis.sessionStorage
+    target.removeItem(PAYMENT_SESSION_KEY)
+    target.removeItem('bakers-house-test-payment-v1')
+  } catch { /* No saved session can be removed if storage is unavailable. */ }
 }
 
 async function request(path, { body, token, signal, fetchImpl = globalThis.fetch } = {}) {
@@ -154,7 +161,11 @@ export async function getTestPaymentConfig(options) {
 }
 
 export async function createTestPaymentOrder(checkout, attempt, options) {
-  const data = await request('/api/orders', { ...options, body: { ...serializeTestCheckout(checkout), idempotencyKey: attempt.idempotencyKey } })
+  const params = new URLSearchParams()
+  const current = new URLSearchParams(globalThis.location?.search || '')
+  for (const key of ['item', 'quantity']) if (current.has(key)) params.set(key, current.get(key))
+  const returnPath = `/checkout${params.size ? `?${params}` : ''}`
+  const data = await request('/api/orders', { ...options, body: { ...serializeTestCheckout(checkout), idempotencyKey: attempt.idempotencyKey, returnPath } })
   return validateTestOrder(data, { requireToken: true, customerPhone: checkout.fields?.phone })
 }
 

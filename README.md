@@ -1,44 +1,22 @@
 # Baker’s House
 
-A responsive artisan bakery frontend with a burgundy and cream theme, local photographs and fonts, ready-made and custom gift hampers, and a persistent basket. Built with React, Vite, React Router, Tailwind CSS, Motion and Lucide.
+Bakery storefront with delivery/pickup checkout, cash orders, Razorpay Test Mode and a customer-sent WhatsApp order summary.
 
-## Run and build
+## Run locally
 
-Use Node.js 22.12 or later. No environment variables or backend services are required.
+Use Node.js 24.x. Install with npm ci, then npm run dev. To serve a production build locally, run npm run build followed by npm start.
 
-```sh
-npm ci
-npm run dev
-npm run build
-npm run preview
-```
+Checkout offers Pay online, Cash on delivery for delivery, and Pay at pickup for collection. Cash requests save before WhatsApp opens. Online requests open WhatsApp only after the server verifies the full captured test payment. The customer taps Send, and bakery staff confirm or decline availability in chat. Test Mode collects no real money.
 
-The build output is `dist/`. The existing `vercel.json` preserves direct application routes through the SPA rewrite.
+## Vercel backend
 
-## Pages and features
+The api catch-all function serves /api/orders and protected order reads. Neon Postgres provides persistent serverless storage; local development uses SQLite when no cloud database is configured. Vercel requires a persistent database and will not silently store orders in temporary SQLite files.
 
-- `/`: three photographic hero collections, three featured products, bakery philosophy, story and other editorial sections.
-- `/shop`: 45 products with visible cake-occasion and chocolate-type choices, nested sweet collections/categories/varieties, search, price and bestseller filters, sorting and shareable URLs.
-- Clicking Shop opens all products. Hovering Shop opens the desktop collection menu; a separate mobile arrow opens the same options. Collection links consistently open the dedicated Cakes, Chocolates and Sweets pages. About, Our Story and Contact are available as dedicated pages.
-- `/gift-hampers`: ready-made gifts and an editable custom hamper of chocolates and sweets, with pack sizes, packaging, a gift message and one grouped basket line. Cakes are excluded.
-- `/cakes`, `/chocolates`, `/sweets`: dedicated collection pages with matching product details.
-- Product details provide seven-picture galleries, weight options through 5 kg, flavours, quantities, Add to cart and Buy now.
-- Visible Shop and Home Best Sellers photographs rotate through seven images every four seconds. Manual arrows appear on card hover or keyboard focus and remain available on touch screens. Mouse-click focus does not retain hover styling after the pointer leaves. Manual navigation or keyboard focus pauses rotation. Reduced motion disables autoplay.
-- Shop and detail photographs fill their frames with consistent cover sizing, including portrait and landscape cake photos.
-- `/search`, `/cart` and `/checkout`: catalogue search, a persistent variant-aware basket and a demo-only checkout review.
-- Responsive layouts, larger hamper text, keyboard focus, reduced-motion support, and local WebP/WOFF2 assets.
+Set DATABASE_URL (or DATABASE_URL_UNPOOLED), RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in the Vercel environment. Only rzp_test_ keys are accepted. ORDER_PUBLIC_BASE_URL is the trusted HTTPS checkout origin. Optional settings: RAZORPAY_WEBHOOK_SECRET, BAKERY_WHATSAPP_NUMBER and BAKERY_STAFF_TOKEN. See .env.example for names; keep all actual values server-side.
 
-## Demo catalogue and local storage
+The default WhatsApp recipient is +91 79821 07035. Click-to-chat requires no WhatsApp API credentials. Order and payment status remain separate: a saved or paid request still awaits bakery confirmation. Customer messages can be edited; staff should check the saved order/payment reference before accepting.
 
-Prices, weights and flavours are illustrative catalogue values. Bestseller ranks are editorial. Confirm actual recipes, ingredients, allergens, availability and nutritional labels before commercial use; Healthy, Protein and Sugar-Free sample labels are not verified dietary claims.
-
-Checkout simulates an enquiry locally. It sends no real email, places no real order and processes no payment. Newsletter preferences, baskets and hamper drafts stay on the visitor’s device and can be cleared through Privacy. Customer contact fields are not persisted.
-
-Each current product gallery contains its existing main photograph plus six shared, clearly labelled generated inspiration samples for its collection. These samples show serving, craft, gifting, celebrations, ingredients and textures; they do not claim to be additional photographs or verified recipes of the actual product.
-
-The built-in image generation tool created 18 gallery samples, optimized to WebP. Filenames, labels and full prompts are recorded in `public/images/bakery/gallery/gallery-sample-prompts.json`. The original stock photograph and font credits are retained below.
-
-This repository contains application source, required assets, manifests, deployment configuration and licensing documentation. Local browser tests, screenshots, verification reports and original asset downloads are excluded.
+Public catalogue prices, pickup address and serviceable delivery PIN codes are sample settings. Confirm them before real commercial use. This repository includes app source, required assets, deployment configuration and licenses. Browser artifacts, customer data and secret files are excluded.
 
 ## Photograph sources and licenses
 

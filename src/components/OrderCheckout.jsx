@@ -108,8 +108,8 @@ export default function OrderCheckout({ checkout }) {
         <p className="test-payment-confirmed" role="status"><Check size={20} aria-hidden="true" />{cash ? 'Your cash order request is saved. Payment is due on delivery or pickup.' : 'Your test payment is verified.'} Bakery acceptance is still pending.</p>
         <CustomerWhatsAppChat order={order} onNotice={setNotice} />
       </> : !terminal && <>
-        <a className="button test-payment-primary" href={order.paymentUrl} target="_blank" rel="noopener noreferrer"><CreditCard size={19} aria-hidden="true" />Open Razorpay test payment<ExternalLink size={17} aria-hidden="true" /></a>
-        <p className="test-payment-description">Razorpay displays the enabled test payment methods. Complete payment and return here. Selecting a method alone does not complete payment.</p>
+        <a className="button test-payment-primary" href={order.paymentUrl}><CreditCard size={19} aria-hidden="true" />Open Razorpay test payment<ExternalLink size={17} aria-hidden="true" /></a>
+        <p className="test-payment-description">Razorpay displays the enabled test payment methods and returns you here after payment. If needed, use your browser’s Back button. Selecting a method alone does not complete payment.</p>
         <div className="test-payment-actions"><button type="button" disabled={checking} onClick={() => checkNow.current?.()}><RefreshCw size={16} aria-hidden="true" />{checking ? 'Checking payment…' : 'Check payment status'}</button></div>
         <p className="test-payment-waiting" role="status">We check automatically and when you return to this page. Your message becomes available after verified payment. Your basket stays saved.</p>
       </>}

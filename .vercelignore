@@ -12,3 +12,17 @@ playwright.config.*
 .env
 .env.*
 *.md
+
+.payment-data
+
+verification
+
+test-results*
+
+**/*.sqlite
+
+**/*.sqlite-*
+
+**/*.sqlite3
+
+**/*.db

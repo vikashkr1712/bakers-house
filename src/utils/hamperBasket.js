@@ -1,5 +1,5 @@
-import { catalogProducts, getUnitPrice } from '../data/catalog'
-import { hamperPackaging } from '../data/hampers'
+import { catalogProducts, getUnitPrice } from '../data/catalog.js'
+import { hamperPackaging } from '../data/hampers.js'
 
 export const HAMPER_PRODUCT_ID = 'gift-hamper'
 export const HAMPER_MAX_PACKS = 8

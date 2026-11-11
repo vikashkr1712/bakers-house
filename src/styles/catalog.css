@@ -295,3 +295,10 @@
   .catalog-product-card:hover, .catalog-quick-add:not(:disabled):hover, .catalog-buy-button:not(:disabled):hover, .catalog-details-link:hover svg, .catalog-hero-secondary:hover > svg, .cake-occasion-card:not(:disabled):hover .cake-occasion-name svg { translate: none; }
   .catalog-product-card:hover .catalog-product-image img, .cake-occasion-card:not(:disabled):hover img, .cake-detail-thumbnails button:not(:disabled):hover img { transform: none; }
 }
+
+.cake-detail-message { min-width: 0; }
+.cake-detail-message label { display: block; margin-bottom: 10px; color: #35252b; font-size: 12px; font-weight: 500; }
+.cake-detail-message label span { color: #766b6d; font-weight: 400; }
+.cake-detail-message input { display: block; width: 100%; min-width: 0; min-height: 48px; padding: 12px 14px; border: 1px solid #d9c9c9; border-radius: 7px; background: #fffaf7; color: #35252b; font: inherit; font-size: 16px; line-height: 1.6; }
+.cake-detail-message input:focus-visible { border-color: #a99ca1; outline: 1px solid #8b7d83; outline-offset: 2px; }
+.cake-detail-message p { margin-top: 8px; font-size: 11px; line-height: 1.8; color: #766b6d; }

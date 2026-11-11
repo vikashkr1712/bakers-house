@@ -1,4 +1,4 @@
-import { catalogProducts, cakeProducts, chocolateProducts, sweetProducts } from './catalog'
+import { catalogProducts, cakeProducts, chocolateProducts, sweetProducts } from './catalog.js'
 
 export const legacyProducts = [
   { id: 'sourdough', name: 'Sourdough Bread', category: 'Breads', note: 'Slow made. Simply good.', description: 'A beautifully rustic loaf with a deeply golden crust and a soft, open crumb. Made for the breakfast table, a generous sandwich, or just a little butter.', image: '/images/bakery/products/product-sourdough-bread.webp', alt: 'Rustic sourdough bread with a flour-dusted crust', featured: true },

@@ -15,3 +15,11 @@ playwright.config.*
 .npm-cache/
 *.md
 !/README.md
+
+!.env.example
+
+.payment-data/
+
+test-results*/
+
+verification/

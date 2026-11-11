@@ -12,9 +12,11 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
   const product = (location.pathname.startsWith('/cakes/') ? cakeProducts : catalogProducts).find((item) => item.slug === slug)
   const [weight, setWeight] = useState('')
   const [flavour, setFlavour] = useState('')
+  const [eggPreference, setEggPreference] = useState('eggless')
+  const [cakeMessage, setCakeMessage] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [activeImage, setActiveImage] = useState(0)
-  useEffect(() => { setWeight(product?.weights[0].label || ''); setFlavour(product?.flavours[0] || ''); setQuantity(1); setActiveImage(0) }, [product?.id])
+  useEffect(() => { setWeight(product?.weights[0].label || ''); setFlavour(product?.flavours[0] || ''); setEggPreference('eggless'); setCakeMessage(''); setQuantity(1); setActiveImage(0) }, [product?.id])
   useEffect(() => { document.title = product ? `${product.name} — Baker’s House` : 'Product Not Found — Baker’s House' }, [product?.id, location.pathname])
   const fallback = product ? `/${product.collection}` : `/${collection}`
   const returnPath = location.state?.from
@@ -26,7 +28,7 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
   const chosenWeight = product.weights.some((item) => item.label === weight) ? weight : product.weights[0].label
   const chosenFlavour = product.flavours.includes(flavour) ? flavour : product.flavours[0]
   const unitPrice = getUnitPrice(product, chosenWeight)
-  const options = { weight: chosenWeight, flavour: chosenFlavour, quantity }
+  const options = { weight: chosenWeight, flavour: chosenFlavour, quantity, ...(product.collection === 'cakes' ? { eggPreference, cakeMessage } : {}) }
   const gallery = product.gallery || product.images.map(src => ({ src, alt: product.alt, generated: false }))
   const currentPhoto = gallery[activeImage] || gallery[0]
   const recommendations = catalogProducts.filter((item) => item.collection === product.collection && item.id !== product.id).sort((a, b) => a.bestsellerRank - b.bestsellerRank).slice(0, 3)
@@ -57,10 +59,14 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
           <div className="cake-detail-options">
             <fieldset><legend>Choose weight</legend><div className="cake-option-buttons">{product.weights.map((option) => <button key={option.label} type="button" aria-pressed={chosenWeight === option.label} className={chosenWeight === option.label ? 'is-selected' : ''} onClick={() => setWeight(option.label)}>{option.label}</button>)}</div></fieldset>
             <fieldset><legend>{product.flavours.length > 1 ? 'Choose flavour' : 'Flavour'}</legend><div className="cake-option-buttons">{product.flavours.map((option) => <button key={option} type="button" aria-pressed={chosenFlavour === option} className={chosenFlavour === option ? 'is-selected' : ''} onClick={() => setFlavour(option)}>{option}</button>)}</div></fieldset>
+            {product.collection === 'cakes' && <>
+              <fieldset><legend>Egg preference</legend><div className="cake-option-buttons">{[{ value: 'eggless', label: 'Eggless' }, { value: 'with-egg', label: 'With egg' }].map((option) => <button key={option.value} type="button" aria-pressed={eggPreference === option.value} className={eggPreference === option.value ? 'is-selected' : ''} onClick={() => setEggPreference(option.value)}>{option.label}</button>)}</div></fieldset>
+              <div className="cake-detail-message"><label htmlFor="cake-message">Message on cake <span>(optional)</span></label><input id="cake-message" name="cakeMessage" type="text" value={cakeMessage} onChange={(event) => setCakeMessage(event.target.value)} maxLength={80} placeholder="A little birthday wish…" aria-describedby="cake-message-help" /><p id="cake-message-help">Up to 80 characters. Preferences are subject to bakery confirmation.</p></div>
+            </>}
           </div>
           <div className="cake-detail-order-row"><div className="cake-detail-quantity-wrap"><label htmlFor="cake-quantity">Quantity</label><div className="cake-detail-quantity"><button onClick={() => changeQuantity(quantity - 1)} disabled={quantity <= 1} aria-label="Decrease quantity"><Minus size={16} /></button><input id="cake-quantity" type="number" inputMode="numeric" min="1" max="99" value={quantity} onChange={(event) => changeQuantity(event.target.value)} /><button onClick={() => changeQuantity(quantity + 1)} disabled={quantity >= 99} aria-label="Increase quantity"><Plus size={16} /></button></div></div><p className="cake-detail-total">Total<span aria-live="polite">{formatPrice(unitPrice * quantity)}</span></p></div>
           <div className="cake-detail-purchase"><button className="button catalog-secondary-button" disabled={!product.available} onClick={() => onAdd?.(product, options)}><ShoppingBag size={18} aria-hidden="true" />Add to cart</button><button className="button catalog-primary-button" disabled={!product.available} onClick={() => onBuy?.(product, options)}>Buy now<ArrowRight size={18} aria-hidden="true" /></button></div>
-          <p className="cake-detail-order-note">Your selected weight and flavour will be included in your order review.</p>
+          <p className="cake-detail-order-note">{product.collection === 'cakes' ? 'Your cake preferences and message will be included in your order review.' : 'Your selected weight and flavour will be included in your order review.'}</p>
           <div className="cake-detail-small-print"><h2>A little care, a lovely treat.</h2><p>{product.collection === 'cakes' ? 'Keep refrigerated and allow a little time at room temperature before serving. Decorative details may vary.' : product.collection === 'chocolates' ? 'Store in a cool, dry place away from direct sunlight. Decorative details and assortment may vary.' : 'Keep in a cool place and enjoy fresh. Refrigerate syrup-based sweets after opening.'} Please confirm any dietary or allergy requirements before ordering.</p></div>
         </div>
       </div>

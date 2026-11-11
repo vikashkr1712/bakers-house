@@ -187,7 +187,7 @@ export default function GiftHampersPage({ basket, onAddHamper }) {
               {error && <p className="hamper-error" role="alert">{error}</p>}
               <button className="button button--gold hamper-submit" type="submit" disabled={!packCount} aria-label={editKey ? 'Save hamper changes' : 'Add custom hamper to basket'}>{editKey ? 'Save hamper changes' : 'Add hamper to basket'}<ShoppingBag size={18} aria-hidden="true" /></button>
               <button className="hamper-start-fresh" type="button" onClick={startFresh}><RotateCcw size={14} aria-hidden="true" />Start fresh</button>
-              <p className="hamper-local-note">Your selection and gift note stay on this device. Checkout is a demo; no real order or email is sent.</p>
+              <p className="hamper-local-note">Your gift stays saved in this browser. Checkout creates a unique Razorpay test payment link for your selection; no real money or bakery fulfilment.</p>
             </form>
             <div className="hamper-status" role="status" aria-live="polite">{status && <p><Check size={16} aria-hidden="true" />{status}</p>}</div><Link to="/cart" className="text-link hamper-view-basket">View your basket<ArrowRight size={16} aria-hidden="true" /></Link>
           </aside>

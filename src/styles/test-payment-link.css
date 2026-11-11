@@ -1,0 +1,47 @@
+.test-payment-link { min-width: 0; color: #35252b; }
+.test-payment-mode { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid #ddc7d0; background: #f6eaf0; color: #6d213c; border-radius: 6px; font-size: 10px; font-weight: 600; line-height: 1.7; letter-spacing: .06em; }
+.test-payment-link h2 { font-size: clamp(29px, 2.9vw, 38px); line-height: 1.3; letter-spacing: -.02em; margin-top: 20px; }
+.test-payment-description { font-size: 14px; color: #766b6d; line-height: 1.85; margin-top: 15px; }
+.test-payment-loading { display: flex; align-items: center; gap: 10px; padding: 20px 0; margin-top: 16px; font-size: 14px; line-height: 1.8; color: #6d213c; }
+.test-payment-loading svg { flex-shrink: 0; animation: test-payment-turn 1.5s linear infinite; }
+@keyframes test-payment-turn { to { transform: rotate(360deg); } }
+.test-payment-error { border: 1px solid #e1bec9; border-radius: 9px; padding: 15px 17px; margin-top: 20px; background: #fff1f4; color: #922c45; font-size: 13px; line-height: 1.85; overflow-wrap: anywhere; }
+.test-payment-error:focus { outline: 2px solid #6d213c; outline-offset: 3px; }
+.test-payment-details { display: grid; gap: 16px; padding: 23px; margin-top: 25px; border: 1px solid #e8dcd8; border-radius: 12px; background: #fff; }
+.test-payment-details dt { color: #766b6d; font-size: 12px; line-height: 1.8; }
+.test-payment-details dd { color: #35252b; font-size: 15px; line-height: 1.8; margin: 3px 0 0; overflow-wrap: anywhere; }
+.test-payment-delivery { display: flex; align-items: flex-start; gap: 11px; padding: 17px; border: 1px solid #e8dcd8; border-radius: 10px; background: #f5efe6; font-size: 13px; line-height: 1.85; color: #68585f; margin-top: 22px; overflow-wrap: anywhere; }
+.test-payment-delivery > svg { flex-shrink: 0; margin-top: 3px; color: #6d213c; }
+.test-payment-delivery > div { min-width: 0; }
+.test-payment-delivery .test-payment-delivery-title { font-weight: 600; color: #49363e; margin-bottom: 5px; }
+.test-payment-delivery[data-state="failed"] { background: #fff1f4; border-color: #e1bec9; }
+.test-payment-chat { padding: 20px; margin-top: 24px; border: 1px solid #ddc7d0; border-radius: 12px; background: #faf6ef; font-size: 13px; line-height: 1.85; overflow-wrap: anywhere; }
+.test-payment-chat .test-payment-chat-heading { font-size: 17px; font-weight: 600; color: #6d213c; margin-bottom: 10px; }
+.test-payment-chat-instructions, .test-payment-chat-warning { margin-top: 13px; color: #68585f; }
+.test-payment-chat-warning { padding: 11px 13px; background: #f3e7ec; border-radius: 6px; }
+.test-payment-chat .test-payment-whatsapp { margin-top: 17px; }
+.test-payment-delivery .test-payment-delivery-error { color: #922c45; margin-top: 7px; }
+.test-payment-send-again { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 8px; color: #6d213c; font-size: 13px; line-height: 1.7; text-align: left; }
+.test-payment-send-again:hover:not(:disabled) { text-decoration: underline; text-underline-offset: 4px; }
+.test-payment-send-again:disabled { cursor: wait; color: #766b6d; }
+.test-payment-send-again:focus-visible { outline: 2px solid #6d213c; outline-offset: 4px; border-radius: 3px; }
+.test-payment-link .test-payment-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; max-width: 100%; border: 1px solid #6d213c; border-radius: 9px; padding: 12px 17px; margin-top: 23px; background: #6d213c; color: #fff; font-size: 14px; line-height: 1.7; }
+.test-payment-link .test-payment-primary:hover { background: #842d4c; border-color: #842d4c; }
+.test-payment-link .test-payment-secondary { background: transparent; color: #6d213c; margin-top: 12px; }
+.test-payment-link .test-payment-secondary:hover { color: #fff; }
+.test-payment-primary svg { flex-shrink: 0; }
+.test-payment-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 22px; margin-top: 16px; }
+.test-payment-actions button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 13px; line-height: 1.7; color: #6d213c; }
+.test-payment-actions button:disabled { cursor: wait; color: #766b6d; }
+.test-payment-actions button:hover:not(:disabled) { text-decoration: underline; text-underline-offset: 4px; }
+.test-payment-url { display: block; max-width: 100%; padding: 12px 14px; background: #fff; border: 1px solid #e8dcd8; border-radius: 8px; color: #6d213c; font-size: 12px; line-height: 1.9; overflow-wrap: anywhere; margin-top: 13px; }
+.test-payment-waiting, .test-payment-notice { margin-top: 14px; font-size: 12px; line-height: 1.85; color: #766b6d; }
+.test-payment-confirmed { display: flex; align-items: flex-start; gap: 10px; padding: 18px; margin-top: 22px; background: #f3e7ec; border: 1px solid #d9bdc9; border-radius: 10px; font-size: 14px; line-height: 1.85; color: #6d213c; }
+.test-payment-confirmed svg { flex-shrink: 0; margin-top: 3px; }
+.test-payment-terminal { margin-top: 22px; font-size: 14px; line-height: 1.85; color: #766b6d; }
+@media (max-width: 479px) {
+  .test-payment-mode { font-size: 9px; letter-spacing: .025em; }
+  .test-payment-details { padding: 19px; }
+  .test-payment-link .test-payment-primary { width: 100%; gap: 8px; padding-inline: 12px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .test-payment-loading svg { animation: none; } }

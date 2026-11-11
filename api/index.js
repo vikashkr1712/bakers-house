@@ -9,6 +9,19 @@ export default async function handler(req, res) {
   res.setHeader('X-Content-Type-Options', 'nosniff')
   res.setHeader('Cache-Control', 'no-store')
   try {
+    // Plain Vercel functions do not infer a catch-all filesystem route. The
+    // explicit rewrite supplies the path while preserving staff query fields.
+    const url = new URL(req.url, 'https://api.invalid')
+    if (url.pathname === '/api/index') {
+      const route = url.searchParams.get('route') || ''
+      url.searchParams.delete('route')
+      if (!/^[A-Za-z0-9/_-]*$/.test(route)) {
+        res.statusCode = 404
+        res.end(JSON.stringify({ error: 'Order API route not found.' }))
+        return
+      }
+      req.url = `/api/${route}${url.search ? url.search : ''}`
+    }
     if (!middleware) {
       const hosts = new Set(['localhost', '127.0.0.1', '[::1]'])
       for (const value of [process.env.VERCEL_PROJECT_PRODUCTION_URL, process.env.VERCEL_URL, process.env.ORDER_PUBLIC_BASE_URL, ...String(process.env.ORDER_ALLOWED_HOSTS || '').split(',')]) {

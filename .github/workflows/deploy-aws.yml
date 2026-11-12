@@ -1,7 +1,10 @@
 name: Deploy bakery website to AWS
 
-# Explicitly started from GitHub Actions. Pushing code does not publish this site.
+# Deploy main automatically; keep a manual run option for retries.
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -20,6 +23,7 @@ jobs:
     env:
       AWS_REGION: ${{ vars.AWS_REGION }}
       S3_BUCKET: ${{ vars.S3_BUCKET }}
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
 
     steps:
       - name: Check deployment settings
@@ -29,7 +33,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           set -euo pipefail
-          for setting in AWS_REGION S3_BUCKET; do
+          for setting in AWS_REGION S3_BUCKET CLOUDFRONT_DISTRIBUTION_ID; do
             if [[ -z "${!setting}" ]]; then
               echo "::error::Add the ${setting} repository variable under Settings > Secrets and variables > Actions > Variables."
               exit 1
@@ -37,6 +41,10 @@ jobs:
           done
           if [[ ! "$S3_BUCKET" =~ ^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$ ]]; then
             echo "::error::S3_BUCKET must be the bucket name only, without s3:// or a folder path."
+            exit 1
+          fi
+          if [[ ! "$CLOUDFRONT_DISTRIBUTION_ID" =~ ^[A-Z0-9]{10,32}$ ]]; then
+            echo "::error::CLOUDFRONT_DISTRIBUTION_ID must be the distribution ID, without a domain name or ARN."
             exit 1
           fi
           for secret in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do
@@ -112,4 +120,30 @@ jobs:
             echo 'Open the CloudFront HTTPS domain configured for this bucket.'
             echo 'Use /#/cakes, /#/shop and /#/cart for refresh-safe page URLs.'
             echo 'Checkout opens WhatsApp for COD or manual online payment. Customers send the message and payment screenshot themselves; the bakery confirms receipt.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Refresh CloudFront and wait for updated content
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! invalidation_id=$(aws cloudfront create-invalidation \
+            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+            --paths '/*' \
+            --query 'Invalidation.Id' --output text --no-cli-pager); then
+            echo "::error::Website files were uploaded, but CloudFront refresh failed. The upload user needs cloudfront:CreateInvalidation and cloudfront:GetInvalidation on this distribution. See deploy/aws/cloudfront-refresh-policy.json."
+            exit 1
+          fi
+          if [[ -z "$invalidation_id" || "$invalidation_id" == 'None' ]]; then
+            echo "::error::CloudFront did not return an invalidation ID."
+            exit 1
+          fi
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+            --id "$invalidation_id" --no-cli-pager
+          {
+            echo '### CloudFront refresh completed'
+            echo "Distribution: \`${CLOUDFRONT_DISTRIBUTION_ID}\`"
+            echo "Invalidation: \`${invalidation_id}\`"
+            echo 'The website upload and cache refresh are complete.'
           } >> "$GITHUB_STEP_SUMMARY"

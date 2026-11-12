@@ -57,6 +57,7 @@ The current AWS project account restricts OIDC identity providers until advanced
 3. Create an access key for the third-party GitHub deployment service.
 4. Save the access key ID as the repository secret `AWS_ACCESS_KEY_ID` and the secret access key as `AWS_SECRET_ACCESS_KEY`, under **Settings > Secrets and variables > Actions > Secrets**.
 5. Keep credentials out of source, frontend environment variables, chat, screenshots and logs. Replace the secrets when rotating the user's key.
+6. Add `cloudfront-refresh-policy.json` as a second inline policy named `RefreshBakersHouseCloudFront`. This permits cache invalidation and status checks only on the website's distribution `E51AZB5P1JPQH`. Keep the S3 upload policy attached too.
 
 The upload user does not need permission to create AWS resources, edit bucket policies or delete objects. CloudFront's read policy and GitHub's upload policy are separate permissions. The existing OIDC role and `AWS_ROLE_ARN` variable are not used by this workflow. `github-trust-policy.json` remains an optional reference for accounts where OIDC is available.
 
@@ -68,10 +69,11 @@ In the repository, open **Settings > Secrets and variables > Actions > Variables
 | --- | --- |
 | `AWS_REGION` | `ap-southeast-2` for the existing Sydney bucket |
 | `S3_BUCKET` | Bucket name only, without `s3://` or a folder |
+| `CLOUDFRONT_DISTRIBUTION_ID` | `E51AZB5P1JPQH` for the current website |
 
-Keep the two credential values under **Secrets**, not **Variables**. Open **Actions > Deploy bakery website to AWS > Run workflow**, select `main` and run it. The workflow is manual: committing or pushing source does not start an AWS deployment. It runs `npm ci` and `npm run build`, authenticates with the repository secrets, uploads assets and public files, then publishes `index.html` last. Existing objects are not automatically deleted.
+Keep the two credential values under **Secrets**, not **Variables**. Every push to `main`, including a merged pull request or a committed GitHub editor change, starts **Deploy bakery website to AWS** automatically. Other branches do not deploy. The **Run workflow** button remains available for a manual retry on `main`. The workflow runs `npm ci` and `npm run build`, authenticates with the repository secrets, uploads assets and public files, publishes `index.html` last, then refreshes CloudFront and waits for completion. Existing objects are not automatically deleted. Deployments share one concurrency group and do not cancel an upload that is already running.
 
-After a deployment, use the CloudFront HTTPS distribution URL. If updating existing files, use a CloudFront invalidation for changed cached paths (`/*` refreshes the complete website) when immediate freshness is needed. The provided upload policy does not include CloudFront invalidation permissions, so this is a separate console action. Hashed application assets get long caching, public files get one hour, and `index.html` is uploaded with `no-cache`.
+After a successful deployment, open the CloudFront HTTPS distribution URL. The final workflow step invalidates `/*` automatically, including existing image/font paths and the home page, and waits until CloudFront reports completion. Its IAM permission is supplied by the separate, distribution-scoped refresh policy. A refresh failure marks the run failed even if the S3 upload already succeeded; fix the permission or distribution ID and start a new run. Hashed application assets get long caching, public files get one hour, and `index.html` is uploaded with `no-cache`. A browser tab already open still needs refreshing to load the new page.
 
 ## Check the website
 

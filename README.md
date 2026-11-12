@@ -2,7 +2,7 @@
 
 A React/Vite bakery website with customizable cakes and hampers, offers, pickup/delivery scheduling and WhatsApp order requests. Checkout runs entirely in the browser: customers choose cash on delivery, pay at pickup or manual online payment via WhatsApp. No payment gateway, order API or order database is required.
 
-For GitHub Actions deployment to S3 and HTTPS through CloudFront, follow [the AWS deployment guide](deploy/aws/README.md). The website uses refresh-safe hash URLs and includes the complete WhatsApp checkout. The supplied workflow uploads the built website to S3; AWS resources are configured separately.
+For GitHub Actions deployment to S3 and HTTPS through CloudFront, follow [the AWS deployment guide](deploy/aws/README.md). The website uses refresh-safe hash URLs and includes the complete WhatsApp checkout. Pushes to `main` automatically build and upload the website, then refresh CloudFront; the manual Run workflow button remains available. AWS resources and the upload user's permissions are configured separately.
 
 Changes stay local unless the user explicitly requests publication of the current changes. Previously deployed sites and the existing GitHub repository do not update automatically from this workspace.
 

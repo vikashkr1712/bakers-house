@@ -105,6 +105,8 @@ export function createTestOrderMiddleware({ env = process.env, fetchImpl = globa
   const buckets = new Map()
   const time = () => Number(now())
   const isoNow = () => new Date(time()).toISOString()
+  const transactionTime = payment => Number.isSafeInteger(payment?.created_at) && payment.created_at > 0 && payment.created_at * 1000 <= time() + 300000
+    ? new Date(payment.created_at * 1000).toISOString() : null
 
   function publicOrder(order, accessToken) {
     const handoffReady = isOrderHandoffReady(order)
@@ -114,7 +116,7 @@ export function createTestOrderMiddleware({ env = process.env, fetchImpl = globa
       paymentMethod: order.paymentMethod, status: order.status, paymentStatus: order.paymentStatus,
       amount: order.amount, currency: 'INR', paymentUrl: order.paymentUrl || null,
       customerPhone: order.customerPhone, mode: 'test', createdAt: order.createdAt,
-      paidAt: order.paidAt || null, ...(order.paymentId ? { paymentId: order.paymentId } : {}),
+      paidAt: order.paidAt || null, transactionAt: order.transactionAt || null, ...(order.paymentId ? { paymentId: order.paymentId } : {}),
       messagingMode: 'customer_to_bakery', whatsappNumber: config.whatsappNumber,
       handoffReady, orderSummary,
       whatsappUrl: orderSummary && config.whatsappNumber ? `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(orderSummary)}` : null,
@@ -158,7 +160,23 @@ export function createTestOrderMiddleware({ env = process.env, fetchImpl = globa
     return link
   }
   async function reconcile(order, force = false) {
-    if (order.paymentMethod !== 'payment-link' || !order.providerLinkId || order.paymentStatus === 'paid') return
+    if (order.paymentMethod !== 'payment-link' || !order.providerLinkId) return
+    if (order.paymentStatus === 'paid') {
+      // Older verified orders have no transaction timestamp. Enrich only the
+      // saved, trusted payment ID; a metadata outage must not revoke payment.
+      if (order.transactionAt || order.transactionTimeChecked || !config.configured || !/^pay_[A-Za-z0-9]+$/.test(order.paymentId || '')) return
+      if (!force && order.transactionTimeCheckAt && time() - order.transactionTimeCheckAt < pollIntervalMs) return
+      order.transactionTimeCheckAt = time()
+      try {
+        const payment = await provider(`payments/${order.paymentId}`)
+        if (payment.id === order.paymentId && payment.amount === order.amount && payment.currency === 'INR' && payment.status === 'captured' && payment.captured === true) {
+          order.transactionAt = transactionTime(payment)
+          order.transactionTimeChecked = true
+        }
+      } catch { /* Keep the original verification time as an explicitly labelled fallback. */ }
+      await store.save(order)
+      return
+    }
     if (!config.configured) throw new OrderError('Razorpay Test Mode is not configured. Payment cannot be verified.', 503)
     if (!force && order.lastCheckedAt && time() - order.lastCheckedAt < pollIntervalMs) return
     const link = await provider(`payment_links/${order.providerLinkId}`)
@@ -185,6 +203,7 @@ export function createTestOrderMiddleware({ env = process.env, fetchImpl = globa
       }
       if (payment.status !== 'captured' || payment.captured !== true) throw new OrderError('The test payment has not been captured. Please check its status again.', 409)
       order.status = 'awaiting_bakery_confirmation'; order.paymentStatus = 'paid'; order.paymentId = payment.id; order.paidAt = isoNow()
+      order.transactionAt = transactionTime(payment); order.transactionTimeChecked = true
     } else if (['expired', 'cancelled'].includes(link.status)) {
       order.status = link.status; order.paymentStatus = 'unpaid'
     } else {

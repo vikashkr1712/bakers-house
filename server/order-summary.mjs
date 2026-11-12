@@ -2,6 +2,10 @@ import { ORDERING_CONFIG } from '../src/config/ordering.js'
 import { formatOrderPrice } from '../src/utils/whatsappOrder.js'
 
 const line = value => String(value ?? '').replace(/[\u0000-\u001f\u007f-\u009f]/g, ' ').replace(/\s+/g, ' ').trim()
+const paymentTime = value => {
+  if (typeof value !== 'string' || !Number.isFinite(Date.parse(value))) return null
+  return new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(new Date(value)) + ' IST (Asia/Kolkata)'
+}
 
 export function isOrderHandoffReady(order) {
   return order.status === 'awaiting_bakery_confirmation' && (order.paymentMethod === 'cod' && order.paymentStatus === 'unpaid' || order.paymentMethod === 'payment-link' && order.paymentStatus === 'paid' && /^pay_[A-Za-z0-9]+$/.test(order.paymentId || ''))
@@ -31,7 +35,13 @@ export function buildCheckoutWhatsAppSummary(order, config = ORDERING_CONFIG) {
   if (request.totals.discount) lines.push(`Offer saving: −${formatOrderPrice(request.totals.discount)}`)
   lines.push(`${request.fulfilment === 'delivery' ? 'Delivery charge' : 'Pickup charge'}: ${formatOrderPrice(request.totals.deliveryFee)}`, `Final total: ${formatOrderPrice(order.amount / 100)}`, '', 'PAYMENT')
   if (order.paymentMethod === 'cod') lines.push(`Method: ${request.fulfilment === 'delivery' ? 'Cash on delivery (COD)' : 'Pay at pickup'}`, `Payment status: UNPAID — ${formatOrderPrice(order.amount / 100)} payable ${request.fulfilment === 'delivery' ? 'on delivery' : 'at pickup'}.`)
-  else lines.push('Payment status: SUCCESSFUL — verified Razorpay TEST payment. No real money was charged.', `Payment ID: ${order.paymentId}`, `Payment-link reference: ${order.reference}`, `Paid test amount: ${formatOrderPrice(order.amount / 100)}`)
+  else {
+    lines.push('Payment status: SUCCESSFUL — verified Razorpay TEST payment. No real money was charged.', `Payment ID: ${order.paymentId}`, `Payment-link reference: ${order.reference}`, `Paid test amount: ${formatOrderPrice(order.amount / 100)}`)
+    const transactionTime = paymentTime(order.transactionAt), verifiedTime = paymentTime(order.paidAt)
+    if (transactionTime) lines.push(`Transaction time (Razorpay): ${transactionTime}`)
+    else if (verifiedTime) lines.push(`Payment verified at: ${verifiedTime} — transaction time unavailable.`)
+    else lines.push('Transaction time: unavailable.')
+  }
   if (request.fields.message) lines.push('', `Special instructions: ${line(request.fields.message)}`)
   lines.push('', 'Please reply in this chat to confirm or decline availability and the requested slot.', 'Bakery: verify the saved order/payment reference in your records before accepting; WhatsApp message text can be edited by the sender.')
   return lines.join('\n')

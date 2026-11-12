@@ -102,14 +102,14 @@ export function paymentAttemptFor(checkout, { storage, fresh = false } = {}) {
 export function rememberTestOrder(attempt, order, storage) {
   const verified = validateTestOrder(order, { requireToken: true })
   const previous = readStoredPaymentAttempt(storage)
-  return persistAttempt({ ...attempt, ...(previous?.idempotencyKey === attempt.idempotencyKey && previous.handoffOpenedFor ? { handoffOpenedFor: previous.handoffOpenedFor } : {}), order: verified }, storage)
+  return persistAttempt({ ...attempt, ...(previous?.idempotencyKey === attempt.idempotencyKey && previous.handoffRedirectedFor ? { handoffRedirectedFor: previous.handoffRedirectedFor } : {}), order: verified }, storage)
 }
 
 export function markWhatsAppHandoff(attempt, order, storage) {
   if (!isOrderHandoffReady(order)) return false
   const previous = readStoredPaymentAttempt(storage)
-  if (previous?.idempotencyKey === attempt.idempotencyKey && previous.handoffOpenedFor === order.id) return false
-  persistAttempt({ ...(previous?.idempotencyKey === attempt.idempotencyKey ? previous : attempt), handoffOpenedFor: order.id }, storage)
+  if (previous?.idempotencyKey === attempt.idempotencyKey && previous.handoffRedirectedFor === order.id) return false
+  persistAttempt({ ...(previous?.idempotencyKey === attempt.idempotencyKey ? previous : attempt), handoffRedirectedFor: order.id }, storage)
   return true
 }
 

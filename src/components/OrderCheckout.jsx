@@ -45,9 +45,10 @@ export default function OrderCheckout({ checkout }) {
       if (isOrderHandoffReady(value)) {
         clearTimeout(timer)
         if (markWhatsAppHandoff(attempt, value)) {
-          // Opening a chat never sends its contents. Persist this attempt first
-          // so reloads and repeated payment callbacks cannot open duplicate tabs.
-          try { window.open(value.whatsappUrl, '_blank', 'noopener,noreferrer') }
+          // Navigate the current tab so async verification never needs a popup.
+          // Persist first so returning from WhatsApp cannot cause a redirect loop.
+          // WhatsApp still requires the customer to tap Send.
+          try { window.open(value.whatsappUrl, '_self') }
           catch { /* The permanent on-page link and copy option remain usable. */ }
         }
       }
@@ -92,6 +93,10 @@ export default function OrderCheckout({ checkout }) {
 
   const ready = isOrderHandoffReady(order)
   const terminal = order && ['expired', 'cancelled'].includes(order.status)
+  const timestamp = order?.transactionAt || order?.paidAt
+  const paymentTime = typeof timestamp === 'string' && Number.isFinite(Date.parse(timestamp))
+    ? new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'medium', hour12: true }).format(new Date(timestamp)) + ' IST'
+    : null
   useEffect(() => { if (ready) headingRef.current?.focus({ preventScroll: true }) }, [ready])
 
   return <section className="test-payment-link" aria-labelledby="order-checkout-title" aria-busy={loading || checking}>
@@ -109,9 +114,10 @@ export default function OrderCheckout({ checkout }) {
         <div><dt>Order status</dt><dd>{ready ? 'Awaiting bakery confirmation' : terminal ? `Payment link ${order.status}` : 'Awaiting payment'}</dd></div>
         <div><dt>Payment status</dt><dd>{order.paymentStatus === 'paid' ? 'Payment successful · Razorpay Test Mode' : cash ? checkout.fulfilment === 'delivery' ? 'Unpaid · cash on delivery' : 'Unpaid · pay at pickup' : order.paymentStatus === 'pending' ? 'Verification pending' : 'Not paid'}</dd></div>
         {order.paymentId && <div><dt>Test payment reference</dt><dd>{order.paymentId}</dd></div>}
+        {order.paymentStatus === 'paid' && paymentTime && <div><dt>{order.transactionAt ? 'Transaction time' : 'Payment verified at'}</dt><dd><time dateTime={timestamp}>{paymentTime}</time></dd></div>}
       </dl>
       {ready ? <>
-        <p className="test-payment-confirmed" role="status"><Check size={20} aria-hidden="true" />{cash ? 'Your cash order request is saved. Payment is due on delivery or pickup.' : 'Your test payment is verified.'} Bakery acceptance is still pending.</p>
+        <p className="test-payment-confirmed" role="status"><Check size={20} aria-hidden="true" />{cash ? 'Your cash order request is saved. Payment is due on delivery or pickup.' : 'Your test payment is verified. Redirecting to WhatsApp with your order and payment details.'} Bakery acceptance is still pending.</p>
         <CustomerWhatsAppChat order={order} onNotice={setNotice} />
       </> : !terminal && <>
         {order.paymentStatus === 'pending' ? <p className="test-payment-waiting" role="status">Your saved payment is being verified. Please do not pay again. We will show the WhatsApp order message after Razorpay confirms capture.</p> : <><a className="button test-payment-primary" href={order.paymentUrl}><CreditCard size={19} aria-hidden="true" />Open Razorpay test payment<ExternalLink size={17} aria-hidden="true" /></a>

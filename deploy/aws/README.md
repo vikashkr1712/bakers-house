@@ -50,15 +50,15 @@ For an existing public S3 website, first configure and verify the CloudFront ori
 
 ## GitHub authentication
 
-GitHub Actions uses OIDC and a temporary IAM role. No permanent AWS access-key secret is required.
+The current AWS project account restricts OIDC identity providers until advanced features are activated. The workflow therefore uses a dedicated IAM upload user's access key, stored only in GitHub repository secrets.
 
-1. In IAM, create or reuse the OpenID Connect provider `https://token.actions.githubusercontent.com` with audience `sts.amazonaws.com`.
-2. Create an IAM role using `github-trust-policy.json`. Replace `YOUR_AWS_ACCOUNT_ID` with the intended account. The repository subjects are set to `vikashkr1712/bakers-house`; update them only if hosting from a different repository.
-3. Keep the `main` branch restriction. The two subject patterns support GitHub's older and immutable-ID subject formats; do not broaden them to unrestricted repositories.
-4. Attach `github-role-policy.json` as an inline policy after replacing both bucket-name placeholders. This grants bucket listing/location and object upload for that bucket only.
-5. Copy the full IAM role ARN. An existing upload role can be reused if its trust and bucket permissions match.
+1. Create the IAM user `GitHubBakersHouseUploader` without console access.
+2. Attach `github-role-policy.json` as an inline policy after replacing both bucket-name placeholders. Despite the template's filename, this permissions policy also applies to an IAM user. It grants listing/location and object upload for that bucket only.
+3. Create an access key for the third-party GitHub deployment service.
+4. Save the access key ID as the repository secret `AWS_ACCESS_KEY_ID` and the secret access key as `AWS_SECRET_ACCESS_KEY`, under **Settings > Secrets and variables > Actions > Secrets**.
+5. Keep credentials out of source, frontend environment variables, chat, screenshots and logs. Replace the secrets when rotating the user's key.
 
-The upload role does not create AWS resources, edit bucket policies or delete objects. CloudFront's read policy and GitHub's upload policy are separate permissions.
+The upload user does not need permission to create AWS resources, edit bucket policies or delete objects. CloudFront's read policy and GitHub's upload policy are separate permissions. The existing OIDC role and `AWS_ROLE_ARN` variable are not used by this workflow. `github-trust-policy.json` remains an optional reference for accounts where OIDC is available.
 
 ## GitHub variables and deployment
 
@@ -68,11 +68,10 @@ In the repository, open **Settings > Secrets and variables > Actions > Variables
 | --- | --- |
 | `AWS_REGION` | `ap-southeast-2` for the existing Sydney bucket |
 | `S3_BUCKET` | Bucket name only, without `s3://` or a folder |
-| `AWS_ROLE_ARN` | Full ARN of the GitHub upload role |
 
-Open **Actions > Deploy bakery website to AWS > Run workflow**, select `main` and run it. The workflow is manual: committing or pushing source does not start an AWS deployment. It runs `npm ci` and `npm run build`, authenticates with OIDC, uploads assets and public files, then publishes `index.html` last. Existing objects are not automatically deleted.
+Keep the two credential values under **Secrets**, not **Variables**. Open **Actions > Deploy bakery website to AWS > Run workflow**, select `main` and run it. The workflow is manual: committing or pushing source does not start an AWS deployment. It runs `npm ci` and `npm run build`, authenticates with the repository secrets, uploads assets and public files, then publishes `index.html` last. Existing objects are not automatically deleted.
 
-After a deployment, use the CloudFront HTTPS distribution URL. If updating existing files, use a CloudFront invalidation for changed cached paths (`/*` refreshes the complete website) when immediate freshness is needed. The provided upload role does not include CloudFront invalidation permissions, so this is a separate console action. Hashed application assets get long caching, public files get one hour, and `index.html` is uploaded with `no-cache`.
+After a deployment, use the CloudFront HTTPS distribution URL. If updating existing files, use a CloudFront invalidation for changed cached paths (`/*` refreshes the complete website) when immediate freshness is needed. The provided upload policy does not include CloudFront invalidation permissions, so this is a separate console action. Hashed application assets get long caching, public files get one hour, and `index.html` is uploaded with `no-cache`.
 
 ## Check the website
 
@@ -83,7 +82,7 @@ After a deployment, use the CloudFront HTTPS distribution URL. If updating exist
 - Confirm online payment stays unverified and asks for payment and a screenshot in chat.
 - Check mobile navigation and the checkout layout.
 
-If assets are missing, check object paths and the upload run. If CloudFront shows AccessDenied, check the S3 origin, OAC and the distribution ARN in the bucket policy. If GitHub cannot assume the role, check provider audience, account, repository, branch and `AWS_ROLE_ARN`.
+If assets are missing, check object paths and the upload run. If CloudFront shows AccessDenied, check the S3 origin, OAC and the distribution ARN in the bucket policy. If authentication fails, verify both repository secret names, that the matching access key is active, and that its IAM user has the bucket upload policy. An OIDC authentication step means the old workflow was run; start a new run from the updated `main` branch instead of rerunning an older commit.
 
 ## References
 

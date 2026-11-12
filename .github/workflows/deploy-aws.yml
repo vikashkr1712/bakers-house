@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: bakery-aws-deployment
@@ -21,14 +20,16 @@ jobs:
     env:
       AWS_REGION: ${{ vars.AWS_REGION }}
       S3_BUCKET: ${{ vars.S3_BUCKET }}
-      AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
 
     steps:
       - name: Check deployment settings
         shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           set -euo pipefail
-          for setting in AWS_REGION S3_BUCKET AWS_ROLE_ARN; do
+          for setting in AWS_REGION S3_BUCKET; do
             if [[ -z "${!setting}" ]]; then
               echo "::error::Add the ${setting} repository variable under Settings > Secrets and variables > Actions > Variables."
               exit 1
@@ -38,10 +39,12 @@ jobs:
             echo "::error::S3_BUCKET must be the bucket name only, without s3:// or a folder path."
             exit 1
           fi
-          if [[ ! "$AWS_ROLE_ARN" =~ ^arn:aws:iam::[0-9]{12}:role/ ]]; then
-            echo "::error::AWS_ROLE_ARN must be the ARN of your GitHub deployment role."
-            exit 1
-          fi
+          for secret in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do
+            if [[ -z "${!secret}" ]]; then
+              echo "::error::Add the ${secret} repository secret under Settings > Secrets and variables > Actions > Secrets."
+              exit 1
+            fi
+          done
 
       - name: Check out the application
         uses: actions/checkout@v7
@@ -71,12 +74,12 @@ jobs:
             exit 1
           fi
 
-      - name: Authenticate to AWS using GitHub OIDC
+      - name: Authenticate to AWS using repository secrets
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
-          role-session-name: github-bakery-${{ github.run_id }}
 
       - name: Upload hashed application assets
         shell: bash

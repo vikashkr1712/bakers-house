@@ -107,6 +107,14 @@ export default function OrderCheckout({ checkout }) {
     {error && <div className="test-payment-error" role="alert">{error}</div>}
     {!loading && !order && <button type="button" className="button test-payment-primary" onClick={() => setRestart(value => value + 1)}><RefreshCw size={17} aria-hidden="true" />Try again</button>}
     {order && <>
+      {!ready && !terminal && <div className="test-payment-next-step">
+        {order.paymentStatus === 'pending' ? <p className="test-payment-waiting" role="status">Your saved payment is being verified. Please do not pay again. We will show the WhatsApp order message after Razorpay confirms capture.</p> : <>
+          <a className="button test-payment-primary" href={order.paymentUrl}><CreditCard size={19} aria-hidden="true" />Pay through Razorpay<ExternalLink size={17} aria-hidden="true" /></a>
+          <p className="test-payment-description">Pay {formatOrderPrice(order.amount / 100)} in Test Mode. Razorpay shows the payment methods available for this account and device, then returns you here after payment.</p>
+        </>}
+        <div className="test-payment-actions"><button type="button" disabled={checking} onClick={() => checkNow.current?.()}><RefreshCw size={16} aria-hidden="true" />{checking ? 'Checking payment…' : 'Check payment status'}</button></div>
+        <p className="test-payment-waiting" role="status">We check automatically and when you return to this page. WhatsApp opens after verified payment. Your basket stays saved.</p>
+      </div>}
       <dl className="test-payment-details">
         <div><dt>Order reference</dt><dd>{order.reference}</dd></div>
         <div><dt>Customer WhatsApp number</dt><dd>+{order.customerPhone}</dd></div>
@@ -119,12 +127,7 @@ export default function OrderCheckout({ checkout }) {
       {ready ? <>
         <p className="test-payment-confirmed" role="status"><Check size={20} aria-hidden="true" />{cash ? 'Your cash order request is saved. Payment is due on delivery or pickup.' : 'Your test payment is verified. Redirecting to WhatsApp with your order and payment details.'} Bakery acceptance is still pending.</p>
         <CustomerWhatsAppChat order={order} onNotice={setNotice} />
-      </> : !terminal && <>
-        {order.paymentStatus === 'pending' ? <p className="test-payment-waiting" role="status">Your saved payment is being verified. Please do not pay again. We will show the WhatsApp order message after Razorpay confirms capture.</p> : <><a className="button test-payment-primary" href={order.paymentUrl}><CreditCard size={19} aria-hidden="true" />Open Razorpay test payment<ExternalLink size={17} aria-hidden="true" /></a>
-        <p className="test-payment-description">Razorpay displays the enabled test payment methods and returns you here after payment. If needed, use your browser’s Back button. Selecting a method alone does not complete payment.</p></>}
-        <div className="test-payment-actions"><button type="button" disabled={checking} onClick={() => checkNow.current?.()}><RefreshCw size={16} aria-hidden="true" />{checking ? 'Checking payment…' : 'Check payment status'}</button></div>
-        <p className="test-payment-waiting" role="status">We check automatically and when you return to this page. Your message becomes available after verified payment. Your basket stays saved.</p>
-      </>}
+      </> : null}
       {terminal && <div className="test-payment-terminal"><p>This payment link has {order.status === 'expired' ? 'expired' : 'been cancelled'}. No successful payment has been verified.</p><button type="button" className="button test-payment-primary" onClick={() => { fresh.current = true; setRestart(value => value + 1) }}>Start a new test payment</button></div>}
     </>}
     <p className="test-payment-description">This is a demonstration. Online payments use Razorpay Test Mode; no real money or bakery delivery or pickup is booked.</p>

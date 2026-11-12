@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, ChevronRight, CreditCard, MapPin, ShieldCheck, ShoppingBag, Store, Tag, Truck } from 'lucide-react'
 import { getUnitPrice } from '../data/catalog'
@@ -73,6 +73,15 @@ export default function CheckoutPage({ basket }) {
       forgetTestOrder()
     }
   }, [signature])
+
+  useLayoutEffect(() => {
+    if (!ready || !readyRef.current) return
+    // Replacing the long form otherwise leaves touch devices near the footer.
+    // Align the new payment step before paint, clear of the sticky header.
+    readyRef.current.querySelector('#order-checkout-title')?.focus({ preventScroll: true })
+    readyRef.current.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }, [ready])
+
   function changeFulfilment(value) {
     setFulfilment(value)
     setErrors({})

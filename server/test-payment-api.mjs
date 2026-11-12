@@ -155,6 +155,10 @@ export function createTestOrderMiddleware({ env = process.env, fetchImpl = globa
       expire_by: Math.floor(time() / 1000) + 86400,
       notes: { purpose: 'Test order only', local_order_id: order.id },
       callback_url: order.callbackUrl, callback_method: 'get',
+      // Request every standard method, including UPI, on hosted checkout.
+      // Availability still depends on Razorpay's account and Test Mode support.
+      // upi_link is a different, live-only product and must not be enabled here.
+      options: { checkout: { method: { upi: true, card: true, netbanking: true, wallet: true } } },
     }) })
     validateLink(link, order)
     return link

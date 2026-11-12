@@ -44,6 +44,8 @@
 .checkout-review-button svg, .checkout-send svg { flex-shrink: 0; }
 .checkout-back, .checkout-edit { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.7; min-height: 44px; color: #6d213c; }
 .checkout-back { margin-top: 21px; }
+.s3-preview-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; }
+.s3-preview-actions .checkout-back { margin-top: 0; }
 .checkout-back:hover, .checkout-edit:hover { text-decoration: underline; text-underline-offset: 4px; }
 .checkout-back > svg, .checkout-edit > svg { transition: translate var(--motion-base, 260ms) var(--motion-ease, ease); }
 .checkout-summary { position: sticky; top: calc(var(--header-height, 90px) + 24px); border: 1px solid #e8dcd8; border-radius: 18px; background: #fff; padding: 28px; min-width: 0; }

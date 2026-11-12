@@ -1,4 +1,4 @@
-// Illustrative offers shared by the checkout and the test-payment server.
+// Illustrative offers for the order estimate. The bakery confirms final pricing.
 export const DEMO_OFFERS = [
   { code: 'SWEET10', title: '10% off your favourites', description: '10% off on ₹500+. Save up to ₹200.', minimum: 500 },
   { code: 'TREAT150', title: 'A little extra sweetness', description: '₹150 off on ₹1,500+.', minimum: 1500 },

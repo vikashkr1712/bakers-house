@@ -25,6 +25,7 @@ import CakeDetailPage from './pages/CakeDetailPage'
 import CollectionPage from './pages/CollectionPage'
 import CheckoutPage from './pages/CheckoutPage'
 import GiftHampersPage from './pages/GiftHampersPage'
+import { handleHashAnchor } from './utils/hashAnchors.js'
 import { catalogProducts } from './data/catalog'
 import { ABOUT_PAGE_ENABLED, CART_PAGE_ENABLED, CONTACT_PAGE_ENABLED, SHOP_ENABLED, STORY_PAGE_ENABLED } from './config/site'
 
@@ -66,6 +67,10 @@ export default function App() {
   const matchesCart = Boolean(useMatch('/cart'))
   const isCart = CART_PAGE_ENABLED && matchesCart
   const basket = useBasket()
+  useEffect(() => {
+    document.addEventListener('click', handleHashAnchor, true)
+    return () => document.removeEventListener('click', handleHashAnchor, true)
+  }, [])
   useEffect(() => {
     setView(null)
     if (isCart) setNotification(null)

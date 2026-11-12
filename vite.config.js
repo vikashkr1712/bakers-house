@@ -1,10 +1,9 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { testPaymentApiPlugin } from './server/test-payment-api.mjs'
 
-export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), testPaymentApiPlugin(loadEnv(mode, process.cwd(), ''))],
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
   server: {
     port: 5000,
     strictPort: true,
@@ -14,4 +13,4 @@ export default defineConfig(({ mode }) => ({
       ignored: ['**/.publish/**', '**/.publish-tools/**', '**/test-results*/**', '**/playwright-report/**', '**/screenshots/**', '**/.payment-data/**'],
     },
   },
-}))
+})

@@ -1,5 +1,5 @@
 // Public storefront settings. Replace these placeholders only after
-// the bakery confirms its contact details, service area, hours and payment link.
+// the bakery confirms its contact details, service area and hours.
 // Nothing here is a secret; never add gateway key secrets to frontend config.
 export const ORDERING_CONFIG = {
   bakeryName: 'Baker’s House',
@@ -21,7 +21,7 @@ export const ORDERING_CONFIG = {
     cashOnDelivery: true,
   },
   payAtPickup: true,
-  onlinePayment: { enabled: true, mode: 'test' },
+  onlinePayment: { enabled: true, mode: 'manual-whatsapp' },
   timezone: 'Asia/Kolkata',
   preparationLeadHours: 24,
   maxAdvanceDays: 30,

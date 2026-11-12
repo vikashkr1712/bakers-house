@@ -1,0 +1,112 @@
+name: Deploy bakery website to AWS
+
+# Explicitly started from GitHub Actions. Pushing code does not publish this site.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: bakery-aws-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and upload the bakery website
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      S3_BUCKET: ${{ vars.S3_BUCKET }}
+      AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
+
+    steps:
+      - name: Check deployment settings
+        shell: bash
+        run: |
+          set -euo pipefail
+          for setting in AWS_REGION S3_BUCKET AWS_ROLE_ARN; do
+            if [[ -z "${!setting}" ]]; then
+              echo "::error::Add the ${setting} repository variable under Settings > Secrets and variables > Actions > Variables."
+              exit 1
+            fi
+          done
+          if [[ ! "$S3_BUCKET" =~ ^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$ ]]; then
+            echo "::error::S3_BUCKET must be the bucket name only, without s3:// or a folder path."
+            exit 1
+          fi
+          if [[ ! "$AWS_ROLE_ARN" =~ ^arn:aws:iam::[0-9]{12}:role/ ]]; then
+            echo "::error::AWS_ROLE_ARN must be the ARN of your GitHub deployment role."
+            exit 1
+          fi
+
+      - name: Check out the application
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the website
+        run: npm run build
+
+      - name: Verify the upload contains only static files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s dist/index.html
+          test -d dist/assets
+          if find dist -type f \( -name '.env*' -o -name '*.sqlite*' -o -name '*.db' -o -name '*.map' -o -name '*.docx' -o -name '*.pdf' \) -print -quit | grep -q .; then
+            echo "::error::Unexpected private, source-map or report file in dist. Upload stopped."
+            exit 1
+          fi
+
+      - name: Authenticate to AWS using GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: github-bakery-${{ github.run_id }}
+
+      - name: Upload hashed application assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws s3 sync dist/assets/ "s3://${S3_BUCKET}/assets/" \
+            --cache-control 'public,max-age=31536000,immutable' \
+            --no-progress --only-show-errors
+
+      - name: Upload images, fonts and public files
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws s3 sync dist/ "s3://${S3_BUCKET}/" \
+            --exclude 'index.html' --exclude 'assets/*' \
+            --cache-control 'public,max-age=3600' \
+            --no-progress --only-show-errors
+
+      - name: Publish the entry page last
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws s3 cp dist/index.html "s3://${S3_BUCKET}/index.html" \
+            --content-type 'text/html; charset=utf-8' \
+            --cache-control 'no-cache' \
+            --no-progress --only-show-errors
+          {
+            echo '### Bakery website uploaded to S3'
+            echo "Bucket: \`${S3_BUCKET}\`"
+            echo 'Open the CloudFront HTTPS domain configured for this bucket.'
+            echo 'Use /#/cakes, /#/shop and /#/cart for refresh-safe page URLs.'
+            echo 'Checkout opens WhatsApp for COD or manual online payment. Customers send the message and payment screenshot themselves; the bakery confirms receipt.'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -6,15 +6,14 @@ import { ORDERING_CONFIG } from '../config/ordering.js'
 import { getAvailableSlots, getServiceability, validateSchedule } from './fulfilment.js'
 
 export const REQUESTS_STORAGE_KEY = 'bakers-house-whatsapp-requests-v1'
-const REQUEST_TTL = 7 * 24 * 60 * 60 * 1000
 const singleLine = (value, max = 300) => String(value ?? '').replace(/[\r\n\t]+/g, ' ').trim().slice(0, max)
 export const formatOrderPrice = (amount) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(amount)
 
 export function paymentChoices(fulfilment, config = ORDERING_CONFIG) {
   return [
-    ...(config.onlinePayment?.enabled ? [{ id: 'payment-link', label: 'Pay online · Razorpay Test Mode', description: 'Choose a payment method on Razorpay. We verify your test payment before opening WhatsApp. No real money is charged.' }] : []),
-    ...(fulfilment === 'delivery' && config.delivery?.cashOnDelivery ? [{ id: 'cod', label: 'Cash on delivery', description: 'Pay when your order arrives. Send the saved request to the bakery for confirmation.' }] : []),
-    ...(fulfilment === 'pickup' && config.payAtPickup ? [{ id: 'cod', label: 'Pay at pickup', description: 'Pay at the store when you collect. Send the saved request to the bakery for confirmation.' }] : []),
+    ...(config.onlinePayment?.enabled ? [{ id: 'manual-online', label: 'Online payment via WhatsApp', description: 'Ask for payment details in WhatsApp, make the payment yourself, then send a screenshot in the same chat. The bakery verifies receipt.' }] : []),
+    ...(fulfilment === 'delivery' && config.delivery?.cashOnDelivery ? [{ id: 'cod', label: 'Cash on delivery', description: 'Pay when your order arrives. Send your request on WhatsApp for bakery confirmation.' }] : []),
+    ...(fulfilment === 'pickup' && config.payAtPickup ? [{ id: 'cod', label: 'Pay at pickup', description: 'Pay at the store when you collect. Send your request on WhatsApp for bakery confirmation.' }] : []),
   ]
 }
 
@@ -66,6 +65,7 @@ export function buildOrderRequest({ items, fields, fulfilment, storeId, requeste
   const currentItems = normalizedItems(items)
   const totals = checkoutQuote(currentItems, fulfilment, couponCode, config)
   if (totals.offerError) throw new Error(totals.offerError)
+  if (totals.needsPriceConfirmation) throw new Error('Some selections need a price before checkout. Please update your basket.')
   const cleanFields = { name: singleLine(fields.name, 120), phone: singleLine(fields.phone, 30), message: singleLine(fields.message, 1500), ...(fulfilment === 'delivery' ? { address: singleLine(fields.address), city: singleLine(fields.city, 80), pincode: singleLine(fields.pincode, 6), landmark: singleLine(fields.landmark, 150) } : {}) }
   const store = config.stores.find((entry) => entry.id === storeId)
   const slot = config.slots.find((entry) => entry.id === slotId)
@@ -73,8 +73,14 @@ export function buildOrderRequest({ items, fields, fulfilment, storeId, requeste
   const snapshotItems = currentItems.map(({ product, ...item }) => ({ ...item, ...(item.hamper ? { hamperContents: product.hamperContents?.map((content) => ({ name: content.product.name, weight: content.weight, flavour: content.flavour, quantity: content.quantity })) || [], packaging: product.packaging?.name || '' } : {}) }))
   const details = { items: snapshotItems, fields: cleanFields, fulfilment, storeId, requestedDate, slotId, paymentMethod, couponCode: totals.couponCode, totals, store: fulfilment === 'pickup' ? { name: store.name, address: store.address } : null, slotLabel: slot.label, paymentLabel: selectedPayment.label }
   const fingerprint = JSON.stringify(details)
-  const reference = `BH-${requestedDate.replaceAll('-', '')}-${globalThis.crypto.randomUUID().slice(0, 8).toUpperCase()}`
-  const request = { ...details, reference, createdAt: now.toISOString(), orderStatus: paymentMethod === 'cod' ? 'Awaiting bakery confirmation' : 'Awaiting test payment', paymentStatus: 'Unpaid', fingerprint }
+  // This is a conversation reference, not an order record or payment token.
+  // getRandomValues also works on HTTP S3 endpoints, unlike randomUUID.
+  const bytes = new Uint8Array(6)
+  const suffix = globalThis.crypto?.getRandomValues
+    ? Array.from(globalThis.crypto.getRandomValues(bytes), (byte) => byte.toString(16).padStart(2, '0')).join('')
+    : `${now.getTime().toString(36)}${Math.random().toString(36).slice(2, 8)}`
+  const reference = `BH-${requestedDate.replaceAll('-', '')}-${suffix.toUpperCase()}`
+  const request = { ...details, reference, createdAt: now.toISOString(), orderStatus: 'Awaiting bakery confirmation', paymentStatus: paymentMethod === 'cod' ? 'Unpaid' : 'Not verified — manual payment via WhatsApp', fingerprint }
   request.summary = buildOrderSummary(request, config)
   return request
 }
@@ -85,7 +91,7 @@ export function buildOrderSummary(request, config = ORDERING_CONFIG) {
     lines.push(`${index + 1}. ${item.name} × ${item.quantity}`, `   ${[item.weight, item.flavour, item.eggPreference ? item.eggPreference === 'eggless' ? 'Eggless preference' : 'With egg preference' : ''].filter(Boolean).join(' · ')}`)
     if (item.cakeMessage) lines.push(`   Cake message: ${item.cakeMessage}`)
     if (item.hamper) {
-      for (const content of item.hamperContents || []) lines.push(`   • ${content.name} · ${content.weight} × ${content.quantity}`)
+      for (const content of item.hamperContents || []) lines.push(`   • ${content.name} · ${[content.weight, content.flavour].filter(Boolean).join(' · ')} × ${content.quantity}`)
       if (item.packaging) lines.push(`   Packaging: ${item.packaging}`)
       if (item.hamper.giftMessage) lines.push(`   Gift note: ${singleLine(item.hamper.giftMessage, 240)}`)
     }
@@ -99,9 +105,14 @@ export function buildOrderSummary(request, config = ORDERING_CONFIG) {
   lines.push(`Requested date: ${request.requestedDate}`, `Requested slot: ${request.slotLabel} (${config.timezone})`, '', `Subtotal${request.totals.needsPriceConfirmation ? ' (priced items)' : ''}: ${formatOrderPrice(request.totals.subtotal)}`)
   if (request.couponCode) lines.push(`Offer: ${request.couponCode}`)
   if (request.totals.discount) lines.push(`Offer saving: −${formatOrderPrice(request.totals.discount)}`)
-  lines.push(`${request.fulfilment === 'delivery' ? 'Delivery charge' : 'Pickup charge'}: ${formatOrderPrice(request.totals.deliveryFee)}`, `${request.totals.needsPriceConfirmation ? 'Priced total' : 'Total'}: ${formatOrderPrice(request.totals.total)}`, `Payment preference: ${request.paymentLabel}`, `Payment status: ${request.paymentStatus}`)
+  lines.push(`${request.fulfilment === 'delivery' ? 'Delivery charge' : 'Pickup charge'}: ${formatOrderPrice(request.totals.deliveryFee)}`, `Estimated total: ${formatOrderPrice(request.totals.total)}`, `Payment preference: ${request.paymentLabel}`, `Payment status: ${request.paymentStatus}`)
   if (request.fields.message) lines.push(`Special instructions: ${request.fields.message}`)
-  lines.push('', 'Please confirm availability, preferences, the requested slot and final amount in WhatsApp.', request.paymentMethod === 'cod' ? `This is an unpaid cash order request. Payment is due ${request.fulfilment === 'delivery' ? 'on delivery' : 'at pickup'}.` : 'This is an order request. No payment has been verified.')
+  lines.push('', 'Please confirm availability, preferences, the requested slot and final amount in WhatsApp.')
+  if (request.paymentMethod === 'cod') {
+    lines.push(`This is an unpaid cash order request. Payment is due ${request.fulfilment === 'delivery' ? 'on delivery' : 'at pickup'}.`)
+  } else {
+    lines.push('', 'MANUAL ONLINE PAYMENT', 'Please share your UPI ID or payment QR code and confirm the final amount.', 'I will make the payment myself and send the payment screenshot here along with this order message.', 'Please verify receipt of the payment and confirm my order. No payment has been verified by the website.')
+  }
   return lines.join('\n')
 }
 
@@ -109,28 +120,4 @@ export function getWhatsAppUrl(number, summary) {
   const digits = String(number || '').replace(/\D/g, '')
   if (!/^[1-9]\d{9,14}$/.test(digits)) throw new Error('The bakery’s WhatsApp number is unavailable. Please contact the bakery directly.')
   return `https://wa.me/${digits}?text=${encodeURIComponent(summary)}`
-}
-
-export function getSavedRequests(storage, now = new Date()) {
-  try {
-    const target = storage ?? globalThis.localStorage
-    const saved = JSON.parse(target.getItem(REQUESTS_STORAGE_KEY))
-    if (!Array.isArray(saved)) return []
-    const current = saved.filter((entry) => entry && typeof entry.reference === 'string' && typeof entry.summary === 'string' && typeof entry.fingerprint === 'string' && Array.isArray(entry.items) && entry.fields && Number.isFinite(Date.parse(entry.createdAt)) && now.getTime() - Date.parse(entry.createdAt) >= 0 && now.getTime() - Date.parse(entry.createdAt) < REQUEST_TTL).slice(0, 10)
-    if (current.length !== saved.length) { try { target.setItem(REQUESTS_STORAGE_KEY, JSON.stringify(current)) } catch { /* Reading remains useful if cleanup is blocked. */ } }
-    return current
-  } catch { return [] }
-}
-
-export function saveOrderRequest(request, storage) {
-  try {
-    const target = storage ?? globalThis.localStorage
-    const saved = getSavedRequests(target, new Date(request.createdAt))
-    const existing = saved.find((entry) => entry.fingerprint === request.fingerprint && Date.parse(request.createdAt) - Date.parse(entry.createdAt) < 24 * 60 * 60 * 1000)
-    if (existing) return existing
-    const next = [request, ...saved].slice(0, 10)
-    target.setItem(REQUESTS_STORAGE_KEY, JSON.stringify(next))
-    if (target.getItem(REQUESTS_STORAGE_KEY) !== JSON.stringify(next)) throw new Error('Storage did not save the request.')
-    return request
-  } catch { throw new Error('Your request could not be saved in this browser. Enable browser storage and try again. Your basket has not been cleared.') }
 }

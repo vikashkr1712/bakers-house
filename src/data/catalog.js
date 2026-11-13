@@ -1,22 +1,24 @@
 import { getSubcategory, getSweetCollection, getSweetType } from './subcategories.js'
 import { buildProductGallery } from './productGallery.js'
+import { cakePhotos } from './cakePhotos.js'
 
 const image = (name) => `/images/bakery/redesign/${name}.webp`
 
 export const cakeCategories = [
-  { id: 'birthday', name: 'Birthday Cake', heading: 'Birthday Cakes', image: image('cake-birthday'), alt: 'White buttercream cake decorated with colourful sprinkles' },
-  { id: 'anniversary', name: 'Anniversary Cake', heading: 'Anniversary Cakes', image: image('cake-anniversary'), alt: 'White celebration cake decorated with white and blue flowers' },
-  { id: 'kids', name: 'Kids Special', heading: 'Kids Special Cakes', image: image('cake-kids'), alt: 'Round white cake covered with colourful rainbow sprinkles' },
-  { id: 'party', name: 'Party Cake', heading: 'Party Cakes', image: image('cake-party'), alt: 'Rustic tiered celebration cake decorated with pastries and flowers' },
-  { id: 'baby-shower', name: 'Baby Shower Cake', heading: 'Baby Shower Cakes', image: image('cake-baby-shower'), alt: 'White baby shower cake surrounded by blue and yellow balloons' },
+  { id: 'birthday', name: 'Birthday Cake', heading: 'Birthday Cakes', image: cakePhotos.sunnySmile.src, alt: cakePhotos.sunnySmile.alt },
+  { id: 'anniversary', name: 'Anniversary Cake', heading: 'Anniversary Cakes', image: cakePhotos.pinkHeart.src, alt: cakePhotos.pinkHeart.alt },
+  { id: 'kids', name: 'Kids Special', heading: 'Kids Special Cakes', image: cakePhotos.littleLion.src, alt: cakePhotos.littleLion.alt },
+  { id: 'party', name: 'Party Cake', heading: 'Party Cakes', image: cakePhotos.redRosette.src, alt: cakePhotos.redRosette.alt },
+  { id: 'baby-shower', name: 'Baby Shower Cake', heading: 'Baby Shower Cakes', image: cakePhotos.blueHearts.src, alt: cakePhotos.blueHearts.alt },
 ]
 
-function cake({ slug, name, tags, photo, alt, note, description, price, flavours, rank, bestseller = false, available = true }) {
-  const gallery = buildProductGallery({ collection: 'cakes', name, image: image(photo), alt })
+function cake({ slug, name, tags, photo, note, description, price, flavours, rank, bestseller = false, available = true }) {
+  const { src, alt } = cakePhotos[photo]
+  const gallery = buildProductGallery({ collection: 'cakes', name, image: src, alt })
   const largeUnit = price * 3 - 148
   return {
     id: `cake-${slug}`, slug, name, category: 'Cakes & Pastries', collection: 'cakes', tags,
-    description, note, image: image(photo), images: gallery.map(item => item.src), gallery, alt, price,
+    description, note, image: src, images: gallery.map(item => item.src), gallery, alt, price,
     weights: [{ label: '500 g', price }, { label: '1 kg', price: price * 2 - 99 }, { label: '1.5 kg', price: largeUnit }, ...[2, 3, 4, 5].map(kg => ({ label: `${kg} kg`, price: Math.round(largeUnit * kg / 1.5) }))],
     flavours, bestseller, bestsellerRank: rank, available, detailPath: `/cakes/${slug}`,
   }
@@ -24,16 +26,16 @@ function cake({ slug, name, tags, photo, alt, note, description, price, flavours
 
 // Editorial order for a balanced collection; these ranks do not represent sales figures.
 export const cakeProducts = [
-  cake({ slug: 'birthday-confetti', name: 'Birthday Confetti', tags: ['Birthday Cake', 'Kids Special'], photo: 'cake-birthday', alt: 'A birthday celebration cake with colourful decorations', note: 'A little colour. A lot of joy.', description: 'Soft vanilla sponge layered with smooth vanilla cream and a cheerful finish. A joyful centrepiece for candle wishes and birthday smiles.', price: 749, flavours: ['Vanilla'], rank: 1, bestseller: true }),
-  cake({ slug: 'velvet-romance', name: 'Floral Romance', tags: ['Anniversary Cake'], photo: 'cake-anniversary', alt: 'White celebration cake decorated with white and blue flowers', note: 'For a love worth celebrating.', description: 'Tender sponge and delicately whipped cream, finished with a little romance. Made for anniversaries, milestones and moments shared by two.', price: 899, flavours: ['Vanilla', 'Chocolate'], rank: 2, bestseller: true }),
-  cake({ slug: 'little-wonder', name: 'Little Wonder', tags: ['Baby Shower Cake'], photo: 'cake-baby-shower', alt: 'A delicate celebration cake with a soft decorative finish', note: 'Sweet beginnings, beautifully celebrated.', description: 'Light vanilla sponge and silky cream in a gently decorated cake. A lovely addition to a gathering for the newest little arrival.', price: 949, flavours: ['Vanilla'], rank: 3, bestseller: true }),
-  cake({ slug: 'rustic-celebration', name: 'Rustic Celebration', tags: ['Party Cake', 'Birthday Cake'], photo: 'cake-party', alt: 'Rustic tiered celebration cake decorated with pastries, flowers and a 70 topper', note: 'Bring everyone a little closer.', description: 'A celebration cake with soft vanilla sponge and a rustic cream finish. Slice, share and make a little more of your next gathering.', price: 849, flavours: ['Vanilla'], rank: 4, bestseller: true }),
-  cake({ slug: 'happy-little-cake', name: 'Happy Little Cake', tags: ['Kids Special', 'Birthday Cake'], photo: 'cake-kids', alt: 'A playful cake with bright celebration decorations', note: 'Made for the biggest little smiles.', description: 'Fluffy vanilla sponge with a creamy filling and a playful finish. An extra happy cake for little celebrations and big imaginations.', price: 849, flavours: ['Vanilla'], rank: 5, bestseller: true }),
-  cake({ slug: 'strawberry-cloud', name: 'Strawberry Cloud', tags: ['Birthday Cake', 'Anniversary Cake'], photo: 'cake-strawberry', alt: 'A cream cake finished with strawberries', note: 'Berries, cream and happy moments.', description: 'Layers of soft sponge and strawberry cream, finished with a fresh, berry-inspired touch. Bright, light and lovely to share.', price: 799, flavours: ['Strawberry'], rank: 6 }),
-  cake({ slug: 'floral-daydream', name: 'Floral Daydream', tags: ['Baby Shower Cake', 'Anniversary Cake'], photo: 'cake-floral', alt: 'A celebration cake with delicate floral decoration', note: 'A delicate flourish for your day.', description: 'A softly finished vanilla cake with an elegant floral design. A thoughtful centrepiece for intimate celebrations and new beginnings.', price: 999, flavours: ['Vanilla'], rank: 7 }),
-  cake({ slug: 'midnight-chocolate', name: 'Midnight Chocolate', tags: ['Party Cake', 'Birthday Cake'], photo: 'cake-chocolate', alt: 'A rich chocolate cake with a chocolate finish', note: 'For the devoted chocolate lover.', description: 'Rich cocoa sponge meets smooth chocolate cream in a deeply indulgent cake. Enjoy a generous slice with your favourite people.', price: 899, flavours: ['Chocolate'], rank: 8 }),
-  cake({ slug: 'classic-cream', name: 'Classic Cream', tags: ['Birthday Cake', 'Baby Shower Cake'], photo: 'cake-cream', alt: 'A simply decorated cake with a light cream finish', note: 'Simple, soft and a little special.', description: 'A timeless combination of light sponge and whipped vanilla cream. Understated, beautifully finished and at home at any celebration.', price: 699, flavours: ['Vanilla'], rank: 9 }),
-  cake({ slug: 'red-velvet-affair', name: 'Red Velvet Affair', tags: ['Anniversary Cake', 'Party Cake'], photo: 'cake-red-velvet', alt: 'A red velvet cake with a cream finish', note: 'A classic with a romantic heart.', description: 'Velvety cocoa sponge layered with a smooth cream-cheese-style frosting. A rich, tender finish for evenings worth remembering.', price: 949, flavours: ['Red Velvet'], rank: 10 }),
+  cake({ slug: 'birthday-confetti', name: 'Sunny Smile', tags: ['Birthday Cake', 'Kids Special'], photo: 'sunnySmile', note: 'A little sunshine. A lot of joy.', description: 'Soft vanilla sponge layered with smooth vanilla cream, finished with a sunny smile and piped white petals. A joyful centrepiece for candle wishes and birthday smiles.', price: 749, flavours: ['Vanilla'], rank: 1, bestseller: true }),
+  cake({ slug: 'velvet-romance', name: 'Floral Romance', tags: ['Anniversary Cake'], photo: 'pinkRosette', note: 'For a love worth celebrating.', description: 'Tender sponge and delicately whipped cream, finished with a sweep of pink rosettes. Made for anniversaries, milestones and moments shared by two.', price: 899, flavours: ['Vanilla', 'Chocolate'], rank: 2, bestseller: true }),
+  cake({ slug: 'little-wonder', name: 'Little Wonder', tags: ['Baby Shower Cake'], photo: 'blueHearts', note: 'Sweet beginnings, beautifully celebrated.', description: 'Light vanilla sponge and silky cream, decorated in soft blue with little red hearts. A lovely addition to a gathering for the newest little arrival.', price: 949, flavours: ['Vanilla'], rank: 3, bestseller: true }),
+  cake({ slug: 'rustic-celebration', name: 'Rosette Celebration', tags: ['Party Cake', 'Birthday Cake'], photo: 'redRosette', note: 'Bring everyone a little closer.', description: 'A celebration cake with soft vanilla sponge, a smooth cream finish, red rosettes and gold pearls. Slice, share and make a little more of your next gathering.', price: 849, flavours: ['Vanilla'], rank: 4, bestseller: true }),
+  cake({ slug: 'happy-little-cake', name: 'Happy Little Cake', tags: ['Kids Special', 'Birthday Cake'], photo: 'littleLion', note: 'Made for the biggest little smiles.', description: 'Fluffy vanilla sponge with a creamy filling and a smiling lion in bright orange buttercream. An extra happy cake for little celebrations and big imaginations.', price: 849, flavours: ['Vanilla'], rank: 5, bestseller: true }),
+  cake({ slug: 'strawberry-cloud', name: 'Strawberry Cloud', tags: ['Birthday Cake', 'Anniversary Cake'], photo: 'pinkHeart', note: 'Berries, cream and happy moments.', description: 'Layers of soft sponge and strawberry cream beneath a white cream finish, decorated with a pink heart and delicate pearls. Bright, light and lovely to share.', price: 799, flavours: ['Strawberry'], rank: 6 }),
+  cake({ slug: 'floral-daydream', name: 'Floral Daydream', tags: ['Baby Shower Cake', 'Anniversary Cake'], photo: 'greenFloral', note: 'A delicate flourish for your day.', description: 'A softly finished vanilla cake in sage green with delicate white flowers. A thoughtful centrepiece for intimate celebrations and new beginnings.', price: 999, flavours: ['Vanilla'], rank: 7 }),
+  cake({ slug: 'midnight-chocolate', name: 'Midnight Chocolate', tags: ['Party Cake', 'Birthday Cake'], photo: 'vanillaSmile', note: 'For the devoted chocolate lover.', description: 'Rich cocoa sponge meets smooth chocolate cream beneath a smiling ivory cream finish. Enjoy a generous slice with your favourite people.', price: 899, flavours: ['Chocolate'], rank: 8 }),
+  cake({ slug: 'classic-cream', name: 'Classic Cream', tags: ['Birthday Cake', 'Baby Shower Cake'], photo: 'daisySmile', note: 'Soft cream. A happy little bloom.', description: 'A timeless combination of light sponge and whipped vanilla cream, finished with a smiling daisy and little piped flowers. A cheerful addition to any celebration.', price: 699, flavours: ['Vanilla'], rank: 9 }),
+  cake({ slug: 'red-velvet-affair', name: 'Red Velvet Affair', tags: ['Anniversary Cake', 'Party Cake'], photo: 'redRosette', note: 'A classic with a romantic heart.', description: 'Velvety cocoa sponge layered with a smooth cream-cheese-style frosting, finished with red rosettes and gold pearls. A rich, tender finish for evenings worth remembering.', price: 949, flavours: ['Red Velvet'], rank: 10 }),
 ]
 
 // A sweet can appear in more than one relevant collection without duplicating its product or price.

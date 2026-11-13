@@ -38,7 +38,7 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
     setQuantity(Number.isFinite(parsed) ? Math.min(99, Math.max(1, parsed)) : 1)
   }
 
-  return <div className="catalog-page cake-detail-page">
+  return <div className={`catalog-page cake-detail-page${product.collection === 'cakes' ? ' cake-detail-page--cakes' : ''}`}>
     <section className="container cake-detail-section" aria-labelledby="cake-detail-title">
       <nav className="catalog-breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link><ChevronRight size={14} aria-hidden="true" /><Link to={fallback}>{product.category}</Link><ChevronRight size={14} aria-hidden="true" /><span aria-current="page">{product.name}</span></nav>
       <div className="cake-detail-layout">
@@ -48,7 +48,7 @@ export default function CakeDetailPage({ onAdd, onBuy, collection = 'cakes' }) {
             <button type="button" className="product-gallery-arrow product-gallery-arrow--next" aria-label={`Next photograph of ${product.name}`} onClick={() => setActiveImage(index => (index + 1) % gallery.length)}><ChevronRight size={20} aria-hidden="true" /></button>
             <span className="product-gallery-position" aria-live="polite">{activeImage + 1} / {gallery.length}</span>
           </div>
-          <p className="product-gallery-note">{currentPhoto.generated ? `${currentPhoto.label}. Styling inspiration; the actual product may differ.` : product.imageNote || currentPhoto.label}</p>
+          <p className="product-gallery-note">{currentPhoto.inspiration ? `${currentPhoto.label}. Another cake design from our collection for inspiration.` : currentPhoto.generated ? `${currentPhoto.label}. Styling inspiration; the actual product may differ.` : product.imageNote || currentPhoto.label}</p>
           <div className="cake-detail-thumbnails" role="group" aria-label="Product photographs">{gallery.map((photo, index) => <button key={photo.src} type="button" onClick={() => setActiveImage(index)} aria-pressed={activeImage === index} aria-label={`View photograph ${index + 1} of ${product.name}`}><img src={photo.src} alt="" width="100" height="100" loading="lazy" decoding="async" /><span className="product-gallery-thumbnail-number" aria-hidden="true">{index + 1}</span></button>)}</div>
           <Link className="cake-detail-back" to={from}><ArrowLeft size={16} aria-hidden="true" />{backLabel}</Link>
         </div>

@@ -13,7 +13,8 @@ export default function CatalogProductCard({ product, onAdd, onBuy, previewGalle
   const [inView, setInView] = useState(false)
   const cardRef = useRef(null)
   const gallery = product.gallery || [{ src: product.image, alt: product.alt, generated: false }]
-  const previewEnabled = previewGallery && gallery.length > 1
+  // Other cake designs belong in the labelled detail gallery, not on the product card.
+  const previewEnabled = previewGallery && gallery.length > 1 && !gallery.some(photo => photo.inspiration)
   const currentPhoto = gallery[previewEnabled ? activeImage : 0] || gallery[0]
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')

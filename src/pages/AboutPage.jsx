@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowDown, ArrowRight, ChevronRight, HandHeart, Leaf, Wheat } from 'lucide-react'
 import Reveal from '../components/Reveal'
+import { cakePhotos } from '../data/cakePhotos'
 import '../styles/about.css'
 
 const values = [
@@ -10,9 +11,9 @@ const values = [
 ]
 
 const process = [
-  { number: '01', title: 'Begin with the essentials', text: 'Flour, water, and a little possibility. Our inspiration starts with simple ingredients and a love for honest flavor.', image: '/images/bakery/categories/category-breads.webp', alt: 'Thick slices of rustic bread with a golden crust' },
-  { number: '02', title: 'Give the craft its time', text: 'From a beautifully formed loaf to delicate pastry layers, good baking is a reminder that some things are worth the wait.', image: '/images/bakery/hero/hero-fresh-croissant.webp', alt: 'Golden croissants with delicate, flaky layers' },
-  { number: '03', title: 'Make a moment of it', text: 'Slice, pass around, and enjoy. Because a good bake is even better with a warm conversation and a little company.', image: '/images/bakery/categories/category-cakes.webp', alt: 'Little cakes topped with frosting and fresh berries, ready to share' },
+  { number: '01', title: 'Begin with the essentials', text: 'Soft sponge, smooth cream, and a little possibility. Our inspiration starts with simple ingredients and a love for honest flavor.', photo: cakePhotos.vanillaSmile },
+  { number: '02', title: 'Give the craft its time', text: 'From a smooth cream finish to delicate piped flowers, good baking is a reminder that some things are worth the wait.', photo: cakePhotos.greenFloral },
+  { number: '03', title: 'Make a moment of it', text: 'Slice, pass around, and enjoy. Because a good bake is even better with a warm conversation and a little company.', photo: cakePhotos.pinkHeart },
 ]
 
 export default function AboutPage({ onContact }) {
@@ -29,9 +30,9 @@ export default function AboutPage({ onContact }) {
             <div className="about-hero-detail"><span aria-hidden="true" /><p>A little care in every sweet moment.</p></div>
           </div>
           <figure className="about-hero-visual">
-            <img src="/images/bakery/story/story-baker-working.webp" alt="Flour-dusted hands carefully shaping dough on a bakery workbench" width="2000" height="1333" fetchPriority="high" decoding="async" />
-            <figcaption><Wheat size={27} strokeWidth={1.1} aria-hidden="true" /><span>Flour. Water. Heart.<small>Inspired by the art of making.</small></span></figcaption>
-            <span className="about-photo-label">THE JOY IS IN THE MAKING</span>
+            <img src={cakePhotos.pinkRosette.src} alt={cakePhotos.pinkRosette.alt} width={cakePhotos.pinkRosette.width} height={cakePhotos.pinkRosette.height} fetchPriority="high" decoding="async" />
+            <figcaption><Wheat size={27} strokeWidth={1.1} aria-hidden="true" /><span>Flour. Cream. Heart.<small>A little care in every detail.</small></span></figcaption>
+            <span className="about-photo-label">MADE FOR SWEET MOMENTS</span>
           </figure>
         </div>
       </div>
@@ -50,13 +51,13 @@ export default function AboutPage({ onContact }) {
     <section className="about-craft" aria-labelledby="about-craft-title">
       <div className="container">
         <div className="about-section-heading"><Reveal direction="left"><p className="eyebrow">THE BEAUTY IS IN THE MAKING</p><h2 id="about-craft-title">A little patience.<br />A lot of care.</h2></Reveal><Reveal direction="right"><p>From the first handful of flour to the last crumb on the plate, it’s the care along the way that inspires us.</p></Reveal></div>
-        <div className="about-process-grid">{process.map((step, index) => <article className="about-process-step" key={step.number}><Reveal className="about-process-photo" delay={index * 0.08}><img src={step.image} alt={step.alt} width="1000" height="700" loading="lazy" decoding="async" /></Reveal><Reveal className="about-process-copy" delay={index * 0.08 + 0.08}><p className="about-step-number"><span>{step.number}</span><span aria-hidden="true" /></p><h3>{step.title}</h3><p>{step.text}</p></Reveal></article>)}</div>
+        <div className="about-process-grid">{process.map((step, index) => <article className="about-process-step" key={step.number}><Reveal className="about-process-photo" delay={index * 0.08}><img src={step.photo.src} alt={step.photo.alt} width={step.photo.width} height={step.photo.height} loading="lazy" decoding="async" /></Reveal><Reveal className="about-process-copy" delay={index * 0.08 + 0.08}><p className="about-step-number"><span>{step.number}</span><span aria-hidden="true" /></p><h3>{step.title}</h3><p>{step.text}</p></Reveal></article>)}</div>
       </div>
     </section>
 
     <section className="about-invitation" aria-labelledby="about-invitation-title">
       <div className="container about-invitation-grid">
-        <Reveal className="about-invitation-photo" direction="left"><img src="/images/bakery/redesign/cake-floral.webp" alt="A softly decorated celebration cake with delicate floral details" width="1000" height="1000" loading="lazy" decoding="async" /></Reveal>
+        <Reveal className="about-invitation-photo" direction="left"><img src={cakePhotos.daisySmile.src} alt={cakePhotos.daisySmile.alt} width={cakePhotos.daisySmile.width} height={cakePhotos.daisySmile.height} loading="lazy" decoding="async" /></Reveal>
         <Reveal className="about-invitation-copy" direction="right" delay={0.1}><p className="eyebrow">A PLACE FOR SIMPLE PLEASURES</p><h2 id="about-invitation-title">For the everyday.<br />And the <em>just because.</em></h2><p>A birthday wish. A thoughtful gift. Something sweet for someone you love. Find a little goodness for whatever the day brings.</p><div className="about-invitation-actions"><Link className="button button--gold" to="/shop">Explore our bakes<ArrowRight size={18} aria-hidden="true" /></Link><button className="text-link" onClick={onContact}>Get in touch<ArrowRight size={17} aria-hidden="true" /></button></div></Reveal>
       </div>
     </section>

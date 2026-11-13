@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { ArrowRight, ArrowUpRight, Check, ChevronRight, Clock3, Mail, MapPin, Phone, Wheat } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { contactDetails } from '../config/contact'
+import { cakePhotos } from '../data/cakePhotos'
 import '../styles/contact.css'
 
 const topics = ['General enquiry', 'Our bakes', 'Ingredients & allergens', 'Feedback']
@@ -79,7 +80,7 @@ export default function ContactPage() {
 
     <section className="contact-invitation" aria-labelledby="contact-invitation-title">
       <div className="container contact-invitation-layout">
-        <div className="contact-invitation-photo"><img src="/images/bakery/banners/banner-fresh-pastries.webp" alt="Golden pastries arranged on a wooden board" width="1200" height="822" loading="lazy" decoding="async" /></div>
+        <div className="contact-invitation-photo"><img src={cakePhotos.sunnySmile.src} alt={cakePhotos.sunnySmile.alt} width={cakePhotos.sunnySmile.width} height={cakePhotos.sunnySmile.height} loading="lazy" decoding="async" /></div>
         <div className="contact-invitation-copy"><Wheat size={32} strokeWidth={1.1} aria-hidden="true" /><p className="eyebrow">A LITTLE INSPIRATION WHILE YOU’RE HERE</p><h2 id="contact-invitation-title">Something good.<br />For every <em>occasion.</em></h2><p>Celebration cakes, thoughtful chocolates, and familiar sweet favourites. Find a little joy to share.</p><Link className="text-link" to="/shop">Explore our collection<ArrowRight size={18} aria-hidden="true" /></Link></div>
       </div>
     </section>

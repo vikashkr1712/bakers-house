@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowRight, Check, ChevronRight } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { cakeCategories, cakeProducts } from '../data/catalog'
+import { cakePhotos } from '../data/cakePhotos'
 import CatalogProductCard from '../components/CatalogProductCard'
 import '../styles/catalog.css'
 
@@ -36,7 +37,7 @@ export default function CakesPage({ onAdd, onBuy }) {
           <div className="catalog-hero-footnote"><span aria-hidden="true" /><p>A little happiness, made to share.</p></div>
         </div>
         <div className="catalog-hero-visual">
-          <div className="catalog-hero-photo-frame"><img src="/images/bakery/redesign/cake-strawberry.webp" alt="Pink strawberry cream cake topped with a strawberry and red sauce" width="1000" height="667" fetchPriority="high" /></div>
+          <div className="catalog-hero-photo-frame"><img src={cakePhotos.redRosette.src} alt={cakePhotos.redRosette.alt} width={cakePhotos.redRosette.width} height={cakePhotos.redRosette.height} fetchPriority="high" /></div>
           <div className="catalog-hero-caption"><span>THE CAKE COLLECTION</span><p>Every slice,<br /><em>a sweet memory.</em></p></div>
           <span className="catalog-hero-seal" aria-hidden="true">Made for<br /><em>your moment</em></span>
         </div>

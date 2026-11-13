@@ -97,6 +97,8 @@
 .cake-detail-gallery { min-width: 0; }
 .cake-detail-main-image { position: relative; aspect-ratio: .9; background: #f0e7df; border: 1px solid #e8dcd8; border-radius: 16px; overflow: hidden; }
 .cake-detail-main-image img { position: absolute; inset: 0; display: block; height: 100%; width: 100%; max-width: none; object-fit: cover; object-position: center; }
+.cake-detail-page--cakes .cake-detail-main-image { aspect-ratio: 1; }
+.cake-detail-page--cakes .cake-detail-main-image img { object-fit: contain; }
 .cake-detail-thumbnails { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
 .cake-detail-thumbnails button { width: 78px; height: 78px; overflow: hidden; border: 1px solid #e8dcd8; border-radius: 6px; transition: border-color var(--motion-fast, 180ms), box-shadow var(--motion-fast, 180ms); }
 .cake-detail-thumbnails button[aria-pressed='true'] { border: 2px solid var(--burgundy, #6d213c); }

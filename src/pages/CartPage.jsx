@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronRight, Heart, Minus, Plus, ShoppingBag, Trash2, Wheat } from 'lucide-react'
 import { products } from '../data/products'
 import { formatPrice, getUnitPrice } from '../data/catalog'
+import { cakePhotos } from '../data/cakePhotos'
 import HamperContents from '../components/HamperContents'
 import '../styles/cart.css'
 
@@ -129,8 +130,8 @@ export default function CartPage({ basket, onShop, onAdd, onProduct }) {
             <div className="cart-order-note"><span className="cart-order-label">A NOTE BEFORE YOU GO</span><p>Choose pickup or delivery, then select cash or online payment via WhatsApp. Send your order message to the bakery for confirmation. For online payment, pay separately and send your screenshot in the chat for verification.</p></div>
           </aside>
         </div> : <div className="cart-empty">
-          <div className="cart-empty-copy"><span className="cart-empty-icon" aria-hidden="true"><ShoppingBag size={32} strokeWidth={1.2} /></span><p className="eyebrow">ROOM FOR SOMETHING LOVELY</p><h2>Your basket<br /> is waiting.</h2><p>From a favorite daily loaf to a little sweet indulgence, there’s something good to make your own.</p><button className="button button--gold" onClick={onShop}>Explore our bakes<ArrowRight size={18} aria-hidden="true" /></button><span className="cart-empty-note">Find a favorite. Start a little collection.</span></div>
-          <div className="cart-empty-visual"><img src="/images/bakery/banners/banner-fresh-pastries.webp" alt="Freshly baked pastries waiting to be enjoyed" width="2000" height="1000" decoding="async" /><span><Wheat size={23} strokeWidth={1.2} aria-hidden="true" />Good things are worth gathering.</span></div>
+          <div className="cart-empty-copy"><span className="cart-empty-icon" aria-hidden="true"><ShoppingBag size={32} strokeWidth={1.2} /></span><p className="eyebrow">ROOM FOR SOMETHING LOVELY</p><h2>Your basket<br /> is waiting.</h2><p>From a cheerful celebration cake to a little sweet indulgence, there’s something good to make your own.</p><button className="button button--gold" onClick={onShop}>Explore our bakes<ArrowRight size={18} aria-hidden="true" /></button><span className="cart-empty-note">Find a favorite. Start a little collection.</span></div>
+          <div className="cart-empty-visual"><img src={cakePhotos.vanillaSmile.src} alt={cakePhotos.vanillaSmile.alt} width={cakePhotos.vanillaSmile.width} height={cakePhotos.vanillaSmile.height} decoding="async" /><span><Wheat size={23} strokeWidth={1.2} aria-hidden="true" />Good things are worth gathering.</span></div>
         </div>}
 
         {suggestions.length > 0 && <section className="cart-recommendations" aria-labelledby="cart-suggestions-title">
